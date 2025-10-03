@@ -76,7 +76,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                         </button>
                         <div class="hidden md:flex items-center space-x-3 border-l border-gray-200 pl-4">
                             <div class="text-right">
-                                <p class="text-sm font-medium text-gray-900">Bienvenido</p>
+                                <p class="text-sm font-medium text-gray-900">Mark</p>
                                 <p class="text-xs text-gray-500">Estudiante</p>
                             </div>
                             <div class="relative group">
@@ -104,17 +104,6 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             <aside class="w-64 bg-white shadow-lg flex flex-col h-full z-30 transition-all duration-300 ease-in-out transform -translate-x-full lg:translate-x-0" id="sidebar">
                 <!-- contenido del menú con scroll interno -->
                 <div class="flex-1 flex flex-col overflow-hidden">
-                    <!-- búsqueda -->
-                    <div class="p-4 border-b border-gray-200">
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
-                                <span class="material-icons-round text-lg">search</span>
-                            </span>
-                            <input type="text" placeholder="Buscar en el menú..." 
-                                class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                aria-label="Buscar en el menú">
-                        </div>
-                    </div>
             
                     <!-- menú de navegación -->
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
@@ -178,7 +167,6 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">help_outline</span>
                                 <span>Soporte</span>
                             </a>
-
                         </div>
                     </nav>
                 </div>
@@ -190,7 +178,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                             <span class="material-icons-round text-4xl text-gray-400" aria-hidden="true">account_circle</span>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-gray-900">Usuario Ejemplo</p>
+                            <p class="text-sm font-medium text-gray-900">Mark</p>
                             <p class="text-xs text-gray-500 truncate"><?php echo $_SESSION['usuario_email']; ?></p>
                         </div>
                         <div class="ml-auto">
@@ -203,13 +191,8 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             </aside>
 
             <!-- Contenido principal -->
-            <main class="flex-1 overflow-y-auto bg-gray-50">
-                <div class="max-w-7xl mx-auto p-6">
-                    <h1 class="text-2xl font-semibold text-gray-900 mb-6">Bienvenido a Core Class</h1>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <p class="text-gray-600">Un sistema que centraliza la educación en un solo lugar.</p>
-                    </div>
-                </div>
+            <main class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100">
+                <?php include 'pages/principal.php'; ?>
             </main>
         </div>
 
