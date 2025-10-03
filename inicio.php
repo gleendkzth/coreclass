@@ -200,6 +200,17 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                         </div>
                     </div>
                 </div>
+            </aside>
+
+            <!-- Contenido principal -->
+            <main class="flex-1 overflow-y-auto bg-gray-50">
+                <div class="max-w-7xl mx-auto p-6">
+                    <h1 class="text-2xl font-semibold text-gray-900 mb-6">Bienvenido a Core Class</h1>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <p class="text-gray-600">Un sistema que centraliza la educación en un solo lugar.</p>
+                    </div>
+                </div>
+            </main>
         </div>
 
     <!-- script para el menú lateral -->
