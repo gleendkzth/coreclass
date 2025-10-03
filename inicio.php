@@ -109,14 +109,14 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Inicio -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg mb-1 hover:bg-blue-700 transition-colors duration-200 group">
-                                <span class="material-icons-round mr-3 text-lg">home</span>
+                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">home</span>
                                 <span>Inicio</span>
                             </a>
 
                             <!-- Mis Cursos -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">school</span>
+                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200 group">
+                                <span class="material-icons-round mr-3 text-lg">school</span>
                                 <span>Mis Cursos</span>
                             </a>
 
@@ -192,7 +192,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
 
             <!-- Contenido principal -->
             <main class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100">
-                <?php include 'pages/principal.php'; ?>
+                <?php include 'pages/cursos.php'; ?>
             </main>
         </div>
 
