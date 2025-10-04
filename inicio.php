@@ -109,61 +109,67 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Inicio -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="principal" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">home</span>
                                 <span>Inicio</span>
                             </a>
 
                             <!-- Mis Cursos -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200 group">
-                                <span class="material-icons-round mr-3 text-lg">school</span>
+                            <a href="#" data-page="cursos" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
+                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">school</span>
                                 <span>Mis Cursos</span>
                             </a>
 
+                            <!-- Horario -->
+                            <a href="#" data-page="horario" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
+                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">calendar_today</span>
+                                <span>Horario</span>
+                            </a>
+
                             <!-- Calificaciones -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="calificaciones" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">grade</span>
                                 <span>Calificaciones</span>
                             </a>
 
                             <!-- Tareas & Entregas -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="tareas" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">assignment</span>
                                 <span>Tareas & Entregas</span>
                             </a>
 
                             <!-- Exámenes -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="examenes" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">quiz</span>
                                 <span>Exámenes</span>
                             </a>
 
                             <!-- Materiales -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="materiales" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">folder</span>
                                 <span>Materiales</span>
                             </a>
 
                             <!-- Asistencia -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="asistencia" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">event_available</span>
                                 <span>Asistencia</span>
                             </a>
 
                             <!-- Mensajes -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="mensajes" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">chat_bubble_outline</span>
                                 <span>Mensajes</span>
                             </a>
 
                             <!-- Recomendaciones -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="recomendaciones" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">notifications_none</span>
                                 <span>Recomendaciones</span>
                             </a>
 
                             <!-- Soporte -->
-                            <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1">
+                            <a href="#" data-page="soporte" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">help_outline</span>
                                 <span>Soporte</span>
                             </a>
@@ -191,44 +197,109 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             </aside>
 
             <!-- Contenido principal -->
-            <main class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100">
-                <?php include 'pages/horario.php'; ?>
+            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8">
+                <!-- contenido dinámicamente -->
             </main>
         </div>
 
-    <!-- script para el menú lateral -->
     <script>
+    // script para el menú lateral y carga de contenido
         document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('menu-toggle');
             const sidebar = document.getElementById('sidebar');
-            
-            // toggle sidebar
+            const mainContent = document.getElementById('contenido-principal');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // función para cargar contenido
+            function loadContent(page) {
+                // mostrar un indicador de carga
+                mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div></div>';
+
+                fetch(`pages/${page}.php`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('La página no pudo ser cargada.');
+                        }
+                        return response.text();
+                    })
+                    .then(html => {
+                        mainContent.innerHTML = html;
+                    })
+                    .catch(error => {
+                        mainContent.innerHTML = `<div class="text-center text-red-500 p-8"><strong>Error:</strong> ${error.message}</div>`;
+                        console.error('Error al cargar la página:', error);
+                    });
+            }
+
+            // cargar la página de inicio por defecto
+            loadContent('principal');
+            // marcar el enlace de inicio como activo
+            const defaultActiveLink = document.querySelector('a[data-page="principal"]');
+            if(defaultActiveLink) {
+                defaultActiveLink.classList.add('bg-blue-600', 'text-white');
+                defaultActiveLink.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                // cambiar el color del ícono a blanco
+                const icon = defaultActiveLink.querySelector('.material-icons-round');
+                if (icon) {
+                    icon.classList.remove('text-gray-500', 'group-hover:text-gray-700');
+                    icon.classList.add('text-white');
+                }
+            }
+
+            // cambia de sección al hacer clic en el menú y resalta la opción seleccionada
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+
+                    // quitar clase activa de todos los enlaces e iconos
+                    navLinks.forEach(innerLink => {
+                        innerLink.classList.remove('bg-blue-600', 'text-white');
+                        innerLink.classList.add('text-gray-700', 'hover:bg-gray-100');
+                        // restaurar el color original de los iconos
+                        const icons = innerLink.querySelectorAll('.material-icons-round');
+                        icons.forEach(icon => {
+                            icon.classList.remove('text-white');
+                            icon.classList.add('text-gray-500', 'group-hover:text-gray-700');
+                        });
+                    });
+
+                    // añadir clase activa al enlace clickeado y su icono
+                    this.classList.add('bg-blue-600', 'text-white');
+                    this.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                    // cambiar el color del ícono a blanco
+                    const icon = this.querySelector('.material-icons-round');
+                    if (icon) {
+                        icon.classList.remove('text-gray-500', 'group-hover:text-gray-700');
+                        icon.classList.add('text-white');
+                    }
+
+                    loadContent(page);
+
+                    // cerrar sidebar en móvil
+                    if (window.innerWidth < 1024) {
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                });
+            });
+
+            // lógica para el menú lateral
+            const menuToggle = document.getElementById('menu-toggle');
             if (menuToggle) {
                 menuToggle.addEventListener('click', function() {
                     sidebar.classList.toggle('-translate-x-full');
                 });
             }
             
-            // cerrar menú al hacer clic en un enlace en móviles
-            const navLinks = document.querySelectorAll('#sidebar a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth < 1024) {
-                        sidebar.classList.add('-translate-x-full');
-                    }
-                });
-            });
-            
-            // manejar el cambio de tamaño de la ventana
             function handleResize() {
                 if (window.innerWidth >= 1024) {
                     sidebar.classList.remove('-translate-x-full');
                 } else {
-                    sidebar.classList.add('-translate-x-full');
+                    if (!sidebar.classList.contains('manual-toggle')) {
+                       sidebar.classList.add('-translate-x-full');
+                    }
                 }
             }
             
-            // inicializar
             handleResize();
             window.addEventListener('resize', handleResize);
         });
