@@ -192,7 +192,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
 
             <!-- Contenido principal -->
             <main class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100">
-                <?php include 'pages/cursos.php'; ?>
+                <?php include 'pages/horario.php'; ?>
             </main>
         </div>
 
