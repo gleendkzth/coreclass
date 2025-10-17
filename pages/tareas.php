@@ -1,314 +1,189 @@
 <div class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
     <!-- Encabezado de la página -->
-    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-6 text-white relative overflow-hidden">
-        <!-- decorativos -->
-        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full"></div>
-        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/5 rounded-full"></div>
-        
+    <div class="bg-gradient-to-r from-red-800 to-red-900 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full opacity-50"></div>
+        <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full opacity-50"></div>
         <div class="relative z-10">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">Mark, gestiona tus tareas y entregas</h1>
-                    <p class="text-blue-100/90 mt-2 text-lg">Mantén el control de tus actividades pendientes</p>
-                </div>
-                <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                    <p class="text-sm font-medium flex items-center">
-                        <span class="material-icons-round mr-2 text-yellow-300">emoji_events</span>
-                        <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">"La constancia es la clave del logro"</span>
-                    </p>
-                </div>
-            </div>
+            <h1 class="text-3xl font-bold">Mis Tareas</h1>
+            <p class="text-red-200 mt-1">Gestiona tus entregas y mantente al día.</p>
         </div>
     </div>
 
-    <!-- Resumen de tareas -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- Widgets de resumen -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Pendientes -->
-        <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-all duration-300">
-            <div class="flex items-start">
-                <div class="p-3 bg-gradient-to-br from-amber-50 to-yellow-100 rounded-xl shadow-inner">
-                    <span class="material-icons-round text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-yellow-500">pending_actions</span>
+        <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center">
+                <div class="p-3 bg-yellow-100 rounded-lg">
+                    <span class="material-icons-round text-yellow-800">pending_actions</span>
                 </div>
-                <div class="ml-4 flex-1">
+                <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Pendientes</p>
-                    <p class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-yellow-600">8</p>
+                    <p class="text-2xl font-bold text-gray-800">3</p>
                 </div>
             </div>
         </div>
 
         <!-- Entregadas -->
-        <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-all duration-300">
-            <div class="flex items-start">
-                <div class="p-3 bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl shadow-inner">
-                    <span class="material-icons-round text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-emerald-500">check_circle</span>
+        <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-lg">
+                    <span class="material-icons-round text-green-800">check_circle</span>
                 </div>
-                <div class="ml-4 flex-1">
+                <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Entregadas</p>
-                    <p class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600">15</p>
+                    <p class="text-2xl font-bold text-gray-800">15</p>
                 </div>
             </div>
         </div>
 
         <!-- Por Vencer -->
-        <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-all duration-300">
-            <div class="flex items-start">
-                <div class="p-3 bg-gradient-to-br from-red-50 to-pink-100 rounded-xl shadow-inner">
-                    <span class="material-icons-round text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-pink-500">schedule</span>
+        <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center">
+                <div class="p-3 bg-red-100 rounded-lg">
+                    <span class="material-icons-round text-red-800">schedule</span>
                 </div>
-                <div class="ml-4 flex-1">
+                <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Por Vencer</p>
-                    <p class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-pink-600">3</p>
+                    <p class="text-2xl font-bold text-gray-800">2</p>
                 </div>
             </div>
         </div>
 
         <!-- Calificadas -->
-        <div class="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-all duration-300">
-            <div class="flex items-start">
-                <div class="p-3 bg-gradient-to-br from-blue-50 to-cyan-100 rounded-xl shadow-inner">
-                    <span class="material-icons-round text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500">grading</span>
+        <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-200 hover:shadow-md transition-all duration-300">
+            <div class="flex items-center">
+                <div class="p-3 bg-blue-100 rounded-lg">
+                    <span class="material-icons-round text-blue-800">grading</span>
                 </div>
-                <div class="ml-4 flex-1">
+                <div class="ml-4">
                     <p class="text-sm font-medium text-gray-500">Calificadas</p>
-                    <p class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600">12</p>
+                    <p class="text-2xl font-bold text-gray-800">12</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Filtros -->
-    <div class="bg-white rounded-xl shadow-sm p-4 border border-gray-100">
-        <div class="flex flex-wrap gap-2">
-            <button class="px-4 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">
-                Todas
-            </button>
-            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors">
-                Pendientes
-            </button>
-            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors">
-                Entregadas
-            </button>
-            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors">
-                Vencidas
-            </button>
-        </div>
-    </div>
-
-    <!-- Lista de tareas -->
-    <div class="space-y-4">
-        <!-- Tarea 1 - Urgente -->
-        <div class="bg-white rounded-xl shadow-sm border-l-4 border-red-500 p-6 hover:shadow-md transition-all duration-300">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex-1">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-red-100 rounded-xl">
-                            <span class="material-icons-round text-red-600">assignment</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-lg font-semibold text-gray-900">Proyecto Final - Sistema de Gestión</h3>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800">Urgente</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-3">Desarrollar un sistema completo de gestión de tareas con autenticación, CRUD y reportes.</p>
-                            <div class="flex flex-wrap gap-3 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-blue-600 text-sm mr-1">school</span>
-                                    Programación Web
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">person</span>
-                                    Ing. Jonatan
-                                </div>
-                                <div class="flex items-center text-red-600 font-medium">
-                                    <span class="material-icons-round text-sm mr-1">event</span>
-                                    Vence: 12/10/2025 (10 días)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4 lg:mt-0 lg:ml-4 flex gap-2">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                        <span class="material-icons-round text-sm mr-1 align-middle">upload</span>
-                        Entregar
-                    </button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                        Ver detalles
-                    </button>
+    <!-- Contenido principal de dos columnas -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Columna Izquierda -->
+    <div class="lg:col-span-2 space-y-6">
+        <!-- Lista de Tareas -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                    <span class="material-icons-round mr-2 text-red-800">list_alt</span>
+                    Todas las Tareas
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <button class="px-3 py-1.5 rounded-lg bg-red-800 text-white text-xs font-medium hover:bg-red-900 transition-colors">Todas</button>
+                    <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-xs font-medium hover:bg-gray-200 transition-colors">Pendientes</button>
+                    <button class="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-700 text-xs font-medium hover:bg-gray-200 transition-colors">Entregadas</button>
                 </div>
             </div>
-        </div>
 
-        <!-- Tarea 2 - Próxima -->
-        <div class="bg-white rounded-xl shadow-sm border-l-4 border-yellow-500 p-6 hover:shadow-md transition-all duration-300">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex-1">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-yellow-100 rounded-xl">
-                            <span class="material-icons-round text-yellow-600">description</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-lg font-semibold text-gray-900">Ensayo sobre Scrum</h3>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">Próxima</span>
+            <!-- Agrupación por Curso -->
+            <div class="space-y-6">
+                <!-- Curso: Programación Web -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3 pb-2 border-b border-gray-200">Programación Web</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-colors">
+                            <div class="p-2 bg-red-100 rounded-lg mr-4"><span class="material-icons-round text-red-800">code</span></div>
+                            <div class="flex-grow">
+                                <p class="font-semibold text-gray-800">Proyecto Final</p>
+                                <p class="text-sm text-gray-500">Docente: Ing. Jonatan</p>
                             </div>
-                            <p class="text-sm text-gray-600 mb-3">Redactar un ensayo de 5 páginas sobre la metodología Scrum y su implementación en proyectos reales.</p>
-                            <div class="flex flex-wrap gap-3 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-orange-600 text-sm mr-1">school</span>
-                                    Metodologías Ágiles
+                            <div class="flex items-center space-x-4 ml-4">
+                                <div class="text-right flex-shrink-0">
+                                    <p class="font-semibold text-red-800">En 4 días</p>
+                                    <p class="text-xs text-gray-500">12/10/2025</p>
                                 </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">person</span>
-                                    Ing. Jonatan
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-sm mr-1">event</span>
-                                    Vence: 15/10/2025 (13 días)
-                                </div>
+                                <button class="bg-red-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-900 transition-colors flex items-center">Entregar <span class="material-icons-round text-sm ml-1">upload</span></button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 lg:mt-0 lg:ml-4 flex gap-2">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                        <span class="material-icons-round text-sm mr-1 align-middle">upload</span>
-                        Entregar
-                    </button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                        Ver detalles
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Tarea 3 - Normal -->
-        <div class="bg-white rounded-xl shadow-sm border-l-4 border-blue-500 p-6 hover:shadow-md transition-all duration-300">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex-1">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-blue-100 rounded-xl">
-                            <span class="material-icons-round text-blue-600">code</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-lg font-semibold text-gray-900">Ejercicios SQL Avanzados</h3>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800">Normal</span>
+                <!-- Curso: Metodologías Ágiles -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-3 pb-2 border-b border-gray-200">Metodologías Ágiles</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-colors">
+                            <div class="p-2 bg-yellow-100 rounded-lg mr-4"><span class="material-icons-round text-yellow-800">description</span></div>
+                            <div class="flex-grow">
+                                <p class="font-semibold text-gray-800">Ensayo sobre Scrum</p>
+                                <p class="text-sm text-gray-500">Docente: Ing. Jonatan</p>
                             </div>
-                            <p class="text-sm text-gray-600 mb-3">Resolver 10 ejercicios de consultas SQL avanzadas incluyendo joins, subconsultas y funciones agregadas.</p>
-                            <div class="flex flex-wrap gap-3 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-purple-600 text-sm mr-1">school</span>
-                                    Base de Datos
+                            <div class="flex items-center space-x-4 ml-4">
+                                <div class="text-right flex-shrink-0">
+                                    <p class="font-semibold text-yellow-800">En 7 días</p>
+                                    <p class="text-xs text-gray-500">15/10/2025</p>
                                 </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">person</span>
-                                    Ing. Mario
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-sm mr-1">event</span>
-                                    Vence: 18/10/2025 (16 días)
-                                </div>
+                                <button class="bg-red-800 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-900 transition-colors flex items-center">Entregar <span class="material-icons-round text-sm ml-1">upload</span></button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mt-4 lg:mt-0 lg:ml-4 flex gap-2">
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                        <span class="material-icons-round text-sm mr-1 align-middle">upload</span>
-                        Entregar
-                    </button>
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                        Ver detalles
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarea 4 - Entregada -->
-        <div class="bg-white rounded-xl shadow-sm border-l-4 border-green-500 p-6 hover:shadow-md transition-all duration-300 opacity-75">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex-1">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-green-100 rounded-xl">
-                            <span class="material-icons-round text-green-600">check_circle</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-lg font-semibold text-gray-900">Prototipo de Interfaz Móvil</h3>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Entregada</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-3">Diseñar prototipo de interfaz para aplicación móvil usando Figma.</p>
-                            <div class="flex flex-wrap gap-3 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-indigo-600 text-sm mr-1">school</span>
-                                    Desarrollo Móvil
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">person</span>
-                                    Ing. Alcides
-                                </div>
-                                <div class="flex items-center text-green-600 font-medium">
-                                    <span class="material-icons-round text-sm mr-1">check</span>
-                                    Entregado: 28/09/2025
-                                </div>
-                                <div class="flex items-center text-green-600 font-medium">
-                                    <span class="material-icons-round text-sm mr-1">star</span>
-                                    Calificación: 18/20
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4 lg:mt-0 lg:ml-4 flex gap-2">
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                        Ver entrega
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarea 5 - Entregada y Calificada -->
-        <div class="bg-white rounded-xl shadow-sm border-l-4 border-green-500 p-6 hover:shadow-md transition-all duration-300 opacity-75">
-            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex-1">
-                    <div class="flex items-start gap-4">
-                        <div class="p-3 bg-green-100 rounded-xl">
-                            <span class="material-icons-round text-green-600">assignment_turned_in</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <h3 class="text-lg font-semibold text-gray-900">Algoritmos de Ordenamiento</h3>
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">Calificada</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-3">Implementar algoritmos de ordenamiento (Bubble Sort, Quick Sort, Merge Sort) en Python.</p>
-                            <div class="flex flex-wrap gap-3 text-sm">
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">school</span>
-                                    Algoritmos y Programación
-                                </div>
-                                <div class="flex items-center text-gray-600">
-                                    <span class="material-icons-round text-amber-600 text-sm mr-1">person</span>
-                                    Ing. Roberto
-                                </div>
-                                <div class="flex items-center text-green-600 font-medium">
-                                    <span class="material-icons-round text-sm mr-1">check</span>
-                                    Entregado: 25/09/2025
-                                </div>
-                                <div class="flex items-center text-green-600 font-bold">
-                                    <span class="material-icons-round text-sm mr-1">star</span>
-                                    Calificación: 16/20
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4 lg:mt-0 lg:ml-4 flex gap-2">
-                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
-                        Ver feedback
-                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Columna Derecha -->
+    <div class="lg:col-span-1 space-y-6">
+        <!-- Calendario -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center mb-4">
+                <span class="material-icons-round mr-2 text-red-800">calendar_today</span>
+                Calendario
+            </h2>
+            <div class="text-center mb-4">
+                <h3 class="font-semibold">Octubre 2025</h3>
+            </div>
+            <div class="grid grid-cols-7 gap-2 text-center text-sm">
+                <div class="text-gray-500 font-medium">Lu</div>
+                <div class="text-gray-500 font-medium">Ma</div>
+                <div class="text-gray-500 font-medium">Mi</div>
+                <div class="text-gray-500 font-medium">Ju</div>
+                <div class="text-gray-500 font-medium">Vi</div>
+                <div class="text-gray-500 font-medium">Sá</div>
+                <div class="text-gray-500 font-medium">Do</div>
+                
+                <div class="text-gray-400"></div><div class="text-gray-400"></div>
+                <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+                <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+                <div class="relative"><span class="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mx-auto">12</span></div>
+                <div>13</div><div>14</div>
+                <div class="relative"><span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center mx-auto">15</span></div>
+                <div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+                <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div>
+                <div>28</div><div>29</div><div>30</div><div>31</div>
+            </div>
+        </div>
+
+        <!-- Tareas Recientemente Calificadas -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center mb-4">
+                <span class="material-icons-round mr-2 text-red-800">history_edu</span>
+                Recientemente Calificadas
+            </h2>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                    <div>
+                        <p class="font-semibold text-gray-700">Prototipo de Interfaz Móvil</p>
+                        <p class="text-sm text-gray-500">Desarrollo Móvil</p>
+                    </div>
+                    <div class="text-lg font-bold text-green-600">18<span class="text-sm text-gray-500 font-normal">/20</span></div>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                    <div>
+                        <p class="font-semibold text-gray-700">Investigación sobre IA</p>
+                        <p class="text-sm text-gray-500">Inteligencia Artificial</p>
+                    </div>
+                    <div class="text-lg font-bold text-orange-500">14<span class="text-sm text-gray-500 font-normal">/20</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

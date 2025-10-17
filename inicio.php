@@ -50,7 +50,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
 </head>
 <body class="bg-gray-50 h-screen overflow-hidden">
     <div class="h-full flex flex-col">
-        <header class="bg-white border-b border-gray-200 shadow-sm w-full">
+        <header class="bg-red-800 border-b border-red-700 shadow-sm w-full">
             <div class="w-full px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16 w-full">
                     <!-- logo -->
@@ -58,39 +58,39 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                         <h1 class="text-3xl">
                             <span class="logo-sora relative">
                                 <span class="relative z-10">
-                                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-cyan-500">Core</span>
-                                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-emerald-500">Class</span>
+                                    <span class="text-white">Core</span>
+                                    <span class="text-white">Class</span>
                                 </span>
-                                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left"></span>
+                                <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left"></span>
                             </span>
                         </h1>
                     </div>
                     
                     <!-- acciones de usuario -->
                     <div class="flex items-center space-x-4">
-                        <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors" title="Notificaciones">
+                        <button class="p-2 text-gray-300 hover:text-white hover:bg-red-700 rounded-full transition-colors" title="Notificaciones">
                             <span class="material-icons-round relative">
                                 notifications_none
                                 <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
                             </span>
                         </button>
-                        <div class="hidden md:flex items-center space-x-3 border-l border-gray-200 pl-4">
+                        <div class="hidden md:flex items-center space-x-3 border-l border-red-700 pl-4">
                             <div class="text-right">
-                                <p class="text-sm font-medium text-gray-900">Mark</p>
-                                <p class="text-xs text-gray-500">Estudiante</p>
+                                <p class="text-sm font-medium text-white">Mark</p>
+                                <p class="text-xs text-gray-300">Estudiante</p>
                             </div>
                             <div class="relative group">
                                 <button class="flex items-center space-x-1 focus:outline-none">
-                                    <div class="h-9 w-9 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-medium">
+                                    <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
                                         U
                                     </div>
-                                    <span class="material-icons-round text-gray-500 text-lg">expand_more</span>
+                                    <span class="material-icons-round text-gray-300 text-lg">expand_more</span>
                                 </button>
                                 <!-- menú desplegable -->
                                 <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Mi perfil</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Configuración</a>
-                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-red-700">Mi perfil</a>
+                                    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-red-700">Configuración</a>
+                                    <div class="border-t border-red-700 my-1"></div>
                                     <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Cerrar sesión</a>
                                 </div>
                             </div>
@@ -162,34 +162,23 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 <span>Mensajes</span>
                             </a>
 
-                            <!-- Recomendaciones -->
-                            <a href="#" data-page="recomendaciones" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">notifications_none</span>
-                                <span>Recomendaciones</span>
-                            </a>
-
-                            <!-- Soporte -->
-                            <a href="#" data-page="soporte" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">help_outline</span>
-                                <span>Soporte</span>
-                            </a>
                         </div>
                     </nav>
                 </div>
                 
                 <!-- Perfil de usuario -->
-                <div class="p-4 border-t border-gray-200 mt-auto">
+                <div class="p-4 border-t border-red-700 mt-auto">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
-                            <span class="material-icons-round text-4xl text-gray-400" aria-hidden="true">account_circle</span>
+                            <span class="material-icons-round text-4xl text-gray-500" aria-hidden="true">account_circle</span>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm font-medium text-gray-900">Mark</p>
-                            <p class="text-xs text-gray-500 truncate"><?php echo $_SESSION['usuario_email']; ?></p>
+                            <p class="text-sm font-medium text-gray-800">Mark</p>
+                            <p class="text-xs text-gray-600 truncate"><?php echo $_SESSION['usuario_email']; ?></p>
                         </div>
                         <div class="ml-auto">
-                            <button class="p-1 text-gray-400 hover:text-gray-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" aria-label="Configuración de usuario">
-                                <span class="material-icons-round text-xl">settings</span>
+                            <button class="p-1 text-gray-400 hover:text-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" aria-label="Configuración de usuario">
+                                <span class="material-icons-round text-gray-500 text-xl">settings</span>
                             </button>
                         </div>
                     </div>
@@ -212,7 +201,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             // función para cargar contenido
             function loadContent(page) {
                 // mostrar un indicador de carga
-                mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div></div>';
+                mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div></div>';
 
                 fetch(`pages/${page}.php`)
                     .then(response => {
@@ -235,7 +224,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             // marcar el enlace de inicio como activo
             const defaultActiveLink = document.querySelector('a[data-page="principal"]');
             if(defaultActiveLink) {
-                defaultActiveLink.classList.add('bg-blue-600', 'text-white');
+                defaultActiveLink.classList.add('bg-red-800', 'text-white');
                 defaultActiveLink.classList.remove('text-gray-700', 'hover:bg-gray-100');
                 // cambiar el color del ícono a blanco
                 const icon = defaultActiveLink.querySelector('.material-icons-round');
@@ -253,7 +242,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
 
                     // quitar clase activa de todos los enlaces e iconos
                     navLinks.forEach(innerLink => {
-                        innerLink.classList.remove('bg-blue-600', 'text-white');
+                        innerLink.classList.remove('bg-red-800', 'text-white');
                         innerLink.classList.add('text-gray-700', 'hover:bg-gray-100');
                         // restaurar el color original de los iconos
                         const icons = innerLink.querySelectorAll('.material-icons-round');
@@ -264,7 +253,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     });
 
                     // añadir clase activa al enlace clickeado y su icono
-                    this.classList.add('bg-blue-600', 'text-white');
+                    this.classList.add('bg-red-800', 'text-white');
                     this.classList.remove('text-gray-700', 'hover:bg-gray-100');
                     // cambiar el color del ícono a blanco
                     const icon = this.querySelector('.material-icons-round');

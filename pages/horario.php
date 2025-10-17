@@ -28,328 +28,98 @@
 <body class="bg-gray-50">
     <div class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
         <!-- Encabezado de la página -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-6 text-white relative overflow-hidden">
-
-        <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full"></div>
-            <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/5 rounded-full"></div>
-            
+        <div class="bg-gradient-to-r from-red-800 to-red-900 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full opacity-50"></div>
+            <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full opacity-50"></div>
             <div class="relative z-10">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">Mark, este es tu horario semanal</h1>
-                        <p class="text-blue-100/90 mt-2 text-lg">Organiza tu semana y aprovecha cada clase.</p>
-                    </div>
-                    <div class="mt-4 md:mt-0 bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-                        <p class="text-sm font-medium flex items-center">
-                            <span class="material-icons-round mr-2 text-yellow-300">task_alt</span>
-                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 to-yellow-400">"La disciplina es el puente entre metas y logros."</span>
-                        </p>
-                    </div>
-                </div>
+                <h1 class="text-3xl font-bold">Mi Horario Semanal</h1>
+                <p class="text-red-200 mt-1">Organiza tu semana y aprovecha cada clase.</p>
             </div>
         </div>
 
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200 table-fixed">
-                <thead class="bg-blue-600 text-white">
+                <thead class="bg-red-800 text-white">
                     <tr>
-                        <th class="w-28 px-3 py-1.5 text-left text-xs font-medium uppercase tracking-wider">Hora</th>
-                        <th class="w-1/5 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider">Lunes</th>
-                        <th class="w-1/5 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider">Martes</th>
-                        <th class="w-1/5 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider">Miércoles</th>
-                        <th class="w-1/5 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider">Jueves</th>
-                        <th class="w-1/5 px-4 py-2 text-center text-xs font-medium uppercase tracking-wider">Viernes</th>
+                        <th class="w-28 px-3 py-2 text-center text-xs font-semibold uppercase tracking-wider">Hora</th>
+                        <th class="w-1/5 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider">Lunes</th>
+                        <th class="w-1/5 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider">Martes</th>
+                        <th class="w-1/5 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider">Miércoles</th>
+                        <th class="w-1/5 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider">Jueves</th>
+                        <th class="w-1/5 px-4 py-2 text-center text-xs font-semibold uppercase tracking-wider">Viernes</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <!-- Hora 1: 8:00 - 8:45 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">8:00 - 8:45</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-blue-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-laptop-code text-blue-600 mr-2"></i>
-                                <span class="font-semibold text-blue-800">Administración Web</span>
-                            </div>
-                            <p class="text-xs text-blue-600">Ing. Ydelfonso</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-purple-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-shopping-cart text-purple-600 mr-2"></i>
-                                <span class="font-semibold text-purple-800">Comercio Electrónico</span>
-                            </div>
-                            <p class="text-xs text-purple-600">Ing. Clemente</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-yellow-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-server text-yellow-600 mr-2"></i>
-                                <span class="font-semibold text-yellow-800">Arquitectura de la Información</span>
-                            </div>
-                            <p class="text-xs text-yellow-600">Ing. Mario</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">8:00 - 8:45</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">laptop_chromebook</span><span class="font-semibold text-red-800 text-sm">Administración Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Ydelfonso</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">shopping_cart</span><span class="font-semibold text-red-800 text-sm">Comercio Electrónico</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Clemente</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">source</span><span class="font-semibold text-red-800 text-sm">Arquitectura de la Información</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Mario</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
                     </tr>
 
                     <!-- Hora 2: 8:45 - 9:30 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">8:45 - 9:30</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-blue-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-laptop-code text-blue-600 mr-2"></i>
-                                <span class="font-semibold text-blue-800">Administración Web</span>
-                            </div>
-                            <p class="text-xs text-blue-600">Ing. Ydelfonso</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-purple-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-shopping-cart text-purple-600 mr-2"></i>
-                                <span class="font-semibold text-purple-800">Comercio Electrónico</span>
-                            </div>
-                            <p class="text-xs text-purple-600">Ing. Clemente</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-yellow-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-server text-yellow-600 mr-2"></i>
-                                <span class="font-semibold text-yellow-800">Arquitectura de la Información</span>
-                            </div>
-                            <p class="text-xs text-yellow-600">Ing. Mario</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">8:45 - 9:30</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">laptop_chromebook</span><span class="font-semibold text-red-800 text-sm">Administración Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Ydelfonso</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">shopping_cart</span><span class="font-semibold text-red-800 text-sm">Comercio Electrónico</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Clemente</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">source</span><span class="font-semibold text-red-800 text-sm">Arquitectura de la Información</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Mario</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
                     </tr>
 
-                    <!-- Receso corto 9:30 - 9:40 -->
+                    <!-- Receso -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">9:30 - 9:40</td>
-                        <td colspan="5" class="px-6 py-4 bg-gray-100 text-center">
-                            <div class="flex items-center justify-center">
-                                <span class="font-medium text-amber-700">Receso</span>
-                            </div>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">9:30 - 9:40</td>
+                        <td colspan="5" class="text-center"><div class="text-sm font-medium text-gray-500">Receso</div></td>
                     </tr>
 
                     <!-- Hora 3: 9:40 - 10:25 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">9:40 - 10:25</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-blue-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-laptop-code text-blue-600 mr-2"></i>
-                                <span class="font-semibold text-blue-800">Administración Web</span>
-                            </div>
-                            <p class="text-xs text-blue-600">Ing. Ydelfonso</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-purple-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-shopping-cart text-purple-600 mr-2"></i>
-                                <span class="font-semibold text-purple-800">Comercio Electrónico</span>
-                            </div>
-                            <p class="text-xs text-purple-600">Ing. Clemente</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-yellow-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-server text-yellow-600 mr-2"></i>
-                                <span class="font-semibold text-yellow-800">Arquitectura de la Información</span>
-                            </div>
-                            <p class="text-xs text-yellow-600">Ing. Mario</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">9:40 - 10:25</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">laptop_chromebook</span><span class="font-semibold text-red-800 text-sm">Administración Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Ydelfonso</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">shopping_cart</span><span class="font-semibold text-red-800 text-sm">Comercio Electrónico</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Clemente</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">source</span><span class="font-semibold text-red-800 text-sm">Arquitectura de la Información</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Mario</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
                     </tr>
 
                     <!-- Hora 4: 10:25 - 11:10 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">10:25 - 11:10</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-orange-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-tasks text-orange-600 mr-2"></i>
-                                <span class="font-semibold text-orange-800">Metodologías Ágiles</span>
-                            </div>
-                            <p class="text-xs text-orange-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-pink-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-language text-pink-600 mr-2"></i>
-                                <span class="font-semibold text-pink-800">Comprensión y Redacción de Inglés</span>
-                            </div>
-                            <p class="text-xs text-pink-600">Ing. Julieta</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">10:25 - 11:10</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">groups</span><span class="font-semibold text-red-800 text-sm">Metodologías Ágiles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">translate</span><span class="font-semibold text-red-800 text-sm">Comprensión de Inglés</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Julieta</p></div></td>
                     </tr>
 
-                    <!-- Receso largo 11:10 - 11:30 -->
+                    <!-- Receso -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">11:10 - 11:30</td>
-                        <td colspan="5" class="px-6 py-4 bg-amber-50 text-center">
-                            <div class="flex items-center justify-center">
-                                <span class="font-medium text-amber-700">Receso</span>
-                            </div>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">11:10 - 11:30</td>
+                        <td colspan="5" class="text-center"><div class="text-sm font-medium text-gray-500">Receso</div></td>
                     </tr>
 
                     <!-- Hora 5: 11:30 - 12:15 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">11:30 - 12:15</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-orange-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-tasks text-orange-600 mr-2"></i>
-                                <span class="font-semibold text-orange-800">Metodologías Ágiles</span>
-                            </div>
-                            <p class="text-xs text-orange-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-pink-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-language text-pink-600 mr-2"></i>
-                                <span class="font-semibold text-pink-800">Comprensión y Redacción de Inglés</span>
-                            </div>
-                            <p class="text-xs text-pink-600">Ing. Julieta</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">11:30 - 12:15</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">groups</span><span class="font-semibold text-red-800 text-sm">Metodologías Ágiles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">translate</span><span class="font-semibold text-red-800 text-sm">Comprensión de Inglés</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Julieta</p></div></td>
                     </tr>
 
                     <!-- Hora 6: 12:15 - 13:00 -->
                     <tr class="hora-fila">
-                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-900 text-center border-r">12:15 - 13:00</td>
-                        <!-- Lunes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-orange-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-tasks text-orange-600 mr-2"></i>
-                                <span class="font-semibold text-orange-800">Metodologías Ágiles</span>
-                            </div>
-                            <p class="text-xs text-orange-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Martes -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Miércoles -->
-                        <td class="whitespace-normal border-r bloque-horario bg-green-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-code text-green-600 mr-2"></i>
-                                <span class="font-semibold text-green-800">Programación Web</span>
-                            </div>
-                            <p class="text-xs text-green-600">Ing. Jonatan</p>
-                        </td>
-                        <!-- Jueves -->
-                        <td class="whitespace-normal border-r bloque-horario bg-indigo-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-mobile-alt text-indigo-600 mr-2"></i>
-                                <span class="font-semibold text-indigo-800">Desarrollo de Aplicaciones Móviles</span>
-                            </div>
-                            <p class="text-xs text-indigo-600">Ing. Alcides</p>
-                        </td>
-                        <!-- Viernes -->
-                        <td class="whitespace-normal bloque-horario bg-pink-100 rounded-lg">
-                            <div class="flex items-center mb-0">
-                                <i class="fas fa-language text-pink-600 mr-2"></i>
-                                <span class="font-semibold text-pink-800">Comprensión y Redacción de Inglés</span>
-                            </div>
-                            <p class="text-xs text-pink-600">Ing. Julieta</p>
-                        </td>
+                        <td class="px-3 py-1.5 whitespace-nowrap text-xs font-medium text-gray-600 text-center border-r">12:15 - 13:00</td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">groups</span><span class="font-semibold text-red-800 text-sm">Metodologías Ágiles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">code</span><span class="font-semibold text-red-800 text-sm">Programación Web</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Jonatan</p></div></td>
+                        <td class="whitespace-normal border-r p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">phone_iphone</span><span class="font-semibold text-red-800 text-sm">Aplicaciones Móviles</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Alcides</p></div></td>
+                        <td class="whitespace-normal p-1"><div class="bloque-horario bg-red-50 border border-red-200 rounded-lg p-2 h-full flex flex-col justify-center"><div class="flex items-center"><span class="material-icons-round text-red-700 mr-2 text-base">translate</span><span class="font-semibold text-red-800 text-sm">Comprensión de Inglés</span></div><p class="text-xs text-red-600 mt-1 ml-6">Ing. Julieta</p></div></td>
                     </tr>
                 </tbody>
             </table>
