@@ -14,6 +14,5 @@ if ($conn->connect_errno) {
     die("No se pudo conectar a la base de datos.");
 }
 
-// Establecer conjunto de caracteres para evitar errores con tildes o ñ
 $conn->set_charset("utf8mb4");
 ?>
