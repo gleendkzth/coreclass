@@ -5,7 +5,7 @@ session_start();
 // verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado'] !== true) {
     // si no hay sesión activa, redirigir al login
-    header('Location: login.php');
+    header('Location: ../views/auth/login.php');
     exit();
 }
 ?>
@@ -18,7 +18,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="icon" href="assets/logo.png" type="image/png">
+    <link rel="icon" href="../../public/img/logo.png" type="image/png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -68,31 +68,78 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     
                     <!-- acciones de usuario -->
                     <div class="flex items-center space-x-4">
-                        <button class="p-2 text-gray-300 hover:text-white hover:bg-red-700 rounded-full transition-colors" title="Notificaciones">
-                            <span class="material-icons-round relative">
-                                notifications_none
-                                <span class="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
-                            </span>
-                        </button>
+                        <div class="relative">
+                            <button id="notification-button" class="p-2 text-gray-300 hover:text-white hover:bg-red-700 rounded-full transition-colors" title="Notificaciones">
+                                <span class="material-icons-round relative">
+                                    notifications_none
+                                </span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-20">
+                                <div class="py-2 px-4 text-sm text-gray-700 font-semibold border-b">
+                                    Notificaciones
+                                </div>
+                                <div class="divide-y divide-gray-100">
+                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
+                                        <p class="font-semibold">Nueva calificación</p>
+                                        <p class="text-xs text-gray-500">Tu nota en Matemáticas ha sido actualizada.</p>
+                                    </a>
+                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
+                                        <p class="font-semibold">Recordatorio de tarea</p>
+                                        <p class="text-xs text-gray-500">La tarea de Historia vence mañana.</p>
+                                    </a>
+                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
+                                        <p class="font-semibold">Anuncio del curso</p>
+                                        <p class="text-xs text-gray-500">Se ha publicado nuevo material en la sección de...</p>
+                                    </a>
+                                </div>
+                                <a href="#" class="block bg-gray-50 text-center text-sm text-red-600 font-semibold py-2 hover:bg-gray-100">
+                                    Ver todas las notificaciones
+                                </a>
+                            </div>
+                        </div>
                         <div class="hidden md:flex items-center space-x-3 border-l border-red-700 pl-4">
                             <div class="text-right">
-                                <p class="text-sm font-medium text-white">Mark</p>
+                                <p class="text-sm font-medium text-white"><?php echo $_SESSION['nombre']; ?> <?php echo $_SESSION['apellido']; ?></p>
                                 <p class="text-xs text-gray-300">Estudiante</p>
                             </div>
                             <div class="relative group">
-                                <button class="flex items-center space-x-1 focus:outline-none">
+                                <button id="user-menu-button" class="flex items-center space-x-1 focus:outline-none">
                                     <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
-                                        U
+                                        <?php echo strtoupper(substr($_SESSION['nombre'], 0, 1)); ?>
                                     </div>
-                                    <span class="material-icons-round text-gray-300 text-lg">expand_more</span>
                                 </button>
-                                <!-- menú desplegable -->
-                                <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                                    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-red-700">Mi perfil</a>
-                                    <a href="#" class="block px-4 py-2 text-sm text-white hover:bg-red-700">Configuración</a>
-                                    <div class="border-t border-red-700 my-1"></div>
-                                    <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Cerrar sesión</a>
+                                <!-- Dropdown menu -->
+                                <div id="user-menu-dropdown" 
+                                     class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 transition-all duration-200 ease-out transform origin-top-right scale-95 opacity-0"
+                                     data-transition-enter="transition ease-out duration-100"
+                                     data-transition-enter-start="transform opacity-0 scale-95"
+                                     data-transition-enter-end="transform opacity-100 scale-100"
+                                     data-transition-leave="transition ease-in duration-75"
+                                     data-transition-leave-start="transform opacity-100 scale-100"
+                                     data-transition-leave-end="transform opacity-0 scale-95">
+                                    <div class="px-4 py-3 border-b border-gray-200">
+                                        <p class="text-sm font-semibold text-gray-800 truncate">
+                                            <?php echo htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']); ?>
+                                        </p>
+                                        <p class="text-xs text-gray-500 truncate">
+                                            Estudiante
+                                        </p>
+                                    </div>
+                                    <div class="py-1">
+                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150">
+                                            <span class="material-icons-round text-base mr-3">account_circle</span>
+                                            Mi Cuenta
+                                        </a>
+                                    </div>
+                                    <div class="py-1 border-t border-gray-200">
+                                        <a href="#" onclick="confirmLogout()" class="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150">
+                                            <span class="material-icons-round text-base mr-3">logout</span>
+                                            Cerrar Sesión
+                                        </a>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -109,15 +156,15 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Inicio -->
-                            <a href="#" data-page="principal" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
+                            <a href="#" data-page="inicio" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">home</span>
                                 <span>Inicio</span>
                             </a>
 
-                            <!-- Mis Cursos -->
+                            <!-- Cursos -->
                             <a href="#" data-page="cursos" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">school</span>
-                                <span>Mis Cursos</span>
+                                <span>Cursos</span>
                             </a>
 
                             <!-- Horario -->
@@ -156,33 +203,10 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 <span>Asistencia</span>
                             </a>
 
-                            <!-- Mensajes -->
-                            <a href="#" data-page="mensajes" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">chat_bubble_outline</span>
-                                <span>Mensajes</span>
-                            </a>
-
                         </div>
                     </nav>
                 </div>
-                
-                <!-- Perfil de usuario -->
-                <div class="p-4 border-t border-red-700 mt-auto">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <span class="material-icons-round text-4xl text-gray-500" aria-hidden="true">account_circle</span>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm font-medium text-gray-800">Mark</p>
-                            <p class="text-xs text-gray-600 truncate"><?php echo $_SESSION['usuario_email']; ?></p>
-                        </div>
-                        <div class="ml-auto">
-                            <button class="p-1 text-gray-400 hover:text-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" aria-label="Configuración de usuario">
-                                <span class="material-icons-round text-gray-500 text-xl">settings</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+               
             </aside>
 
             <!-- Contenido principal -->
@@ -203,7 +227,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                 // mostrar un indicador de carga
                 mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div></div>';
 
-                fetch(`pages/${page}.php`)
+                fetch(`${page}.php`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('La página no pudo ser cargada.');
@@ -220,9 +244,9 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             }
 
             // cargar la página de inicio por defecto
-            loadContent('principal');
+            loadContent('inicio');
             // marcar el enlace de inicio como activo
-            const defaultActiveLink = document.querySelector('a[data-page="principal"]');
+            const defaultActiveLink = document.querySelector('a[data-page="inicio"]');
             if(defaultActiveLink) {
                 defaultActiveLink.classList.add('bg-red-800', 'text-white');
                 defaultActiveLink.classList.remove('text-gray-700', 'hover:bg-gray-100');
@@ -291,7 +315,72 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             
             handleResize();
             window.addEventListener('resize', handleResize);
+
+            // gestión global de dropdowns para que solo uno esté abierto a la vez
+            const dropdowns = [];
+
+            function setupDropdown(buttonId, dropdownId) {
+                const button = document.getElementById(buttonId);
+                const dropdown = document.getElementById(dropdownId);
+                const dropdownState = {
+                    id: dropdownId,
+                    button: button,
+                    dropdown: dropdown,
+                    isOpen: false,
+                    toggle(show) {
+                        if (this.isOpen === show) return;
+
+                        if (show) {
+                            // cerrar otros dropdowns abiertos
+                            dropdowns.forEach(d => {
+                                if (d.id !== this.id && d.isOpen) {
+                                    d.toggle(false);
+                                }
+                            });
+                            this.dropdown.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                this.dropdown.classList.remove('opacity-0', 'scale-95');
+                                this.dropdown.classList.add('opacity-100', 'scale-100');
+                            });
+                        } else {
+                            this.dropdown.classList.remove('opacity-100', 'scale-100');
+                            this.dropdown.classList.add('opacity-0', 'scale-95');
+                            setTimeout(() => {
+                                this.dropdown.classList.add('hidden');
+                            }, 150);
+                        }
+                        this.isOpen = show;
+                    }
+                };
+
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    dropdownState.toggle(!dropdownState.isOpen);
+                });
+
+                dropdowns.push(dropdownState);
+            }
+
+            // cerrar todos los dropdowns si se hace clic fuera
+            window.addEventListener('click', () => {
+                dropdowns.forEach(d => {
+                    if (d.isOpen) {
+                        d.toggle(false);
+                    }
+                });
+            });
+
+            // inicializar los dropdowns
+            setupDropdown('notification-button', 'notification-dropdown');
+            setupDropdown('user-menu-button', 'user-menu-dropdown');
         });
     </script>
+<script>
+    function confirmLogout() {
+        if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
+            window.location.href = '../auth/logout.php';
+        }
+    }
+</script>
 </body>
 </html>

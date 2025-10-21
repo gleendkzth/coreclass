@@ -1,10 +1,19 @@
+<?php
+session_start();
+
+// verificar si el usuario está autenticado y tiene el rol de estudiante
+if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'estudiante') {
+    header('Location: ../auth/login.php');
+    exit;
+}
+?>
 <div class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
     <!-- Sección de bienvenida -->
     <div class="bg-gradient-to-r from-red-800 to-red-900 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
         <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full opacity-50"></div>
         <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full opacity-50"></div>
         <div class="relative z-10">
-            <h1 class="text-3xl font-bold">¡Hola, Mark!</h1>
+            <h1 class="text-3xl font-bold">¡Hola, <?php echo $_SESSION['nombre']; ?>!</h1>
             <p class="text-red-200 mt-1">Bienvenido a tu panel. Aquí tienes un resumen de lo más importante.</p>
         </div>
     </div>
