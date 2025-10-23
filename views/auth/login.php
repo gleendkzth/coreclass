@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../config/conexion.php"; // Ajusta la ruta según tu estructura
+require_once "../../config/conexion.php";
 
 // Si ya está logueado, redirige según rol
 if (isset($_SESSION['rol'])) {
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contrasena = $_POST['password'] ?? '';
 
     if (!empty($correo) && !empty($contrasena)) {
-        // se recomienda usar sentencias preparadas para prevenir inyección sql
-        $sql = "SELECT * FROM Usuario WHERE correo = ? AND contrasena = ?"; // la contraseña no está hasheada
+       
+        $sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $correo, $contrasena);
         $stmt->execute();
@@ -31,10 +31,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($row = $resultado->fetch_assoc()) {
             $_SESSION['usuario_autenticado'] = true;
+
+            // guardar explícitamente cada dato del usuario en la sesión
             $_SESSION['id_usuario'] = $row['id_usuario'];
-            $_SESSION['nombre'] = $row['nombre'];
-            $_SESSION['apellido'] = $row['apellido'];
+            $_SESSION['dni'] = $row['dni'];
+            $_SESSION['primer_nombre'] = $row['primer_nombre'];
+            $_SESSION['segundo_nombre'] = $row['segundo_nombre'];
+            $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
+            $_SESSION['apellido_materno'] = $row['apellido_materno'];
+            $_SESSION['usuario'] = $row['usuario'];
+            $_SESSION['correo'] = $row['correo'];
+            $_SESSION['telefono'] = $row['telefono'];
             $_SESSION['rol'] = $row['rol'];
+            $_SESSION['estado'] = $row['estado'];
+            $_SESSION['fecha_registro'] = $row['fecha_registro'];
+
+            //nombre completo
+            $_SESSION['nombre_completo'] = trim($row['primer_nombre'] . ' ' . $row['segundo_nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
 
             $redirect_map = [
                 'administrador' => '../administrador/panel_administrador.php',

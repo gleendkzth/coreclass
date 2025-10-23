@@ -13,7 +13,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'estudiante
         <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full opacity-50"></div>
         <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/10 rounded-full opacity-50"></div>
         <div class="relative z-10">
-            <h1 class="text-3xl font-bold">¡Hola, <?php echo $_SESSION['nombre']; ?>!</h1>
+            <h1 class="text-3xl font-bold">¡Hola, <?php echo $_SESSION['primer_nombre']; ?>!</h1>
             <p class="text-red-200 mt-1">Bienvenido a tu panel. Aquí tienes un resumen de lo más importante.</p>
         </div>
     </div>

@@ -71,13 +71,13 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                         
                         <div class="hidden md:flex items-center space-x-3 border-red-700 pl-4">
                             <div class="text-right">
-                                <p class="text-sm font-medium text-white"><?php echo htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']); ?></p>
+                                <p class="text-sm font-medium text-white"><?php echo htmlspecialchars($_SESSION['primer_nombre'] . ' ' . $_SESSION['apellido_paterno']); ?></p>
                                 <p class="text-xs text-gray-300">Administrador</p>
                             </div>
                             <div class="relative group">
                                 <button id="user-menu-button" class="flex items-center space-x-1 focus:outline-none">
                                     <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
-                                        <?php echo strtoupper(substr($_SESSION['nombre'], 0, 1)); ?>
+                                        <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
                                     </div>
                                 </button>
                                 <!-- Dropdown menu de usuario -->
@@ -85,7 +85,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                                      class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 transition-all duration-200 ease-out transform origin-top-right scale-95 opacity-0">
                                     <div class="px-4 py-3 border-b border-gray-200">
                                         <p class="text-sm font-semibold text-gray-800 truncate">
-                                            <?php echo htmlspecialchars($_SESSION['nombre'] . ' ' . $_SESSION['apellido']); ?>
+                                            <?php echo htmlspecialchars($_SESSION['primer_nombre'] . ' ' . $_SESSION['segundo_nombre'] . ' ' . $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno']); ?>
                                         </p>
                                         <p class="text-xs text-gray-500 truncate">
                                             Administrador
