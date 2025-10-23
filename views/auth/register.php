@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'El formato del correo electrónico no es válido.';
     } else {
         // verificar si el correo ya existe
-        $sql_check = "SELECT id_usuario FROM Usuario WHERE correo = ?";
+        $sql_check = "SELECT id_usuario FROM usuario WHERE correo = ?";
         $stmt_check = $conn->prepare($sql_check);
         $stmt_check->bind_param('s', $correo);
         $stmt_check->execute();
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $rol = 'estudiante'; // rol por defecto para auto-registro
 
             // insertar nuevo usuario
-            $sql_insert = "INSERT INTO Usuario (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)";
+            $sql_insert = "INSERT INTO usuario (primer_nombre, apellido_paterno, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)";
             $stmt_insert = $conn->prepare($sql_insert);
             $stmt_insert->bind_param('sssss', $nombre, $apellido, $correo, $contrasena, $rol);
 

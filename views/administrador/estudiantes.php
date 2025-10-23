@@ -17,7 +17,7 @@ $error = null;
 $success = null;
 
 // Obtener programas para los select del formulario
-$programas = $conn->query("SELECT * FROM ProgramaEstudio ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
+$programas = $conn->query("SELECT * FROM programa_estudio ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $_POST['nombre'] ?? '';
@@ -36,31 +36,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->begin_transaction();
                 try {
                     // 1. Verificar correos y códigos duplicados
-                    $stmt_check = $conn->prepare("SELECT id_usuario FROM Usuario WHERE correo = ?");
+                    $stmt_check = $conn->prepare("SELECT id_usuario FROM usuario WHERE correo = ?");
                     $stmt_check->bind_param('s', $correo);
                     $stmt_check->execute();
                     if ($stmt_check->get_result()->num_rows > 0) throw new Exception('El correo electrónico ya está registrado.');
 
-                    $stmt_check_code = $conn->prepare("SELECT id_estudiante FROM Estudiante WHERE codigo_estudiante = ?");
+                    $stmt_check_code = $conn->prepare("SELECT id_estudiante FROM estudiante WHERE codigo_estudiante = ?");
                     $stmt_check_code->bind_param('s', $codigo_estudiante);
                     $stmt_check_code->execute();
                     if ($stmt_check_code->get_result()->num_rows > 0) throw new Exception('El código de estudiante ya existe.');
 
                     // 2. Crear el Usuario
                     $rol = 'estudiante';
-                    $stmt_user = $conn->prepare("INSERT INTO Usuario (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)");
+                    $stmt_user = $conn->prepare("INSERT INTO usuario (primer_nombre, apellido_paterno, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)");
                     $stmt_user->bind_param('sssss', $nombre, $apellido, $correo, $contrasena, $rol);
                     $stmt_user->execute();
                     $id_usuario_nuevo = $conn->insert_id;
 
                     // 3. Crear el Estudiante
-                    $stmt_est = $conn->prepare("INSERT INTO Estudiante (id_usuario, codigo_estudiante, fecha_ingreso) VALUES (?, ?, ?)");
+                    $stmt_est = $conn->prepare("INSERT INTO estudiante (id_usuario, codigo_estudiante, fecha_ingreso) VALUES (?, ?, ?)");
                     $stmt_est->bind_param('iss', $id_usuario_nuevo, $codigo_estudiante, $fecha_ingreso);
                     $stmt_est->execute();
                     $id_estudiante_nuevo = $conn->insert_id;
 
                     // 4. Crear la Matrícula
-                    $stmt_mat = $conn->prepare("INSERT INTO Matricula (id_estudiante, id_programa, semestre) VALUES (?, ?, ?)");
+                    $stmt_mat = $conn->prepare("INSERT INTO matricula (id_estudiante, id_programa, semestre) VALUES (?, ?, ?)");
                     $stmt_mat->bind_param('iis', $id_estudiante_nuevo, $id_programa, $semestre);
                     $stmt_mat->execute();
 
@@ -80,17 +80,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->begin_transaction();
                 try {
                     // 1. Actualizar Usuario
-                    $stmt_user = $conn->prepare("UPDATE Usuario SET nombre = ?, apellido = ?, correo = ? WHERE id_usuario = ?");
+                    $stmt_user = $conn->prepare("UPDATE usuario SET primer_nombre = ?, apellido_paterno = ?, correo = ? WHERE id_usuario = ?");
                     $stmt_user->bind_param('sssi', $nombre, $apellido, $correo, $id_usuario);
                     $stmt_user->execute();
 
                     // 2. Actualizar Estudiante
-                    $stmt_est = $conn->prepare("UPDATE Estudiante SET codigo_estudiante = ?, fecha_ingreso = ? WHERE id_estudiante = ?");
+                    $stmt_est = $conn->prepare("UPDATE estudiante SET codigo_estudiante = ?, fecha_ingreso = ? WHERE id_estudiante = ?");
                     $stmt_est->bind_param('ssi', $codigo_estudiante, $fecha_ingreso, $id_estudiante);
                     $stmt_est->execute();
 
                     // 3. Actualizar Matrícula (UPSERT)
-                    $stmt_mat = $conn->prepare("INSERT INTO Matricula (id_estudiante, id_programa, semestre) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE id_programa = VALUES(id_programa), semestre = VALUES(semestre)");
+                    $stmt_mat = $conn->prepare("INSERT INTO matricula (id_estudiante, id_programa, semestre) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE id_programa = VALUES(id_programa), semestre = VALUES(semestre)");
                     $stmt_mat->bind_param('iis', $id_estudiante, $id_programa, $semestre);
                     $stmt_mat->execute();
 
@@ -110,13 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Obtener lista de estudiantes con su matrícula principal
 $sql_select = "
     SELECT 
-        u.id_usuario, u.nombre, u.apellido, u.correo, 
+        u.id_usuario, u.primer_nombre, u.apellido_paterno, u.correo, 
         e.codigo_estudiante, e.fecha_ingreso, 
         p.nombre as nombre_programa, m.semestre, m.estado as estado_matricula
-    FROM Usuario u
-    JOIN Estudiante e ON u.id_usuario = e.id_usuario
-    LEFT JOIN Matricula m ON e.id_estudiante = m.id_estudiante
-    LEFT JOIN ProgramaEstudio p ON m.id_programa = p.id_programa
+    FROM usuario u
+    JOIN estudiante e ON u.id_usuario = e.id_usuario
+    LEFT JOIN matricula m ON e.id_estudiante = m.id_estudiante
+    LEFT JOIN programa_estudio p ON m.id_programa = p.id_programa
     WHERE u.rol = 'estudiante'
     GROUP BY u.id_usuario
     ORDER BY u.apellido, u.nombre ASC
@@ -128,9 +128,9 @@ $estudiante_a_editar = null;
 if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     $sql_edit = "
         SELECT u.*, e.id_estudiante, e.codigo_estudiante, e.fecha_ingreso, m.id_programa, m.semestre
-        FROM Usuario u 
-        JOIN Estudiante e ON u.id_usuario = e.id_usuario
-        LEFT JOIN Matricula m ON e.id_estudiante = m.id_estudiante
+        FROM usuario u 
+        JOIN estudiante e ON u.id_usuario = e.id_usuario
+        LEFT JOIN matricula m ON e.id_estudiante = m.id_estudiante
         WHERE u.id_usuario = ?
     ";
     $stmt_edit = $conn->prepare($sql_edit);
@@ -158,8 +158,8 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
             <?php endif; ?>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                <input type="text" name="nombre" placeholder="Nombre" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['nombre'] ?? ''); ?>">
-                <input type="text" name="apellido" placeholder="Apellido" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['apellido'] ?? ''); ?>">
+                <input type="text" name="nombre" placeholder="Nombre" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['primer_nombre'] ?? ''); ?>">
+                <input type="text" name="apellido" placeholder="Apellido" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['apellido_paterno'] ?? ''); ?>">
                 <input type="email" name="correo" placeholder="Correo Electrónico" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['correo'] ?? ''); ?>">
                 <input type="text" name="codigo_estudiante" placeholder="Código de Estudiante" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['codigo_estudiante'] ?? ''); ?>">
                 <input type="date" name="fecha_ingreso" placeholder="Fecha de Ingreso" class="w-full p-2 border rounded" required value="<?php echo htmlspecialchars($estudiante_a_editar['fecha_ingreso'] ?? ''); ?>">
@@ -210,7 +210,7 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
                         <tr><td colspan="7" class="p-4 text-center text-gray-500">No hay estudiantes registrados.</td></tr>
                     <?php else: foreach ($estudiantes as $est): ?>
                         <tr>
-                            <td class="p-2"><?php echo htmlspecialchars($est['apellido'] . ', ' . $est['nombre']); ?></td>
+                            <td class="p-2"><?php echo htmlspecialchars($est['apellido_paterno'] . ', ' . $est['primer_nombre']); ?></td>
                             <td class="p-2"><?php echo htmlspecialchars($est['codigo_estudiante']); ?></td>
                             <td class="p-2"><?php echo htmlspecialchars($est['correo']); ?></td>
                             <td class="p-2"><?php echo htmlspecialchars($est['nombre_programa']); ?></td>

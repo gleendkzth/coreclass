@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($nombre) && !empty($correo) && !empty($contrasena)) {
                 $conn->begin_transaction();
                 try {
-                    $sql_check = "SELECT id_usuario FROM Usuario WHERE correo = ?";
+                    $sql_check = "SELECT id_usuario FROM usuario WHERE correo = ?";
                     $stmt_check = $conn->prepare($sql_check);
                     $stmt_check->bind_param('s', $correo);
                     $stmt_check->execute();
@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
 
                     $rol = 'docente';
-                    $sql_user = "INSERT INTO Usuario (nombre, apellido, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)";
+                    $sql_user = "INSERT INTO usuario (primer_nombre, apellido_paterno, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)";
                     $stmt_user = $conn->prepare($sql_user);
                     $stmt_user->bind_param('sssss', $nombre, $apellido, $correo, $contrasena, $rol);
                     $stmt_user->execute();
                     $nuevo_id_usuario = $conn->insert_id;
 
-                    $sql_docente = "INSERT INTO Docente (id_usuario, especialidad, grado_academico) VALUES (?, ?, ?)";
+                    $sql_docente = "INSERT INTO docente (id_usuario, especialidad, grado_academico) VALUES (?, ?, ?)";
                     $stmt_docente = $conn->prepare($sql_docente);
                     $stmt_docente->bind_param('iss', $nuevo_id_usuario, $especialidad, $grado_academico);
                     $stmt_docente->execute();
@@ -66,12 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($nombre) && !empty($correo) && !empty($id_usuario)) {
                 $conn->begin_transaction();
                 try {
-                    $sql_user = "UPDATE Usuario SET nombre = ?, apellido = ?, correo = ? WHERE id_usuario = ?";
+                    $sql_user = "UPDATE usuario SET primer_nombre = ?, apellido_paterno = ?, correo = ? WHERE id_usuario = ?";
                     $stmt_user = $conn->prepare($sql_user);
                     $stmt_user->bind_param('sssi', $nombre, $apellido, $correo, $id_usuario);
                     $stmt_user->execute();
 
-                    $sql_docente = "INSERT INTO Docente (id_usuario, especialidad, grado_academico) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE especialidad = VALUES(especialidad), grado_academico = VALUES(grado_academico)";
+                    $sql_docente = "INSERT INTO docente (id_usuario, especialidad, grado_academico) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE especialidad = VALUES(especialidad), grado_academico = VALUES(grado_academico)";
                     $stmt_docente = $conn->prepare($sql_docente);
                     $stmt_docente->bind_param('iss', $id_usuario, $especialidad, $grado_academico);
                     $stmt_docente->execute();
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'eliminar':
             if (!empty($id_usuario)) {
-                $sql = "DELETE FROM Usuario WHERE id_usuario = ? AND rol = 'docente'";
+                $sql = "DELETE FROM usuario WHERE id_usuario = ? AND rol = 'docente'";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('i', $id_usuario);
                 if ($stmt->execute()) {
@@ -104,9 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Obtener todos los docentes (JOIN de Usuario y Docente)
 $sql_select = "
-    SELECT u.id_usuario, u.nombre, u.apellido, u.correo, d.especialidad, d.grado_academico
-    FROM Usuario u
-    JOIN Docente d ON u.id_usuario = d.id_usuario
+    SELECT u.id_usuario, u.primer_nombre, u.apellido_paterno, u.correo, d.especialidad, d.grado_academico
+    FROM usuario u
+    JOIN docente d ON u.id_usuario = d.id_usuario
     WHERE u.rol = 'docente'
     ORDER BY u.apellido, u.nombre ASC
 ";
@@ -117,9 +117,9 @@ $docentes = $resultado->fetch_all(MYSQLI_ASSOC);
 $docente_a_editar = null;
 if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     $sql_edit = "
-        SELECT u.id_usuario, u.nombre, u.apellido, u.correo, d.especialidad, d.grado_academico
-        FROM Usuario u
-        LEFT JOIN Docente d ON u.id_usuario = d.id_usuario
+        SELECT u.id_usuario, u.primer_nombre, u.apellido_paterno, u.correo, d.especialidad, d.grado_academico
+        FROM usuario u
+        LEFT JOIN docente d ON u.id_usuario = d.id_usuario
         WHERE u.id_usuario = ? AND u.rol = 'docente'
     ";
     $stmt_edit = $conn->prepare($sql_edit);
@@ -156,11 +156,11 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($docente_a_editar['nombre'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($docente_a_editar['primer_nombre'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div>
                     <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
-                    <input type="text" name="apellido" id="apellido" value="<?php echo htmlspecialchars($docente_a_editar['apellido'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    <input type="text" name="apellido" id="apellido" value="<?php echo htmlspecialchars($docente_a_editar['apellido_paterno'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div>
                     <label for="correo" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
@@ -215,7 +215,7 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
                     <?php else: ?>
                         <?php foreach ($docentes as $docente): ?>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars($docente['apellido'] . ', ' . $docente['nombre']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars($docente['apellido_paterno'] . ', ' . $docente['primer_nombre']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['correo']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['especialidad'] ?? 'N/A'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['grado_academico'] ?? 'N/A'); ?></td>

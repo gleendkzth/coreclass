@@ -16,7 +16,7 @@ $total_docentes = 0;
 $total_programas = 5; // basado en tu descripción, se puede hacer dinámico después
 
 // consulta para obtener el número de usuarios por rol
-$sql_usuarios = "SELECT rol, COUNT(*) as total FROM Usuario GROUP BY rol";
+$sql_usuarios = "SELECT rol, COUNT(*) as total FROM usuario GROUP BY rol";
 $resultado_usuarios = $conn->query($sql_usuarios);
 
 $usuarios_por_rol = [
