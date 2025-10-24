@@ -16,65 +16,78 @@ $id_curso = $_POST['id_curso'] ?? $_GET['id_curso'] ?? null;
 $error = null;
 $success = null;
 
-// Obtener listas para los selects del formulario
-$programas = $conn->query("SELECT id_programa, nombre FROM ProgramaEstudio ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
-$docentes = $conn->query("SELECT d.id_docente, u.nombre, u.apellido FROM Docente d JOIN Usuario u ON d.id_usuario = u.id_usuario ORDER BY u.apellido")->fetch_all(MYSQLI_ASSOC);
+// obtener listas para los selects del formulario
+$programas = $conn->query("SELECT id_programa, nombre FROM programa_estudio ORDER BY nombre")->fetch_all(MYSQLI_ASSOC);
+$docentes = $conn->query("SELECT d.id_docente, u.primer_nombre, u.apellido_paterno FROM docente d JOIN usuario u ON d.id_usuario = u.id_usuario ORDER BY u.apellido_paterno")->fetch_all(MYSQLI_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_programa = $_POST['id_programa'] ?? null;
-    $id_docente = $_POST['id_docente'] ?? null;
+    // asegurar que el id_docente sea null si está vacío, para evitar problemas con la clave foránea
+    $id_docente = !empty($_POST['id_docente']) ? $_POST['id_docente'] : null;
     $nombre = $_POST['nombre'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
     $creditos = $_POST['creditos'] ?? 0;
     $semestre = $_POST['semestre'] ?? '';
+    $fecha_inicio = !empty($_POST['fecha_inicio']) ? $_POST['fecha_inicio'] : null;
+    $fecha_fin = !empty($_POST['fecha_fin']) ? $_POST['fecha_fin'] : null;
 
     switch ($accion) {
         case 'crear':
             if (!empty($nombre) && !empty($id_programa) && !empty($semestre)) {
-                $stmt = $conn->prepare("INSERT INTO Curso (id_programa, id_docente, nombre, creditos, semestre) VALUES (?, ?, ?, ?, ?)");
-                $stmt->bind_param('iisss', $id_programa, $id_docente, $nombre, $creditos, $semestre);
-                if ($stmt->execute()) $success = 'Curso creado exitosamente.';
-                else $error = 'Error al crear el curso.';
+                $stmt = $conn->prepare("INSERT INTO curso (id_programa, id_docente, nombre, descripcion, creditos, semestre, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param('iississs', $id_programa, $id_docente, $nombre, $descripcion, $creditos, $semestre, $fecha_inicio, $fecha_fin);
+                if ($stmt->execute()) {
+                    $success = 'Curso creado exitosamente.';
+                } else {
+                    $error = 'Error al crear el curso: ' . $stmt->error;
+                }
             } else {
                 $error = 'Nombre, programa y semestre son obligatorios.';
             }
             break;
         case 'editar':
             if (!empty($id_curso) && !empty($nombre)) {
-                $stmt = $conn->prepare("UPDATE Curso SET id_programa = ?, id_docente = ?, nombre = ?, creditos = ?, semestre = ? WHERE id_curso = ?");
-                $stmt->bind_param('iisssi', $id_programa, $id_docente, $nombre, $creditos, $semestre, $id_curso);
-                if ($stmt->execute()) $success = 'Curso actualizado exitosamente.';
-                else $error = 'Error al actualizar el curso.';
+                $stmt = $conn->prepare("UPDATE curso SET id_programa = ?, id_docente = ?, nombre = ?, descripcion = ?, creditos = ?, semestre = ?, fecha_inicio = ?, fecha_fin = ? WHERE id_curso = ?");
+                $stmt->bind_param('iississsi', $id_programa, $id_docente, $nombre, $descripcion, $creditos, $semestre, $fecha_inicio, $fecha_fin, $id_curso);
+                if ($stmt->execute()) {
+                    $success = 'Curso actualizado exitosamente.';
+                } else {
+                    $error = 'Error al actualizar el curso: ' . $stmt->error;
+                }
             } else {
                 $error = 'Faltan datos para actualizar.';
             }
             break;
         case 'eliminar':
             if (!empty($id_curso)) {
-                $stmt = $conn->prepare("DELETE FROM Curso WHERE id_curso = ?");
+                $stmt = $conn->prepare("DELETE FROM curso WHERE id_curso = ?");
                 $stmt->bind_param('i', $id_curso);
-                if ($stmt->execute()) $success = 'Curso eliminado exitosamente.';
-                else $error = 'Error al eliminar el curso.';
+                if ($stmt->execute()) {
+                    $success = 'Curso eliminado exitosamente.';
+                } else {
+                    $error = 'Error al eliminar el curso: ' . $stmt->error;
+                }
             }
             break;
     }
 }
 
-// Obtener datos de un curso para editar
+// obtener datos de un curso para editar
 $curso_a_editar = null;
 if ($accion === 'mostrar_editar' && $id_curso) {
-    $stmt = $conn->prepare("SELECT * FROM Curso WHERE id_curso = ?");
+    $stmt = $conn->prepare("SELECT * FROM curso WHERE id_curso = ?");
     $stmt->bind_param('i', $id_curso);
     $stmt->execute();
     $curso_a_editar = $stmt->get_result()->fetch_assoc();
 }
 
-// Obtener lista de cursos
+// obtener lista de cursos
 $cursos = $conn->query("
-    SELECT c.*, p.nombre as nombre_programa, CONCAT(u.nombre, ' ', u.apellido) as nombre_docente
-    FROM Curso c
-    JOIN ProgramaEstudio p ON c.id_programa = p.id_programa
-    LEFT JOIN Docente d ON c.id_docente = d.id_docente
-    LEFT JOIN Usuario u ON d.id_usuario = u.id_usuario
+    SELECT c.*, p.nombre as nombre_programa, CONCAT(u.primer_nombre, ' ', u.apellido_paterno) as nombre_docente
+    FROM curso c
+    JOIN programa_estudio p ON c.id_programa = p.id_programa
+    LEFT JOIN docente d ON c.id_docente = d.id_docente
+    LEFT JOIN usuario u ON d.id_usuario = u.id_usuario
     ORDER BY c.nombre
 ")->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -106,8 +119,13 @@ $cursos = $conn->query("
                 </select>
                 <select name="id_docente" class="w-full p-2 border rounded">
                     <option value="">Asignar Docente (Opcional)</option>
-                    <?php foreach ($docentes as $d) echo "<option value='{$d['id_docente']}' ".((isset($curso_a_editar) && $curso_a_editar['id_docente'] == $d['id_docente']) ? 'selected' : '').">{$d['apellido']}, {$d['nombre']}</option>"; ?>
+                    <?php foreach ($docentes as $d) echo "<option value='{$d['id_docente']}' ".((isset($curso_a_editar) && $curso_a_editar['id_docente'] == $d['id_docente']) ? 'selected' : '').">{$d['apellido_paterno']}, {$d['primer_nombre']}</option>"; ?>
                 </select>
+                <input type="date" name="fecha_inicio" placeholder="Fecha de Inicio" class="w-full p-2 border rounded" value="<?= htmlspecialchars($curso_a_editar['fecha_inicio'] ?? ''); ?>">
+                <input type="date" name="fecha_fin" placeholder="Fecha de Fin" class="w-full p-2 border rounded" value="<?= htmlspecialchars($curso_a_editar['fecha_fin'] ?? ''); ?>">
+            </div>
+            <div class="mb-4">
+                <textarea name="descripcion" placeholder="Descripción del curso" class="w-full p-2 border rounded" rows="3"><?= htmlspecialchars($curso_a_editar['descripcion'] ?? ''); ?></textarea>
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-red-700 text-white font-bold py-2 px-4 rounded hover:bg-red-800"><?= $curso_a_editar ? 'Actualizar' : 'Guardar'; ?></button>
@@ -127,19 +145,27 @@ $cursos = $conn->query("
                         <th class="px-4 py-2 text-left">Docente</th>
                         <th class="px-4 py-2 text-left">Semestre</th>
                         <th class="px-4 py-2 text-left">Créditos</th>
+                        <th class="px-4 py-2 text-left">F. Inicio</th>
+                        <th class="px-4 py-2 text-left">F. Fin</th>
                         <th class="px-4 py-2 text-right">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y">
                     <?php if (empty($cursos)): ?>
-                        <tr><td colspan="6" class="p-4 text-center text-gray-500">No hay cursos registrados.</td></tr>
-                    <?php else: foreach ($cursos as $curso): ?>
-                        <tr>
-                            <td class="p-2"><?= htmlspecialchars($curso['nombre']); ?></td>
+                        <tr><td colspan="8" class="p-4 text-center text-gray-500">No hay cursos registrados.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($cursos as $curso): ?>
+                            <tr>
+                            <td class="p-2">
+                                <div class="font-semibold"><?= htmlspecialchars($curso['nombre']); ?></div>
+                                <div class="text-xs text-gray-600"><?= htmlspecialchars(substr($curso['descripcion'], 0, 70)); ?>...</div>
+                            </td>
                             <td class="p-2"><?= htmlspecialchars($curso['nombre_programa']); ?></td>
                             <td class="p-2"><?= htmlspecialchars($curso['nombre_docente'] ?? 'No asignado'); ?></td>
                             <td class="p-2"><?= htmlspecialchars($curso['semestre']); ?></td>
                             <td class="p-2"><?= htmlspecialchars($curso['creditos']); ?></td>
+                            <td class="p-2"><?= htmlspecialchars($curso['fecha_inicio']); ?></td>
+                            <td class="p-2"><?= htmlspecialchars($curso['fecha_fin']); ?></td>
                             <td class="p-2 text-right">
                                 <a href="gestion_cursos.php?accion=mostrar_editar&id_curso=<?= $curso['id_curso']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-2">Editar</a>
                                 <form action="gestion_cursos.php" method="POST" class="inline-block" onsubmit="return confirm('¿Eliminar este curso?');">
@@ -149,7 +175,8 @@ $cursos = $conn->query("
                                 </form>
                             </td>
                         </tr>
-                    <?php endforeach; endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>

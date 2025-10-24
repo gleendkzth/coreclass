@@ -135,6 +135,10 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                                 <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">book</span>
                                 <span>Cursos</span>
                             </a>
+                            <a href="#" data-page="semestre" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
+                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">layers</span>
+                                <span>Semestres</span>
+                            </a>
 
                             <!-- Título de Sección: Comunidad -->
                             <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Comunidad</div>

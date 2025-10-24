@@ -13,7 +13,7 @@ require_once '../../config/conexion.php';
 // contadores iniciales
 $total_estudiantes = 0;
 $total_docentes = 0;
-$total_programas = 5; // basado en tu descripción, se puede hacer dinámico después
+$total_programas = 5;
 
 // consulta para obtener el número de usuarios por rol
 $sql_usuarios = "SELECT rol, COUNT(*) as total FROM usuario GROUP BY rol";

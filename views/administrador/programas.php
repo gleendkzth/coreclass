@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['nombre'] ?? '';
             $descripcion = $_POST['descripcion'] ?? '';
             if (!empty($nombre)) {
-                $sql = "INSERT INTO ProgramaEstudio (nombre, descripcion) VALUES (?, ?)";
+                $sql = "INSERT INTO programa_estudio (nombre, descripcion) VALUES (?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('ss', $nombre, $descripcion);
                 if ($stmt->execute()) {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nombre = $_POST['nombre'] ?? '';
             $descripcion = $_POST['descripcion'] ?? '';
             if (!empty($nombre) && !empty($id_programa)) {
-                $sql = "UPDATE ProgramaEstudio SET nombre = ?, descripcion = ? WHERE id_programa = ?";
+                $sql = "UPDATE programa_estudio SET nombre = ?, descripcion = ? WHERE id_programa = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('ssi', $nombre, $descripcion, $id_programa);
                 if ($stmt->execute()) {
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 'eliminar':
             if (!empty($id_programa)) {
-                $sql = "DELETE FROM ProgramaEstudio WHERE id_programa = ?";
+                $sql = "DELETE FROM programa_estudio WHERE id_programa = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param('i', $id_programa);
                 if ($stmt->execute()) {
@@ -70,14 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Obtener todos los programas para mostrarlos en la tabla
-$sql_select = "SELECT * FROM ProgramaEstudio ORDER BY id_programa ASC";
+$sql_select = "SELECT * FROM programa_estudio ORDER BY id_programa ASC";
 $resultado = $conn->query($sql_select);
 $programas = $resultado->fetch_all(MYSQLI_ASSOC);
 
 // Obtener datos de un programa específico para editar
 $programa_a_editar = null;
 if ($accion === 'mostrar_editar' && !empty($id_programa)) {
-    $sql_edit = "SELECT * FROM ProgramaEstudio WHERE id_programa = ?";
+    $sql_edit = "SELECT * FROM programa_estudio WHERE id_programa = ?";
     $stmt_edit = $conn->prepare($sql_edit);
     $stmt_edit->bind_param('i', $id_programa);
     $stmt_edit->execute();
@@ -131,43 +131,42 @@ if ($accion === 'mostrar_editar' && !empty($id_programa)) {
         </form>
     </div>
 
-    <!-- Tabla de Programas Existentes -->
+    <!-- Tarjetas de Programas Existentes -->
     <div class="bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-xl font-semibold text-gray-700 mb-4">Programas Registrados</h2>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre del Programa</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php if (empty($programas)): ?>
-                        <tr>
-                            <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">No hay programas registrados.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($programas as $programa): ?>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?php echo $programa['id_programa']; ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?php echo htmlspecialchars($programa['nombre']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($programa['descripcion']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="programas.php?accion=mostrar_editar&id_programa=<?php echo $programa['id_programa']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                                    <form action="programas.php" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este programa?');">
-                                        <input type="hidden" name="accion" value="eliminar">
-                                        <input type="hidden" name="id_programa" value="<?php echo $programa['id_programa']; ?>">
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
+        
+        <?php if (empty($programas)):
+ ?>
+            <div class="text-center text-gray-500 py-4">
+                No hay programas registrados.
+            </div>
+        <?php else:
+ ?>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <?php foreach ($programas as $programa):
+ ?>
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-5 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800"><?php echo htmlspecialchars($programa['nombre']);
+ ?></h3>
+                            <p class="text-sm text-gray-600 mt-2 mb-4 h-16 overflow-y-auto"><?php echo htmlspecialchars($programa['descripcion'] ?? 'Sin descripción.');
+ ?></p>
+                        </div>
+                        <div class="flex justify-end items-center border-t border-gray-200 pt-3 mt-auto">
+                            <a href="programas.php?accion=mostrar_editar&id_programa=<?php echo $programa['id_programa'];
+ ?>" class="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">Editar</a>
+                            <form action="programas.php" method="POST" class="inline-block ml-4" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este programa?');">
+                                <input type="hidden" name="accion" value="eliminar">
+                                <input type="hidden" name="id_programa" value="<?php echo $programa['id_programa'];
+ ?>">
+                                <button type="submit" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endforeach;
+ ?>
+            </div>
+        <?php endif;
+ ?>
     </div>
 </div>

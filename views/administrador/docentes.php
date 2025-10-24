@@ -19,30 +19,35 @@ $success = null;
 
 // Manejo de acciones POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'] ?? '';
-    $apellido = $_POST['apellido'] ?? '';
+    $dni = $_POST['dni'] ?? '';
+    $primer_nombre = $_POST['primer_nombre'] ?? '';
+    $segundo_nombre = $_POST['segundo_nombre'] ?? '';
+    $apellido_paterno = $_POST['apellido_paterno'] ?? '';
+    $apellido_materno = $_POST['apellido_materno'] ?? '';
+    $usuario = $_POST['usuario'] ?? '';
     $correo = $_POST['correo'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
+    $telefono = $_POST['telefono'] ?? '';
     $especialidad = $_POST['especialidad'] ?? '';
     $grado_academico = $_POST['grado_academico'] ?? '';
 
     switch ($accion) {
         case 'crear':
-            if (!empty($nombre) && !empty($correo) && !empty($contrasena)) {
+            if (!empty($dni) && !empty($primer_nombre) && !empty($apellido_paterno) && !empty($apellido_materno) && !empty($usuario) && !empty($correo) && !empty($contrasena)) {
                 $conn->begin_transaction();
                 try {
-                    $sql_check = "SELECT id_usuario FROM usuario WHERE correo = ?";
+                    $sql_check = "SELECT id_usuario FROM usuario WHERE correo = ? OR dni = ? OR usuario = ?";
                     $stmt_check = $conn->prepare($sql_check);
-                    $stmt_check->bind_param('s', $correo);
+                    $stmt_check->bind_param('sss', $correo, $dni, $usuario);
                     $stmt_check->execute();
                     if ($stmt_check->get_result()->num_rows > 0) {
-                        throw new Exception('El correo electrónico ya está registrado.');
+                        throw new Exception('El DNI, correo electrónico o nombre de usuario ya está registrado.');
                     }
 
                     $rol = 'docente';
-                    $sql_user = "INSERT INTO usuario (primer_nombre, apellido_paterno, correo, contrasena, rol) VALUES (?, ?, ?, ?, ?)";
+                    $sql_user = "INSERT INTO usuario (dni, primer_nombre, segundo_nombre, apellido_paterno, apellido_materno, usuario, correo, contrasena, telefono, rol) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     $stmt_user = $conn->prepare($sql_user);
-                    $stmt_user->bind_param('sssss', $nombre, $apellido, $correo, $contrasena, $rol);
+                    $stmt_user->bind_param('ssssssssss', $dni, $primer_nombre, $segundo_nombre, $apellido_paterno, $apellido_materno, $usuario, $correo, $contrasena, $telefono, $rol);
                     $stmt_user->execute();
                     $nuevo_id_usuario = $conn->insert_id;
 
@@ -58,22 +63,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = $e->getMessage();
                 }
             } else {
-                $error = 'Nombre, correo y contraseña son obligatorios.';
+                $error = 'DNI, primer nombre, apellidos, usuario, correo y contraseña son obligatorios.';
             }
             break;
 
         case 'editar':
-            if (!empty($nombre) && !empty($correo) && !empty($id_usuario)) {
+            if (!empty($dni) && !empty($primer_nombre) && !empty($apellido_paterno) && !empty($apellido_materno) && !empty($usuario) && !empty($correo) && !empty($id_usuario)) {
                 $conn->begin_transaction();
                 try {
-                    $sql_user = "UPDATE usuario SET primer_nombre = ?, apellido_paterno = ?, correo = ? WHERE id_usuario = ?";
+                    $sql_user = "UPDATE usuario SET dni = ?, primer_nombre = ?, segundo_nombre = ?, apellido_paterno = ?, apellido_materno = ?, usuario = ?, correo = ?, telefono = ? WHERE id_usuario = ?";
                     $stmt_user = $conn->prepare($sql_user);
-                    $stmt_user->bind_param('sssi', $nombre, $apellido, $correo, $id_usuario);
+                    $stmt_user->bind_param('ssssssssi', $dni, $primer_nombre, $segundo_nombre, $apellido_paterno, $apellido_materno, $usuario, $correo, $telefono, $id_usuario);
                     $stmt_user->execute();
 
-                    $sql_docente = "INSERT INTO docente (id_usuario, especialidad, grado_academico) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE especialidad = VALUES(especialidad), grado_academico = VALUES(grado_academico)";
+                    $sql_docente = "UPDATE docente SET especialidad = ?, grado_academico = ? WHERE id_usuario = ?";
                     $stmt_docente = $conn->prepare($sql_docente);
-                    $stmt_docente->bind_param('iss', $id_usuario, $especialidad, $grado_academico);
+                    $stmt_docente->bind_param('ssi', $especialidad, $grado_academico, $id_usuario);
                     $stmt_docente->execute();
                     
                     $conn->commit();
@@ -104,11 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Obtener todos los docentes (JOIN de Usuario y Docente)
 $sql_select = "
-    SELECT u.id_usuario, u.primer_nombre, u.apellido_paterno, u.correo, d.especialidad, d.grado_academico
+    SELECT u.id_usuario, u.dni, u.primer_nombre, u.segundo_nombre, u.apellido_paterno, u.apellido_materno, u.usuario, u.correo, u.telefono, d.especialidad, d.grado_academico
     FROM usuario u
     JOIN docente d ON u.id_usuario = d.id_usuario
     WHERE u.rol = 'docente'
-    ORDER BY u.apellido, u.nombre ASC
+    ORDER BY u.apellido_paterno, u.apellido_materno, u.primer_nombre ASC
 ";
 $resultado = $conn->query($sql_select);
 $docentes = $resultado->fetch_all(MYSQLI_ASSOC);
@@ -117,7 +122,7 @@ $docentes = $resultado->fetch_all(MYSQLI_ASSOC);
 $docente_a_editar = null;
 if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     $sql_edit = "
-        SELECT u.id_usuario, u.primer_nombre, u.apellido_paterno, u.correo, d.especialidad, d.grado_academico
+        SELECT u.*, d.especialidad, d.grado_academico
         FROM usuario u
         LEFT JOIN docente d ON u.id_usuario = d.id_usuario
         WHERE u.id_usuario = ? AND u.rol = 'docente'
@@ -153,18 +158,38 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
                 <input type="hidden" name="id_usuario" value="<?php echo $docente_a_editar['id_usuario']; ?>">
             <?php endif; ?>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" value="<?php echo htmlspecialchars($docente_a_editar['primer_nombre'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
+                    <input type="text" name="dni" id="dni" value="<?php echo htmlspecialchars($docente_a_editar['dni'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div>
-                    <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido</label>
-                    <input type="text" name="apellido" id="apellido" value="<?php echo htmlspecialchars($docente_a_editar['apellido_paterno'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                    <label for="primer_nombre" class="block text-sm font-medium text-gray-700">Primer Nombre</label>
+                    <input type="text" name="primer_nombre" id="primer_nombre" value="<?php echo htmlspecialchars($docente_a_editar['primer_nombre'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div>
+                    <label for="segundo_nombre" class="block text-sm font-medium text-gray-700">Segundo Nombre</label>
+                    <input type="text" name="segundo_nombre" id="segundo_nombre" value="<?php echo htmlspecialchars($docente_a_editar['segundo_nombre'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                </div>
+                <div>
+                    <label for="apellido_paterno" class="block text-sm font-medium text-gray-700">Apellido Paterno</label>
+                    <input type="text" name="apellido_paterno" id="apellido_paterno" value="<?php echo htmlspecialchars($docente_a_editar['apellido_paterno'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div>
+                    <label for="apellido_materno" class="block text-sm font-medium text-gray-700">Apellido Materno</label>
+                    <input type="text" name="apellido_materno" id="apellido_materno" value="<?php echo htmlspecialchars($docente_a_editar['apellido_materno'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div>
+                    <label for="usuario" class="block text-sm font-medium text-gray-700">Usuario</label>
+                    <input type="text" name="usuario" id="usuario" value="<?php echo htmlspecialchars($docente_a_editar['usuario'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                 </div>
                 <div>
                     <label for="correo" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
                     <input type="email" name="correo" id="correo" value="<?php echo htmlspecialchars($docente_a_editar['correo'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
+                </div>
+                <div>
+                    <label for="telefono" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                    <input type="text" name="telefono" id="telefono" value="<?php echo htmlspecialchars($docente_a_editar['telefono'] ?? ''); ?>" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div>
                     <label for="especialidad" class="block text-sm font-medium text-gray-700">Especialidad</label>
@@ -200,23 +225,29 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">DNI</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre Completo</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Usuario</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Correo</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Teléfono</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Especialidad</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Grado Académico</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <?php if (empty($docentes)): ?>
+                    <?php if (empty($docentes)) { ?>
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">No hay docentes registrados.</td>
+                            <td colspan="8" class="px-6 py-4 text-center text-gray-500">No hay docentes registrados.</td>
                         </tr>
-                    <?php else: ?>
-                        <?php foreach ($docentes as $docente): ?>
+                    <?php } else {
+                        foreach ($docentes as $docente) { ?>
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars($docente['apellido_paterno'] . ', ' . $docente['primer_nombre']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars($docente['dni']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars(trim($docente['apellido_paterno'] . ' ' . $docente['apellido_materno'] . ', ' . $docente['primer_nombre'] . ' ' . $docente['segundo_nombre'])); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['usuario']); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['correo']); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['telefono'] ?? 'N/A'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['especialidad'] ?? 'N/A'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['grado_academico'] ?? 'N/A'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -228,8 +259,8 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
                                     </form>
                                 </td>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                        <?php }
+                    } ?>
                 </tbody>
             </table>
         </div>
