@@ -36,6 +36,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between items-center py-6">
                         <div class="flex items-center group">
+                            <img src="public/img/ies.png" alt="Logo IES Ayaviri" class="h-12 mr-3">
                             <h1 class="text-4xl">
                                 <span class="logo-sora relative">
                                     <span class="relative z-10">
@@ -44,9 +45,9 @@
                                 </span>
                             </h1>
                         </div>
-                        <a href="views/auth/login.php" class="inline-block bg-red-800 text-white font-medium px-6 py-2 rounded-lg shadow-md hover:bg-red-900 transition-colors duration-300 transform hover:scale-105">
+                        <!-- <a href="views/auth/login.php" class="inline-block bg-red-800 text-white font-medium px-6 py-2 rounded-lg shadow-md hover:bg-red-900 transition-colors duration-300 transform hover:scale-105">
                             Acceder
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </header>
@@ -56,7 +57,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div class="max-w-3xl mx-auto">
                         <h2 class="text-5xl md:text-6xl font-extrabold tracking-tight">
-                            <span class="block text-gray-700 mt-2">Moderniza la gestión académica con innovación, eficiencia y transparencia.</span>
+                            <span class="block text-gray-700 mt-2">Moderniza la Gestión Académica con Innovación, Eficiencia y Transparencia.</span>
                         </h2>
                         <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
                         CoreClass centraliza la gestión de notas, asistencia, materiales y comunicación docente-estudiante en una sola plataforma digital.</p>

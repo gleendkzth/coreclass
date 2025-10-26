@@ -137,17 +137,18 @@ CREATE TABLE matricula_curso (
 );
 
 -- =====================================================
--- TABLA: NOTAS
+-- TABLA: NOTAS (Calificaciones por indicador)
 -- =====================================================
-CREATE TABLE nota (
-  id_nota INT AUTO_INCREMENT PRIMARY KEY,
-  id_matricula_curso INT NOT NULL,
-  evaluacion VARCHAR(50),
-  puntaje DECIMAL(5,2),
-  ponderacion DECIMAL(5,2),
-  fecha DATE DEFAULT CURDATE(),
-  observacion TEXT,
-  FOREIGN KEY (id_matricula_curso) REFERENCES matricula_curso(id_matricula_curso) ON DELETE CASCADE ON UPDATE CASCADE
+CREATE TABLE notas (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,
+    id_estudiante INT NOT NULL,
+    id_curso INT NOT NULL,
+    nombre_nota VARCHAR(20) NOT NULL,
+    valor_nota DECIMAL(4, 2) DEFAULT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE,
+    FOREIGN KEY (id_curso) REFERENCES curso(id_curso) ON DELETE CASCADE,
+    UNIQUE KEY idx_unica_nota (id_estudiante, id_curso, nombre_nota)
 );
 
 -- =====================================================

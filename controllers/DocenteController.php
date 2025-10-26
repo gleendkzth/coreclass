@@ -27,5 +27,13 @@ class DocenteController {
     public function obtenerCursosParaDocente($id_usuario, $id_programa, $semestre) {
         return $this->modelo->obtenerCursosPorProgramaSemestre($id_usuario, $id_programa, $semestre);
     }
+
+    public function obtenerNotasPorCurso($idCurso) {
+        return $this->modelo->obtenerNotasPorCurso($idCurso);
+    }
+
+    public function guardarNotasCurso($idCurso, $notas) {
+        return $this->modelo->guardarNotasCurso($idCurso, $notas);
+    }
 }
 ?>

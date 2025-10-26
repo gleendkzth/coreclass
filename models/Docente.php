@@ -116,5 +116,60 @@ class Docente {
         $resultado = $stmt->get_result();
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
+
+    // Obtener todas las notas de un curso, agrupadas por estudiante
+    public function obtenerNotasPorCurso($id_curso) {
+        $sql = "SELECT id_estudiante, nombre_nota, valor_nota
+                FROM notas
+                WHERE id_curso = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_curso);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        
+        $notas_agrupadas = [];
+        while ($fila = $resultado->fetch_assoc()) {
+            $id_estudiante = $fila['id_estudiante'];
+            $nombre_nota = $fila['nombre_nota'];
+            $valor_nota = $fila['valor_nota'];
+
+            if (!isset($notas_agrupadas[$id_estudiante])) {
+                $notas_agrupadas[$id_estudiante] = [];
+            }
+            $notas_agrupadas[$id_estudiante][$nombre_nota] = $valor_nota;
+        }
+        return $notas_agrupadas;
+    }
+
+    // Guardar o actualizar las notas de un curso
+    public function guardarNotasCurso($id_curso, $notas_por_estudiante) {
+        $sql = "INSERT INTO notas (id_curso, id_estudiante, nombre_nota, valor_nota)
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE valor_nota = VALUES(valor_nota)";
+
+        $this->conn->begin_transaction();
+
+        try {
+            $stmt = $this->conn->prepare($sql);
+
+            foreach ($notas_por_estudiante as $estudiante_data) {
+                $id_estudiante = $estudiante_data['id_estudiante'];
+                foreach ($estudiante_data as $nombre_nota => $valor_nota) {
+                    if ($nombre_nota === 'id_estudiante') continue;
+
+                    $stmt->bind_param("iisd", $id_curso, $id_estudiante, $nombre_nota, $valor_nota);
+                    $stmt->execute();
+                }
+            }
+
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conn->rollback();
+            // Opcional: registrar el error $e->getMessage()
+            return false;
+        }
+    }
 }
 ?>

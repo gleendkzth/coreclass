@@ -68,8 +68,29 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                     
                     <!-- acciones de usuario -->
                     <div class="flex items-center space-x-4">
-                        
-                        <div class="hidden md:flex items-center space-x-3 border-red-700 pl-4">
+                        <div class="relative">
+                            <button id="notification-button" class="p-2 text-gray-300 hover:text-white hover:bg-red-700 rounded-full transition-colors" title="Notificaciones">
+                                <span class="material-icons-round relative">
+                                    notifications_none
+                                </span>
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-20">
+                                <div class="py-2 px-4 text-sm text-gray-700 font-semibold border-b">
+                                    Notificaciones
+                                </div>
+                                <div class="divide-y divide-gray-100">
+                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
+                                        <p class="font-semibold">Actualización del sistema</p>
+                                        <p class="text-xs text-gray-500">El sistema se actualizará esta noche.</p>
+                                    </a>
+                                </div>
+                                <a href="#" class="block bg-gray-50 text-center text-sm text-red-600 font-semibold py-2 hover:bg-gray-100">
+                                    Ver todas las notificaciones
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex items-center space-x-3 border-l border-red-700 pl-4">
                             <div class="text-right">
                                 <p class="text-sm font-medium text-white"><?php echo htmlspecialchars($_SESSION['primer_nombre'] . ' ' . $_SESSION['apellido_paterno']); ?></p>
                                 <p class="text-xs text-gray-300">Administrador</p>
@@ -80,12 +101,12 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                                         <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
                                     </div>
                                 </button>
-                                <!-- Dropdown menu de usuario -->
+                                <!-- Dropdown menu -->
                                 <div id="user-menu-dropdown" 
                                      class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 transition-all duration-200 ease-out transform origin-top-right scale-95 opacity-0">
                                     <div class="px-4 py-3 border-b border-gray-200">
                                         <p class="text-sm font-semibold text-gray-800 truncate">
-                                            <?php echo htmlspecialchars($_SESSION['primer_nombre'] . ' ' . $_SESSION['segundo_nombre'] . ' ' . $_SESSION['apellido_paterno'] . ' ' . $_SESSION['apellido_materno']); ?>
+                                            <?php echo htmlspecialchars($_SESSION['nombre_completo']); ?>
                                         </p>
                                         <p class="text-xs text-gray-500 truncate">
                                             Administrador

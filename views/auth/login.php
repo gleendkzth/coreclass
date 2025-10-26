@@ -149,6 +149,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </button>
                     </div>
                 </form>
+                <div class="mt-6 text-center">
+                    <a href="../../index.php" class="inline-block text-sm text-gray-600 hover:text-red-700 hover:underline transition-colors">
+                        &larr; Volver a la página principal
+                    </a>
+                </div>
             </div>
         </div>
     </div>
