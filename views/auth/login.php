@@ -22,33 +22,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contrasena = $_POST['password'] ?? '';
 
     if (!empty($correo) && !empty($contrasena)) {
-       
-        $sql = "SELECT * FROM usuario WHERE correo = ? AND contrasena = ?";
+        // consulta mejorada con joins para obtener ids de roles
+        $sql = "SELECT u.*, d.id_docente, e.id_estudiante, a.id_admin 
+                FROM usuario u
+                LEFT JOIN docente d ON u.id_usuario = d.id_usuario
+                LEFT JOIN estudiante e ON u.id_usuario = e.id_usuario
+                LEFT JOIN administrador a ON u.id_usuario = a.id_usuario
+                WHERE u.correo = ? AND u.contrasena = ?";
+
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $correo, $contrasena);
         $stmt->execute();
         $resultado = $stmt->get_result();
 
         if ($row = $resultado->fetch_assoc()) {
+            // establecer datos basicos de la sesion
             $_SESSION['usuario_autenticado'] = true;
-
-            // guardar explícitamente cada dato del usuario en la sesión
             $_SESSION['id_usuario'] = $row['id_usuario'];
-            $_SESSION['dni'] = $row['dni'];
-            $_SESSION['primer_nombre'] = $row['primer_nombre'];
-            $_SESSION['segundo_nombre'] = $row['segundo_nombre'];
-            $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
-            $_SESSION['apellido_materno'] = $row['apellido_materno'];
-            $_SESSION['usuario'] = $row['usuario'];
-            $_SESSION['correo'] = $row['correo'];
-            $_SESSION['telefono'] = $row['telefono'];
-            $_SESSION['rol'] = $row['rol'];
-            $_SESSION['estado'] = $row['estado'];
-            $_SESSION['fecha_registro'] = $row['fecha_registro'];
-
-            //nombre completo
             $_SESSION['nombre_completo'] = trim($row['primer_nombre'] . ' ' . $row['segundo_nombre'] . ' ' . $row['apellido_paterno'] . ' ' . $row['apellido_materno']);
+            $_SESSION['rol'] = $row['rol'];
+            $_SESSION['correo'] = $row['correo'];
+            $_SESSION['primer_nombre'] = $row['primer_nombre'];
+            $_SESSION['apellido_paterno'] = $row['apellido_paterno'];
 
+            // guardar id especifico del rol
+            switch ($row['rol']) {
+                case 'administrador':
+                    $_SESSION['id_admin'] = $row['id_admin'];
+                    break;
+                case 'docente':
+                    $_SESSION['id_docente'] = $row['id_docente'];
+                    break;
+                case 'estudiante':
+                    $_SESSION['id_estudiante'] = $row['id_estudiante'];
+                    break;
+            }
+
+            // redirigir al panel correspondiente
             $redirect_map = [
                 'administrador' => '../administrador/panel_administrador.php',
                 'docente' => '../docente/panel_docente.php',

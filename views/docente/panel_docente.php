@@ -181,6 +181,12 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 <span>Materiales</span>
                             </a>
 
+                            <!-- Tareas -->
+                            <a href="#" data-page="tareas" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
+                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">assignment</span>
+                                <span>Tareas</span>
+                            </a>
+
                         </div>
                     </nav>
                 </div>
@@ -214,6 +220,20 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     })
                     .then(html => {
                         mainContent.innerHTML = html;
+
+                        // ejecutar los scripts que vienen en el html cargado
+                        const scripts = mainContent.querySelectorAll('script');
+                        scripts.forEach(script => {
+                            const newScript = document.createElement('script');
+                            if (script.src) {
+                                // añadir un timestamp para forzar la recarga del script en cada navegación
+                                newScript.src = script.src + '?v=' + new Date().getTime();
+                            } else {
+                                // si es un script en línea, copiamos el contenido
+                                newScript.textContent = script.innerHTML;
+                            }
+                            document.body.appendChild(newScript);
+                        });
                     })
                     .catch(error => {
                         mainContent.innerHTML = `<div class="text-center text-red-500 p-8"><strong>Error:</strong> ${error.message}</div>`;

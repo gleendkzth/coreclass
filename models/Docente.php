@@ -37,12 +37,16 @@ class Docente {
                     c.nombre AS nombre_curso,
                     c.semestre,
                     pe.nombre AS nombre_programa,
-                    COUNT(DISTINCT mc.id_matricula_curso) AS cantidad_estudiantes
+                    pe.id_programa,
+                    (
+                        SELECT COUNT(DISTINCT m.id_estudiante)
+                        FROM matricula m
+                        WHERE m.id_programa = c.id_programa AND m.semestre = c.semestre
+                    ) AS cantidad_estudiantes
                 FROM curso c
                 JOIN programa_estudio pe ON c.id_programa = pe.id_programa
-                LEFT JOIN matricula_curso mc ON c.id_curso = mc.id_curso
                 WHERE c.id_docente = ?
-                GROUP BY c.id_curso, c.nombre, c.semestre, pe.nombre
+                GROUP BY c.id_curso, c.nombre, c.semestre, pe.nombre, pe.id_programa
                 ORDER BY pe.nombre, c.semestre, c.nombre";
 
         $stmt = $this->conn->prepare($sql);
@@ -50,6 +54,66 @@ class Docente {
         $stmt->execute();
         $resultado = $stmt->get_result();
 
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Obtener los programas de estudio únicos asignados a un docente
+    public function obtenerProgramasAsignadosPorUsuario($id_usuario) {
+        $docente_data = $this->buscarPorIdUsuario($id_usuario);
+        if (!$docente_data) {
+            return [];
+        }
+        $id_docente = $docente_data['id_docente'];
+
+        $sql = "SELECT DISTINCT
+                    pe.id_programa,
+                    pe.nombre
+                FROM curso c
+                JOIN programa_estudio pe ON c.id_programa = pe.id_programa
+                WHERE c.id_docente = ?
+                ORDER BY pe.nombre";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_docente);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Obtener los semestres únicos para un docente y programa específicos
+    public function obtenerSemestresPorPrograma($id_usuario, $id_programa) {
+        $docente_data = $this->buscarPorIdUsuario($id_usuario);
+        if (!$docente_data) return [];
+        $id_docente = $docente_data['id_docente'];
+
+        $sql = "SELECT DISTINCT c.semestre
+                FROM curso c
+                WHERE c.id_docente = ? AND c.id_programa = ?
+                ORDER BY c.semestre";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ii", $id_docente, $id_programa);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    // Obtener los cursos para un docente, programa y semestre específicos
+    public function obtenerCursosPorProgramaSemestre($id_usuario, $id_programa, $semestre) {
+        $docente_data = $this->buscarPorIdUsuario($id_usuario);
+        if (!$docente_data) return [];
+        $id_docente = $docente_data['id_docente'];
+
+        $sql = "SELECT id_curso, nombre
+                FROM curso
+                WHERE id_docente = ? AND id_programa = ? AND semestre = ?
+                ORDER BY nombre";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("iis", $id_docente, $id_programa, $semestre);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 }

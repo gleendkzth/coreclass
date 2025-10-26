@@ -240,3 +240,47 @@ CREATE TABLE detalle_asistencia (
   FOREIGN KEY (id_asistencia) REFERENCES asistencia(id_asistencia) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- =====================================================
+-- TABLA: TAREA
+-- =====================================================
+CREATE TABLE tarea (
+  id_tarea INT AUTO_INCREMENT PRIMARY KEY,
+  id_curso INT NOT NULL,
+  id_docente INT NOT NULL,
+  id_programa INT NOT NULL,
+  semestre VARCHAR(10) NOT NULL,
+  titulo VARCHAR(150) NOT NULL,
+  instrucciones TEXT,
+  archivo_apoyo VARCHAR(255),
+  fecha_publicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+  fecha_limite DATETIME,
+  FOREIGN KEY (id_curso) REFERENCES curso(id_curso) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_docente) REFERENCES docente(id_docente) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_programa) REFERENCES programa_estudio(id_programa) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- =====================================================
+-- TABLA: TAREA_ENTREGA
+-- =====================================================
+CREATE TABLE tarea_entrega (
+  id_entrega INT AUTO_INCREMENT PRIMARY KEY,
+  id_tarea INT NOT NULL,
+  id_estudiante INT NOT NULL,
+  id_programa INT NOT NULL,
+  semestre VARCHAR(10) NOT NULL,
+  archivo VARCHAR(255),
+  comentario TEXT,
+  fecha_entrega DATETIME DEFAULT CURRENT_TIMESTAMP,
+  calificacion DECIMAL(5,2),
+  observacion TEXT,
+  FOREIGN KEY (id_tarea) REFERENCES tarea(id_tarea) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id_programa) REFERENCES programa_estudio(id_programa) 
+    ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2025 a las 22:03:53
+-- Tiempo de generación: 26-10-2025 a las 15:03:14
 -- Versión del servidor: 11.8.3-MariaDB-0+deb13u1 from Debian
 -- Versión de PHP: 8.2.12
 
@@ -55,6 +55,13 @@ CREATE TABLE `asistencia` (
   `observaciones` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `asistencia`
+--
+
+INSERT INTO `asistencia` (`id_asistencia`, `id_matricula_curso`, `fecha`, `id_docente`, `observaciones`) VALUES
+(1, 1, '2025-10-20', 4, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -91,7 +98,9 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`id_curso`, `id_programa`, `id_docente`, `nombre`, `descripcion`, `creditos`, `semestre`, `fecha_inicio`, `fecha_fin`) VALUES
-(1, 2, NULL, 'Diseño Web I', '0', 4, 'I', '2025-10-01', '2025-10-31');
+(1, 2, 4, 'Administracion web', '0', 4, 'I', '2025-10-01', '2025-10-31'),
+(2, 2, 4, 'Base de datos', '', 2, 'I', '2025-10-01', '2025-10-31'),
+(4, 3, 4, 'arroz', '', 2, 'V', '2025-10-01', '2025-10-09');
 
 -- --------------------------------------------------------
 
@@ -107,6 +116,13 @@ CREATE TABLE `detalle_asistencia` (
   `hora_marcada` time DEFAULT curtime(),
   `observacion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_asistencia`
+--
+
+INSERT INTO `detalle_asistencia` (`id_detalle`, `id_asistencia`, `id_estudiante`, `estado`, `hora_marcada`, `observacion`) VALUES
+(1, 1, 1, 'P', '08:04:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -126,7 +142,8 @@ CREATE TABLE `docente` (
 --
 
 INSERT INTO `docente` (`id_docente`, `id_usuario`, `especialidad`, `grado_academico`) VALUES
-(4, 4, 'web', 'alto');
+(4, 4, 'web', 'alto'),
+(5, 5, 'web', 'web1');
 
 -- --------------------------------------------------------
 
@@ -160,7 +177,8 @@ CREATE TABLE `estudiante` (
 --
 
 INSERT INTO `estudiante` (`id_estudiante`, `id_usuario`, `codigo_estudiante`, `fecha_ingreso`) VALUES
-(1, 3, 'J26-24-002', '2025-03-01');
+(1, 3, 'J26-24-002', '2025-03-01'),
+(2, 6, '2342k3nlk2n', '2025-10-03');
 
 -- --------------------------------------------------------
 
@@ -213,7 +231,8 @@ CREATE TABLE `matricula` (
 --
 
 INSERT INTO `matricula` (`id_matricula`, `id_estudiante`, `id_programa`, `semestre`, `fecha_matricula`, `estado`) VALUES
-(1, 1, 2, 'I', '2025-10-23', 'Activo');
+(1, 1, 2, 'I', '2025-10-23', 'Activo'),
+(11, 2, 2, 'I', '2025-10-24', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -316,7 +335,9 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `dni`, `primer_nombre`, `segundo_nombre`, `apellido_paterno`, `apellido_materno`, `usuario`, `correo`, `contrasena`, `telefono`, `rol`, `estado`, `fecha_registro`) VALUES
 (1, '12345678', 'Steven', 'Mike', 'Tyre', 'Spy', 'admin', 'administrador@coreclass.edu', '123456', NULL, 'administrador', 1, '2025-10-23 08:36:59'),
 (3, '11223344', 'Monica', '', 'Quill', 'Lype', 'monica', 'estudiante@coreclass.edu', '123456', '', 'estudiante', 1, '2025-10-23 08:36:59'),
-(4, '87654321', 'Antony', 'Howard', 'Tre', 'Spy', 'Anthony', 'docente@coreclass.edu', '123456', '', 'docente', 1, '2025-10-23 14:29:10');
+(4, '87654321', 'Antony', 'Howard', 'Tre', 'Spy', 'Anthony', 'docente@coreclass.edu', '123456', '', 'docente', 1, '2025-10-23 14:29:10'),
+(5, '12341234', 'Paul', '', 'Smith', 'Lau', 'paul', 'paul@coreclass.edu', 'paul1234', '', 'docente', 1, '2025-10-23 15:26:09'),
+(6, '123123123123', 'Mike', '', 'Smith', 'Ells', 'sdsvd', 'eee@coreclass.edu', '12345', '123123123123', 'estudiante', 1, '2025-10-24 08:42:45');
 
 --
 -- Índices para tablas volcadas
@@ -456,7 +477,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
@@ -468,19 +489,19 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_asistencia`
 --
 ALTER TABLE `detalle_asistencia`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
 --
 ALTER TABLE `docente`
-  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `docente_asignacion`
@@ -492,7 +513,7 @@ ALTER TABLE `docente_asignacion`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`
@@ -510,7 +531,7 @@ ALTER TABLE `material`
 -- AUTO_INCREMENT de la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `matricula_curso`
@@ -540,7 +561,7 @@ ALTER TABLE `semestre`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

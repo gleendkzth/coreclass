@@ -13,7 +13,10 @@ require_once '../../config/conexion.php';
 // contadores iniciales
 $total_estudiantes = 0;
 $total_docentes = 0;
-$total_programas = 5;
+// consulta para obtener el número total de programas de estudio
+$sql_programas = "SELECT COUNT(*) as total FROM programa_estudio";
+$resultado_programas = $conn->query($sql_programas);
+$total_programas = ($resultado_programas && $resultado_programas->num_rows > 0) ? $resultado_programas->fetch_assoc()['total'] : 0;
 
 // consulta para obtener el número de usuarios por rol
 $sql_usuarios = "SELECT rol, COUNT(*) as total FROM usuario GROUP BY rol";
