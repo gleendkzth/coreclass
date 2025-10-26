@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2025 a las 15:03:14
+-- Tiempo de generación: 26-10-2025 a las 23:24:15
 -- Versión del servidor: 11.8.3-MariaDB-0+deb13u1 from Debian
 -- Versión de PHP: 8.2.12
 
@@ -100,7 +100,8 @@ CREATE TABLE `curso` (
 INSERT INTO `curso` (`id_curso`, `id_programa`, `id_docente`, `nombre`, `descripcion`, `creditos`, `semestre`, `fecha_inicio`, `fecha_fin`) VALUES
 (1, 2, 4, 'Administracion web', '0', 4, 'I', '2025-10-01', '2025-10-31'),
 (2, 2, 4, 'Base de datos', '', 2, 'I', '2025-10-01', '2025-10-31'),
-(4, 3, 4, 'arroz', '', 2, 'V', '2025-10-01', '2025-10-09');
+(4, 3, 4, 'arroz', '', 2, 'V', '2025-10-01', '2025-10-09'),
+(5, 13, 6, 'Introducción al Software', '', 4, 'I', '2026-04-13', '2027-06-23');
 
 -- --------------------------------------------------------
 
@@ -143,7 +144,8 @@ CREATE TABLE `docente` (
 
 INSERT INTO `docente` (`id_docente`, `id_usuario`, `especialidad`, `grado_academico`) VALUES
 (4, 4, 'web', 'alto'),
-(5, 5, 'web', 'web1');
+(5, 5, 'web', 'web1'),
+(6, 7, 'Ing.Sistemas', '5');
 
 -- --------------------------------------------------------
 
@@ -178,7 +180,8 @@ CREATE TABLE `estudiante` (
 
 INSERT INTO `estudiante` (`id_estudiante`, `id_usuario`, `codigo_estudiante`, `fecha_ingreso`) VALUES
 (1, 3, 'J26-24-002', '2025-03-01'),
-(2, 6, '2342k3nlk2n', '2025-10-03');
+(2, 6, '2342k3nlk2n', '2025-10-03'),
+(3, 8, 'J24-26-085', '2025-10-01');
 
 -- --------------------------------------------------------
 
@@ -232,7 +235,8 @@ CREATE TABLE `matricula` (
 
 INSERT INTO `matricula` (`id_matricula`, `id_estudiante`, `id_programa`, `semestre`, `fecha_matricula`, `estado`) VALUES
 (1, 1, 2, 'I', '2025-10-23', 'Activo'),
-(11, 2, 2, 'I', '2025-10-24', 'Activo');
+(11, 2, 2, 'I', '2025-10-24', 'Activo'),
+(12, 3, 13, 'I', '2025-10-26', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -256,17 +260,16 @@ INSERT INTO `matricula_curso` (`id_matricula_curso`, `id_matricula`, `id_curso`)
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `nota`
+-- Estructura de tabla para la tabla `notas`
 --
 
-CREATE TABLE `nota` (
-  `id_nota` int(11) NOT NULL,
-  `id_matricula_curso` int(11) NOT NULL,
-  `evaluacion` varchar(50) DEFAULT NULL,
-  `puntaje` decimal(5,2) DEFAULT NULL,
-  `ponderacion` decimal(5,2) DEFAULT NULL,
-  `fecha` date DEFAULT curdate(),
-  `observacion` text DEFAULT NULL
+CREATE TABLE `notas` (
+  `id_calificacion` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `nombre_nota` varchar(20) NOT NULL,
+  `valor_nota` decimal(4,2) DEFAULT NULL,
+  `fecha_registro` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -290,7 +293,8 @@ INSERT INTO `programa_estudio` (`id_programa`, `nombre`, `descripcion`) VALUES
 (2, 'APSTI', NULL),
 (3, 'Industrias Alimentarias', NULL),
 (4, 'Contabilidad', NULL),
-(5, 'Producción Agropecuaria', NULL);
+(5, 'Producción Agropecuaria', NULL),
+(13, 'Sistemas de Sofware ', '');
 
 -- --------------------------------------------------------
 
@@ -333,11 +337,13 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `primer_nombre`, `segundo_nombre`, `apellido_paterno`, `apellido_materno`, `usuario`, `correo`, `contrasena`, `telefono`, `rol`, `estado`, `fecha_registro`) VALUES
-(1, '12345678', 'Steven', 'Mike', 'Tyre', 'Spy', 'admin', 'administrador@coreclass.edu', '123456', NULL, 'administrador', 1, '2025-10-23 08:36:59'),
+(1, '12345678', 'Elver', 'Fedver', 'Calcina', 'Condori', 'admin', 'administrador@coreclass.edu', '123456', NULL, 'administrador', 1, '2025-10-23 08:36:59'),
 (3, '11223344', 'Monica', '', 'Quill', 'Lype', 'monica', 'estudiante@coreclass.edu', '123456', '', 'estudiante', 1, '2025-10-23 08:36:59'),
 (4, '87654321', 'Antony', 'Howard', 'Tre', 'Spy', 'Anthony', 'docente@coreclass.edu', '123456', '', 'docente', 1, '2025-10-23 14:29:10'),
 (5, '12341234', 'Paul', '', 'Smith', 'Lau', 'paul', 'paul@coreclass.edu', 'paul1234', '', 'docente', 1, '2025-10-23 15:26:09'),
-(6, '123123123123', 'Mike', '', 'Smith', 'Ells', 'sdsvd', 'eee@coreclass.edu', '12345', '123123123123', 'estudiante', 1, '2025-10-24 08:42:45');
+(6, '123123123123', 'Mike', '', 'Smith', 'Ells', 'sdsvd', 'eee@coreclass.edu', '12345', '123123123123', 'estudiante', 1, '2025-10-24 08:42:45'),
+(7, '74964742', 'mirian', '', 'Paucar', 'Hualpa', 'MIRIAN ESMERALDA PAUCAR HUALPA', 'mia@gmail.com', '54321', '123456', 'docente', 1, '2025-10-26 16:18:30'),
+(8, '02296987', 'Enrique', 'Robert', 'Delgado', 'Coasaca', 'Enrrique', 'erdelco007@gmail.com', '123456', '977170735', 'estudiante', 1, '2025-10-26 16:22:52');
 
 --
 -- Índices para tablas volcadas
@@ -436,11 +442,12 @@ ALTER TABLE `matricula_curso`
   ADD KEY `id_curso` (`id_curso`);
 
 --
--- Indices de la tabla `nota`
+-- Indices de la tabla `notas`
 --
-ALTER TABLE `nota`
-  ADD PRIMARY KEY (`id_nota`),
-  ADD KEY `id_matricula_curso` (`id_matricula_curso`);
+ALTER TABLE `notas`
+  ADD PRIMARY KEY (`id_calificacion`),
+  ADD UNIQUE KEY `idx_unica_nota` (`id_estudiante`,`id_curso`,`nombre_nota`),
+  ADD KEY `id_curso` (`id_curso`);
 
 --
 -- Indices de la tabla `programa_estudio`
@@ -489,7 +496,7 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_asistencia`
@@ -501,7 +508,7 @@ ALTER TABLE `detalle_asistencia`
 -- AUTO_INCREMENT de la tabla `docente`
 --
 ALTER TABLE `docente`
-  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `docente_asignacion`
@@ -513,7 +520,7 @@ ALTER TABLE `docente_asignacion`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`
@@ -531,7 +538,7 @@ ALTER TABLE `material`
 -- AUTO_INCREMENT de la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `matricula_curso`
@@ -540,16 +547,16 @@ ALTER TABLE `matricula_curso`
   MODIFY `id_matricula_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `nota`
+-- AUTO_INCREMENT de la tabla `notas`
 --
-ALTER TABLE `nota`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `notas`
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `programa_estudio`
 --
 ALTER TABLE `programa_estudio`
-  MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_programa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `semestre`
@@ -561,7 +568,7 @@ ALTER TABLE `semestre`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
@@ -647,10 +654,11 @@ ALTER TABLE `matricula_curso`
   ADD CONSTRAINT `matricula_curso_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `nota`
+-- Filtros para la tabla `notas`
 --
-ALTER TABLE `nota`
-  ADD CONSTRAINT `nota_ibfk_1` FOREIGN KEY (`id_matricula_curso`) REFERENCES `matricula_curso` (`id_matricula_curso`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `notas`
+  ADD CONSTRAINT `notas_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`) ON DELETE CASCADE,
+  ADD CONSTRAINT `notas_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
