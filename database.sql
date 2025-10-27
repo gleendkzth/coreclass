@@ -256,6 +256,7 @@ CREATE TABLE tarea (
   archivo_apoyo VARCHAR(255),
   fecha_publicacion DATETIME DEFAULT CURRENT_TIMESTAMP,
   fecha_limite DATETIME,
+  puntaje_maximo INT(11) DEFAULT 20 NOT NULL,
   FOREIGN KEY (id_curso) REFERENCES curso(id_curso) 
     ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (id_docente) REFERENCES docente(id_docente) 

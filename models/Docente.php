@@ -143,7 +143,51 @@ class Docente {
     }
 
     // Guardar o actualizar las notas de un curso
-    public function guardarNotasCurso($id_curso, $notas_por_estudiante) {
+     // Contar el número total de estudiantes únicos asignados a un docente
+    public function contarEstudiantesAsignadosPorUsuario($id_usuario) {
+        $docente_data = $this->buscarPorIdUsuario($id_usuario);
+        if (!$docente_data) {
+            return 0;
+        }
+        $id_docente = $docente_data['id_docente'];
+
+        $sql = "SELECT COUNT(DISTINCT m.id_estudiante)
+                FROM matricula m
+                JOIN curso c ON m.id_programa = c.id_programa AND m.semestre = c.semestre
+                WHERE c.id_docente = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_docente);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $fila = $resultado->fetch_row();
+
+        return $fila[0] ?? 0;
+    }
+
+    // Contar el número total de tareas asignadas a un docente
+    public function contarTareasAsignadasPorUsuario($id_usuario) {
+        $docente_data = $this->buscarPorIdUsuario($id_usuario);
+        if (!$docente_data) {
+            return 0;
+        }
+        $id_docente = $docente_data['id_docente'];
+
+        $sql = "SELECT COUNT(t.id_tarea)
+                FROM tarea t
+                JOIN curso c ON t.id_curso = c.id_curso
+                WHERE c.id_docente = ?";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_docente);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $fila = $resultado->fetch_row();
+
+        return $fila[0] ?? 0;
+    }
+
+   public function guardarNotasCurso($id_curso, $notas_por_estudiante) {
         $sql = "INSERT INTO notas (id_curso, id_estudiante, nombre_nota, valor_nota)
                 VALUES (?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE valor_nota = VALUES(valor_nota)";

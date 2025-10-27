@@ -16,9 +16,9 @@ $id_usuario = $_SESSION['id_usuario'];
 $cursos = $docenteController->obtenerCursosAsignados($id_usuario);
 $num_cursos = count($cursos);
 
-// Aquí irían las consultas para obtener el número de estudiantes y tareas (actualmente estático)
-$num_estudiantes = 128; // Dato estático por ahora
-$num_tareas = 12; // Dato estático por ahora
+// Obtener el número total de estudiantes y tareas asignadas
+$num_estudiantes = $docenteController->obtenerTotalEstudiantesAsignados($id_usuario);
+$num_tareas = $docenteController->obtenerTotalTareasAsignadas($id_usuario);
 
 ?>
 <div class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">

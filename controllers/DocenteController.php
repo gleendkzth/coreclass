@@ -35,5 +35,13 @@ class DocenteController {
     public function guardarNotasCurso($idCurso, $notas) {
         return $this->modelo->guardarNotasCurso($idCurso, $notas);
     }
+
+    public function obtenerTotalEstudiantesAsignados($id_usuario) {
+        return $this->modelo->contarEstudiantesAsignadosPorUsuario($id_usuario);
+    }
+
+    public function obtenerTotalTareasAsignadas($id_usuario) {
+        return $this->modelo->contarTareasAsignadasPorUsuario($id_usuario);
+    }
 }
 ?>

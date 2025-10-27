@@ -14,14 +14,34 @@ $docenteController = new DocenteController($conn);
 $id_usuario = $_SESSION['id_usuario'];
 $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
 
+$modo_edicion = false;
+$tarea_a_editar = null;
+
+if (isset($_GET['id_tarea'])) {
+    $modo_edicion = true;
+    $id_tarea = filter_input(INPUT_GET, 'id_tarea', FILTER_VALIDATE_INT);
+    $stmt = $conn->prepare("SELECT id_tarea, titulo, instrucciones, id_programa, semestre, id_curso, fecha_limite, puntaje_maximo FROM tarea WHERE id_tarea = ? AND id_docente = (SELECT id_docente FROM docente WHERE id_usuario = ?)");
+    $stmt->bind_param("ii", $id_tarea, $id_usuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    if ($resultado->num_rows > 0) {
+        $tarea_a_editar = $resultado->fetch_assoc();
+    } else {
+        // Si la tarea no existe o no pertenece al docente, tratar como error o redireccionar
+        echo "<div class='p-6 text-red-700 bg-red-100 border border-red-300 rounded-lg'>Tarea no encontrada o no tienes permiso para editarla.</div>";
+        exit;
+    }
+    $stmt->close();
+}
+
 ?>
 
 <div class="container mx-auto p-4 sm:p-6 lg:p-8">
     <!-- Encabezado -->
     <div class="mb-6 flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">Crear Nueva Tarea</h1>
-            <p class="text-gray-500 mt-1">Completa los siguientes campos para asignar una nueva actividad.</p>
+            <h1 class="text-3xl font-bold text-gray-800"><?php echo $modo_edicion ? 'Editar Tarea' : 'Crear Nueva Tarea'; ?></h1>
+            <p class="text-gray-500 mt-1"><?php echo $modo_edicion ? 'Modifica los detalles de la tarea.' : 'Completa los siguientes campos para asignar una nueva actividad.'; ?></p>
         </div>
         <button id="volver-a-tareas-btn" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
             <span class="material-icons-round -ml-1 mr-2">arrow_back</span>
@@ -31,17 +51,20 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
 
     <!-- Formulario -->
     <form id="form-nueva-tarea" class="bg-white rounded-lg shadow-lg p-6 space-y-6">
+        <?php if ($modo_edicion): ?>
+            <input type="hidden" name="id_tarea" value="<?php echo $tarea_a_editar['id_tarea']; ?>">
+        <?php endif; ?>
         
         <!-- Título -->
         <div>
             <label for="titulo-tarea" class="block text-sm font-medium text-gray-700">Título de la Tarea</label>
-            <input type="text" name="titulo-tarea" id="titulo-tarea" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm">
+            <input type="text" name="titulo-tarea" id="titulo-tarea" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm" value="<?php echo htmlspecialchars($tarea_a_editar['titulo'] ?? ''); ?>">
         </div>
 
         <!-- Descripción -->
         <div>
             <label for="descripcion-tarea" class="block text-sm font-medium text-gray-700">Descripción e Instrucciones</label>
-            <textarea id="descripcion-tarea" name="descripcion-tarea" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Explica detalladamente qué deben hacer los estudiantes..."></textarea>
+            <textarea id="descripcion-tarea" name="descripcion-tarea" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 sm:text-sm" placeholder="Explica detalladamente qué deben hacer los estudiantes..."><?php echo htmlspecialchars($tarea_a_editar['instrucciones'] ?? ''); ?></textarea>
         </div>
 
         <!-- Material de Apoyo -->
@@ -91,7 +114,7 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
         <div class="flex justify-end pt-4 border-t border-gray-200">
             <button type="button" id="cancelar-btn" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Cancelar</button>
             <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-800 hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                Guardar y Publicar Tarea
+                <?php echo $modo_edicion ? 'Actualizar Tarea' : 'Guardar y Publicar Tarea'; ?>
             </button>
         </div>
     </form>
@@ -162,6 +185,98 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
 
     volverBtn.addEventListener('click', volverATareas);
     cancelarBtn.addEventListener('click', volverATareas);
+
+    <?php if ($modo_edicion && $tarea_a_editar): ?>
+    // En modo edición, precargar los selects de forma robusta
+    (async () => {
+        // Datos de la tarea a editar desde PHP
+        const tarea = <?php echo json_encode($tarea_a_editar); ?>;
+
+        // Rellenar campos simples
+        // Asegurarse de que la fecha_limite tenga el formato YYYY-MM-DD
+        if (tarea.fecha_limite) {
+            document.getElementById('fecha-limite').value = tarea.fecha_limite.split(' ')[0];
+        }
+        document.getElementById('puntaje-tarea').value = tarea.puntaje_maximo;
+
+        // Seleccionar programa
+        programaSelect.value = tarea.id_programa;
+
+        // --- Carga en cascada con async/await para garantizar el orden ---
+        
+        // 1. Cargar semestres
+        semestreSelect.innerHTML = '<option value="">Cargando...</option>';
+        const semestresResponse = await fetch(`ajax_get_semestres.php?id_programa=${tarea.id_programa}`);
+        const semestresData = await semestresResponse.json();
+        
+        semestreSelect.innerHTML = '<option value="">Seleccionar semestre...</option>';
+        semestresData.forEach(s => {
+            const option = new Option(s.semestre, s.semestre);
+            if (s.semestre === tarea.semestre) {
+                option.selected = true;
+            }
+            semestreSelect.add(option);
+        });
+
+        // 2. Cargar cursos (solo si hay semestre)
+        if (tarea.semestre) {
+            cursoSelect.innerHTML = '<option value="">Cargando...</option>';
+            const cursosResponse = await fetch(`ajax_get_cursos.php?id_programa=${tarea.id_programa}&semestre=${tarea.semestre}`);
+            const cursosData = await cursosResponse.json();
+
+            cursoSelect.innerHTML = '<option value="">Seleccionar curso...</option>';
+            cursosData.forEach(c => {
+                const option = new Option(c.nombre, c.id_curso);
+                if (c.id_curso == tarea.id_curso) { // Usar '==' para comparación flexible de tipos
+                    option.selected = true;
+                }
+                cursoSelect.add(option);
+            });
+        }
+    })();
+    <?php endif; ?>
+
+    // Lógica para el envío del formulario
+    const form = document.getElementById('form-nueva-tarea');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        // Añadimos los valores de los selects que no se envían con su nombre correcto
+        formData.append('id_programa', programaSelect.value);
+        formData.append('semestre', semestreSelect.value);
+        formData.append('id_curso', cursoSelect.value);
+        formData.append('titulo', document.getElementById('titulo-tarea').value);
+        formData.append('instrucciones', document.getElementById('descripcion-tarea').value);
+        formData.append('fecha_limite', document.getElementById('fecha-limite').value);
+        formData.append('archivo_apoyo', document.getElementById('material-apoyo').files[0]);
+        formData.append('puntaje-tarea', document.getElementById('puntaje-tarea').value);
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Guardando...';
+
+        fetch('ajax_guardar_tarea.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                volverATareas(); // Regresar a la lista de tareas
+            } else {
+                throw new Error(data.message || 'Error desconocido al guardar.');
+            }
+        })
+        .catch(error => {
+            alert(`Error: ${error.message}`);
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Guardar y Publicar Tarea';
+        });
+    });
 
 })();
 </script>

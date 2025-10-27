@@ -1,14 +1,31 @@
+<?php
+session_start();
+require_once "config/conexion.php";
+
+// Si ya está logueado, redirige según rol
+if (isset($_SESSION['rol'])) {
+    $redirect_map = [
+        'administrador' => 'views/administrador/panel_administrador.php',
+        'docente' => 'views/docente/panel_docente.php',
+        'estudiante' => 'views/estudiante/panel_estudiante.php'
+    ];
+    if (isset($redirect_map[$_SESSION['rol']])) {
+        header("Location: " . $redirect_map[$_SESSION['rol']]);
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoreClass - Tu Plataforma Educativa</title>
+    <title>CoreClass</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="public/img/logo.png" type="image/png">
+    <link rel="icon" href="../public/img/logo.png" type="image/png">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -36,7 +53,7 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between items-center py-6">
                         <div class="flex items-center group">
-                            <img src="public/img/ies.png" alt="Logo IES Ayaviri" class="h-12 mr-3">
+                            <img src="/public/img/ies.png" alt="Logo IES Ayaviri" class="h-12 mr-3">
                             <h1 class="text-4xl">
                                 <span class="logo-sora relative">
                                     <span class="relative z-10">
