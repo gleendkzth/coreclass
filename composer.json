@@ -1,0 +1,14 @@
+{
+    "name": "gleendkzth/coreclass",
+    "description": "CoreClass project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cascade"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "^5.6@dev"
+    }
+}

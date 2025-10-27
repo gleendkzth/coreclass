@@ -1,9 +1,16 @@
 <?php
-// Configuración de la base de datos
-$host = "127.0.0.1";
-$user = "zeth";
-$pass = "zeth8080";
-$dbname = "coreclass_db";
+// Incluir el autoloader de Composer
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// Cargar las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+// Configuración de la base de datos usando variables de entorno
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$pass = $_ENV['DB_PASS'];
+$dbname = $_ENV['DB_NAME'];
 
 // Crear conexión con control de errores
 $conn = new mysqli($host, $user, $pass, $dbname);
