@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'estudiante') {
+    http_response_code(403);
+    echo "<div class='p-6 text-red-700 bg-red-100 border border-red-300 rounded-lg'>Acceso denegado. No tienes permiso para ver esta página.</div>";
+    exit;
+}
+
+require_once __DIR__ . '/../../config/conexion.php';
+require_once __DIR__ . '/../../controllers/EstudianteController.php';
+
+$estudianteController = new EstudianteController($conn);
+$id_usuario = $_SESSION['id_usuario'];
+$cursos = $estudianteController->obtenerMisCursos($id_usuario);
+
+?>
 <div class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
     <!-- Encabezado de la página -->
     <div class="bg-gradient-to-r from-red-800 to-red-900 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
@@ -11,220 +28,50 @@
 
     <!-- Grid de cursos -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Programación Web -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">code</span>
+        <?php if (!empty($cursos)): ?>
+            <?php foreach ($cursos as $curso): ?>
+                <!-- Tarjeta de Curso Moderna v2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1.5 transition-all duration-300 group flex flex-col border border-gray-100">
+                    <!-- Cabecera con Imagen de Fondo -->
+                    <div class="h-32 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&auto=format');">
+                        <div class="absolute inset-0 bg-black/50 flex items-end p-4">
+                            <h3 class="text-xl font-bold text-white leading-tight tracking-wide"><?php echo htmlspecialchars($curso['nombre_curso']); ?></h3>
+                        </div>
                     </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Programación Web</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Jonatan</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">78%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 78%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
 
-        <!-- Metodologías Ágiles -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">groups</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Metodologías Ágiles</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Jonatan</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">85%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 85%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
+                    <!-- Cuerpo de la tarjeta -->
+                    <div class="p-5 flex-grow flex flex-col">
+                        <!-- Información del curso con iconos -->
+                        <div class="flex-grow space-y-3">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <svg class="w-5 h-5 mr-2 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span>Semestre: <span class="font-semibold text-gray-800"><?php echo htmlspecialchars($curso['semestre']); ?></span></span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <svg class="w-5 h-5 mr-2 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                <span>Docente: <span class="font-semibold text-gray-800"><?php echo htmlspecialchars($curso['nombre_docente'] ?? 'No asignado'); ?></span></span>
+                            </div>
+                        </div>
 
-        <!-- Comercio Electrónico -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">shopping_cart</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Comercio Electrónico</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Clemente</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">68%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 68%"></div>
+                        <!-- Sección de Tareas -->
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <h4 class="text-sm font-semibold text-gray-800 mb-2">Actividades Pendientes</h4>
+                            <div class="bg-red-50/50 border border-red-200/60 rounded-lg p-4 text-center">
+                                <svg class="mx-auto h-8 w-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <p class="mt-2 text-sm font-medium text-red-800">¡Estás al día!</p>
+                                <p class="text-xs text-red-700/80">No hay actividades nuevas.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
-
-        <!-- Desarrollo de Aplicaciones Móviles -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">phone_iphone</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Desarrollo de Aplicaciones Móviles</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Alcides</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">90%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 90%"></div>
-                    </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="lg:col-span-3 md:col-span-2 col-span-1">
+                <div class="bg-blue-50 border border-blue-200 text-blue-800 p-6 rounded-lg text-center">
+                    <h3 class="font-semibold text-lg">No estás matriculado en ningún curso</h3>
+                    <p class="mt-1">Cuando te matricules en un curso, aparecerá aquí.</p>
                 </div>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
-
-        <!-- Arquitectura de la Información -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">source</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Arquitectura de la Información</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Mario</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">80%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 80%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
-
-        <!-- Comprensión y Redacción de Inglés -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">translate</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Comprensión y Redacción de Inglés</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Julieta</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">83%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 83%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
-
-        <!-- Administración Web -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-red-100 rounded-lg">
-                        <span class="material-icons-round text-red-800">laptop_chromebook</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Administración Web</h3>
-                        <p class="text-sm text-gray-500">Docente: Ing. Ydelfonso</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-red-800">73%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-red-700 h-2.5 rounded-full" style="width: 73%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-red-800 hover:underline">Ver detalles del curso</a>
-            </div>
-        </div>
-
-        <!-- Desarrollo de Aplicaciones de Escritorio -->
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="p-3 bg-gray-100 rounded-lg">
-                        <span class="material-icons-round text-gray-500">desktop_windows</span>
-                    </div>
-                    <div class="ml-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Apps de Escritorio</h3>
-                        <p class="text-sm text-gray-500">Próximamente</p>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex justify-between text-sm text-gray-600 mb-1">
-                        <span>Progreso General</span>
-                        <span class="font-bold text-gray-500">0%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="bg-gray-400 h-2.5 rounded-full" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-                <a href="#" class="text-sm font-medium text-gray-500 cursor-not-allowed">Ver detalles del curso</a>
-            </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>

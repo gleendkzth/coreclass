@@ -8,58 +8,64 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
     exit;
 }
 ?>
-<div class="container mx-auto px-4 py-8 h-full">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Comunicaciones</h1>
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Anuncios Globales</h1>
+    <p class="text-gray-600 mb-8">Publica mensajes importantes para todos los miembros de la institución.</p>
 
-    <div class="flex h-[calc(100vh-200px)] bg-white shadow-lg rounded-lg">
-        <!-- Lista de Canales -->
-        <div class="w-1/4 border-r border-gray-200">
-            <div class="p-4 border-b">
-                <h2 class="text-lg font-semibold">Canales</h2>
+    <!-- Formulario para Nuevo Anuncio -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 mb-8">
+        <div class="flex items-start gap-4">
+                        <div class="h-11 w-11 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium shadow">
+                <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
             </div>
-            <nav class="p-2 space-y-1">
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg bg-gray-200 text-gray-900">
-                    <span class="material-icons-round mr-3">campaign</span> Anuncios Globales
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100">
-                    <span class="material-icons-round mr-3">group</span> Docentes
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 text-sm font-medium rounded-lg text-gray-600 hover:bg-gray-100">
-                    <span class="material-icons-round mr-3">school</span> Estudiantes
-                </a>
-            </nav>
+            <div class="flex-1">
+                <textarea rows="3" class="w-full p-3 border-gray-200 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 transition-all duration-200 resize-none" placeholder="Escribe un nuevo anuncio..."></textarea>
+                <div class="flex justify-end items-center mt-3">
+                    <button class="bg-red-700 text-white font-semibold rounded-lg px-6 py-2.5 hover:bg-red-800 transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Publicar Anuncio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historial de Anuncios -->
+    <div class="space-y-6">
+        <h2 class="text-2xl font-bold text-gray-700 border-b pb-3 mb-4">Historial de Anuncios</h2>
+
+        <!-- Anuncio de ejemplo 1 -->
+        <div class="bg-white p-5 rounded-2xl shadow-md border border-gray-100">
+            <div class="flex items-start gap-4">
+                                <div class="h-10 w-10 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
+                    <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Administrador</p>
+                    <p class="text-xs text-gray-500">Publicado el 26 de Octubre a las 10:30 AM</p>
+                </div>
+            </div>
+            <div class="mt-4 pl-14">
+                <p class="text-gray-700">
+                    <strong>Recordatorio Importante:</strong> La próxima semana inician las inscripciones para el semestre 2025-I. Asegúrense de revisar sus horarios y requisitos.
+                </p>
+            </div>
         </div>
 
-        <!-- Área de Chat -->
-        <div class="w-3/4 flex flex-col">
-            <!-- Cabecera del Chat -->
-            <div class="p-4 border-b flex items-center">
-                <h2 class="text-lg font-semibold text-gray-800"># Anuncios Globales</h2>
-            </div>
-
-            <!-- Historial de Mensajes -->
-            <div class="flex-1 p-6 overflow-y-auto space-y-6">
-                <!-- Mensaje de ejemplo -->
-                <div class="flex items-start gap-3">
-                    <img class="h-10 w-10 rounded-full" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Admin">
-                    <div>
-                        <p class="font-semibold">Administrador <span class="text-xs text-gray-500 font-normal ml-2">10:30 AM</span></p>
-                        <div class="bg-gray-100 p-3 rounded-lg mt-1">
-                            <p>Recordatorio: La próxima semana inician las inscripciones para el semestre 2025-I.</p>
-                        </div>
-                    </div>
+        <!-- Anuncio de ejemplo 2 -->
+        <div class="bg-white p-5 rounded-2xl shadow-md border border-gray-100">
+            <div class="flex items-start gap-4">
+                                <div class="h-10 w-10 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
+                    <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-800">Administrador</p>
+                    <p class="text-xs text-gray-500">Publicado el 24 de Octubre a las 03:15 PM</p>
                 </div>
             </div>
-
-            <!-- Editor y Envío -->
-            <div class="p-4 bg-gray-50 border-t">
-                <div class="relative">
-                    <textarea rows="3" class="w-full p-2 pr-20 border-gray-300 rounded-lg shadow-sm" placeholder="Escribe un mensaje en #Anuncios Globales..."></textarea>
-                    <div class="absolute top-0 right-0 p-2 flex items-center">
-                        <button class="text-gray-500 hover:text-gray-700 p-2"><span class="material-icons-round">attach_file</span></button>
-                        <button class="bg-blue-500 text-white rounded-full p-2 ml-2 hover:bg-blue-600"><span class="material-icons-round">send</span></button>
-                    </div>
-                </div>
+            <div class="mt-4 pl-14">
+                <p class="text-gray-700">
+                    Bienvenidos al nuevo sistema CoreClass
+                </p>
             </div>
         </div>
     </div>

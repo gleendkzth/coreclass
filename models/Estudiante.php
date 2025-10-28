@@ -61,5 +61,28 @@ class Estudiante {
             return false;
         }
     }
+
+    // Obtener los cursos en los que un estudiante está matriculado por su id_usuario
+    public function obtenerCursosPorIdUsuario($id_usuario) {
+        $sql = "SELECT 
+                    c.id_curso,
+                    c.nombre AS nombre_curso,
+                    c.semestre,
+                    CONCAT(u_docente.primer_nombre, ' ', u_docente.apellido_paterno) AS nombre_docente
+                FROM matricula m
+                JOIN estudiante e ON m.id_estudiante = e.id_estudiante
+                JOIN curso c ON m.id_programa = c.id_programa AND m.semestre = c.semestre
+                LEFT JOIN docente d ON c.id_docente = d.id_docente
+                LEFT JOIN usuario u_docente ON d.id_usuario = u_docente.id_usuario
+                WHERE e.id_usuario = ?
+                ORDER BY c.semestre, c.nombre";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $id_usuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>

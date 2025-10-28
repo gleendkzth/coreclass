@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2025 a las 23:24:15
+-- Tiempo de generación: 27-10-2025 a las 22:04:08
 -- Versión del servidor: 11.8.3-MariaDB-0+deb13u1 from Debian
 -- Versión de PHP: 8.2.12
 
@@ -60,7 +60,15 @@ CREATE TABLE `asistencia` (
 --
 
 INSERT INTO `asistencia` (`id_asistencia`, `id_matricula_curso`, `fecha`, `id_docente`, `observaciones`) VALUES
-(1, 1, '2025-10-20', 4, NULL);
+(1, 1, '2025-10-20', 4, NULL),
+(2, 1, '2025-10-01', 4, NULL),
+(3, 1, '2025-10-03', 4, NULL),
+(4, 1, '2025-10-01', 4, NULL),
+(5, 1, '2025-10-03', 4, NULL),
+(6, 1, '2025-10-08', 4, NULL),
+(7, 1, '2025-10-20', 4, NULL),
+(8, 1, '2025-10-07', 4, NULL),
+(9, 1, '2025-10-09', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -123,7 +131,25 @@ CREATE TABLE `detalle_asistencia` (
 --
 
 INSERT INTO `detalle_asistencia` (`id_detalle`, `id_asistencia`, `id_estudiante`, `estado`, `hora_marcada`, `observacion`) VALUES
-(1, 1, 1, 'P', '08:04:52', NULL);
+(1, 1, 1, 'P', '21:08:19', NULL),
+(2, 2, 1, 'P', '21:08:19', NULL),
+(3, 3, 1, 'T', '21:08:19', NULL),
+(4, 4, 1, 'P', '21:13:23', NULL),
+(5, 5, 1, 'T', '21:13:23', NULL),
+(6, 6, 1, 'P', '21:13:23', NULL),
+(7, 7, 1, 'P', '21:13:23', NULL),
+(8, 2, 1, 'P', '21:37:09', NULL),
+(9, 3, 1, 'T', '21:37:09', NULL),
+(10, 8, 1, 'P', '21:37:09', NULL),
+(11, 6, 1, 'P', '21:37:09', NULL),
+(12, 9, 1, 'P', '21:37:09', NULL),
+(13, 1, 1, 'P', '21:37:09', NULL),
+(14, 2, 1, 'P', '21:42:17', NULL),
+(15, 3, 1, 'T', '21:42:17', NULL),
+(16, 8, 1, 'P', '21:42:17', NULL),
+(17, 6, 1, 'P', '21:42:17', NULL),
+(18, 9, 1, 'P', '21:42:17', NULL),
+(19, 1, 1, 'P', '21:42:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -272,6 +298,18 @@ CREATE TABLE `notas` (
   `fecha_registro` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`id_calificacion`, `id_estudiante`, `id_curso`, `nombre_nota`, `valor_nota`, `fecha_registro`) VALUES
+(1, 1, 1, 'il1_n1', 12.00, '2025-10-27 02:18:58'),
+(2, 1, 1, 'il1_n2', 12.00, '2025-10-27 02:18:58'),
+(3, 1, 1, 'il1_n3', 12.00, '2025-10-27 02:18:58'),
+(4, 1, 2, 'il1_n1', 15.00, '2025-10-27 02:19:21'),
+(5, 1, 2, 'il1_n2', 18.00, '2025-10-27 02:19:21'),
+(6, 1, 2, 'il1_n3', 20.00, '2025-10-27 02:19:21');
+
 -- --------------------------------------------------------
 
 --
@@ -308,6 +346,55 @@ CREATE TABLE `semestre` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_fin` date DEFAULT NULL,
   `estado` enum('Activo','Finalizado','Pendiente') DEFAULT 'Activo'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea`
+--
+
+CREATE TABLE `tarea` (
+  `id_tarea` int(11) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `id_docente` int(11) NOT NULL,
+  `id_programa` int(11) NOT NULL,
+  `semestre` varchar(10) NOT NULL,
+  `titulo` varchar(150) NOT NULL,
+  `instrucciones` text DEFAULT NULL,
+  `archivo_apoyo` varchar(255) DEFAULT NULL,
+  `fecha_publicacion` datetime DEFAULT current_timestamp(),
+  `fecha_limite` datetime DEFAULT NULL,
+  `puntaje_maximo` int(11) NOT NULL DEFAULT 20
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tarea`
+--
+
+INSERT INTO `tarea` (`id_tarea`, `id_curso`, `id_docente`, `id_programa`, `semestre`, `titulo`, `instrucciones`, `archivo_apoyo`, `fecha_publicacion`, `fecha_limite`, `puntaje_maximo`) VALUES
+(1, 1, 4, 2, 'I', 'ee', 'ee', NULL, '2025-10-26 21:55:37', '2025-10-29 00:00:00', 20),
+(2, 2, 4, 2, 'I', 'Proyecto final', 'eeeoo', NULL, '2025-10-26 22:00:01', '2025-10-26 00:00:00', 20),
+(3, 4, 4, 3, 'V', 'aaee', 'aas', NULL, '2025-10-26 22:05:26', '2025-10-25 00:00:00', 20),
+(4, 1, 4, 2, 'I', 'main', 'asasas', NULL, '2025-10-26 22:20:09', '2025-10-18 00:00:00', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea_entrega`
+--
+
+CREATE TABLE `tarea_entrega` (
+  `id_entrega` int(11) NOT NULL,
+  `id_tarea` int(11) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
+  `id_programa` int(11) NOT NULL,
+  `semestre` varchar(10) NOT NULL,
+  `archivo` varchar(255) DEFAULT NULL,
+  `comentario` text DEFAULT NULL,
+  `fecha_entrega` datetime DEFAULT current_timestamp(),
+  `calificacion` decimal(5,2) DEFAULT NULL,
+  `observacion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -462,6 +549,24 @@ ALTER TABLE `semestre`
   ADD PRIMARY KEY (`id_semestre`);
 
 --
+-- Indices de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD PRIMARY KEY (`id_tarea`),
+  ADD KEY `id_curso` (`id_curso`),
+  ADD KEY `id_docente` (`id_docente`),
+  ADD KEY `id_programa` (`id_programa`);
+
+--
+-- Indices de la tabla `tarea_entrega`
+--
+ALTER TABLE `tarea_entrega`
+  ADD PRIMARY KEY (`id_entrega`),
+  ADD KEY `id_tarea` (`id_tarea`),
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_programa` (`id_programa`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -484,7 +589,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
@@ -502,7 +607,7 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `detalle_asistencia`
 --
 ALTER TABLE `detalle_asistencia`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
@@ -550,7 +655,7 @@ ALTER TABLE `matricula_curso`
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `programa_estudio`
@@ -563,6 +668,18 @@ ALTER TABLE `programa_estudio`
 --
 ALTER TABLE `semestre`
   MODIFY `id_semestre` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea_entrega`
+--
+ALTER TABLE `tarea_entrega`
+  MODIFY `id_entrega` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -659,6 +776,22 @@ ALTER TABLE `matricula_curso`
 ALTER TABLE `notas`
   ADD CONSTRAINT `notas_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`) ON DELETE CASCADE,
   ADD CONSTRAINT `notas_ibfk_2` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `tarea`
+--
+ALTER TABLE `tarea`
+  ADD CONSTRAINT `tarea_ibfk_1` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id_curso`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tarea_ibfk_2` FOREIGN KEY (`id_docente`) REFERENCES `docente` (`id_docente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tarea_ibfk_3` FOREIGN KEY (`id_programa`) REFERENCES `programa_estudio` (`id_programa`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `tarea_entrega`
+--
+ALTER TABLE `tarea_entrega`
+  ADD CONSTRAINT `tarea_entrega_ibfk_1` FOREIGN KEY (`id_tarea`) REFERENCES `tarea` (`id_tarea`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tarea_entrega_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tarea_entrega_ibfk_3` FOREIGN KEY (`id_programa`) REFERENCES `programa_estudio` (`id_programa`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

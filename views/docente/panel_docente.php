@@ -53,8 +53,13 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
         <header class="bg-red-800 border-b border-red-700 shadow-sm w-full">
             <div class="w-full px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16 w-full">
-                    <!-- logo -->
-                    <div class="flex items-center group">
+                    <!-- logo y menu toggle -->
+                    <div class="flex items-center">
+                        <!-- boton amburguesa para moviles -->
+                        <button id="menu-toggle" class="mr-4 p-2 rounded-md text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lg:hidden">
+                            <span class="sr-only">Abrir menú principal</span>
+                            <span class="material-icons-round">menu</span>
+                        </button>
                         <h1 class="text-3xl">
                             <span class="logo-sora relative">
                                 <span class="relative z-10">
@@ -99,43 +104,42 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 <p class="text-sm font-medium text-white"><?php echo $_SESSION['primer_nombre']; ?> <?php echo $_SESSION['apellido_paterno']; ?></p>
                                 <p class="text-xs text-gray-300">Docente</p>
                             </div>
-                            <div class="relative group">
-                                <button id="user-menu-button" class="flex items-center space-x-1 focus:outline-none">
-                                    <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
-                                        <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
-                                    </div>
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div id="user-menu-dropdown" 
-                                     class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 transition-all duration-200 ease-out transform origin-top-right scale-95 opacity-0"
-                                     data-transition-enter="transition ease-out duration-100"
-                                     data-transition-enter-start="transform opacity-0 scale-95"
-                                     data-transition-enter-end="transform opacity-100 scale-100"
-                                     data-transition-leave="transition ease-in duration-75"
-                                     data-transition-leave-start="transform opacity-100 scale-100"
-                                     data-transition-leave-end="transform opacity-0 scale-95">
-                                    <div class="px-4 py-3 border-b border-gray-200">
-                                        <p class="text-sm font-semibold text-gray-800 truncate">
-                                            <?php echo htmlspecialchars($_SESSION['nombre_completo']); ?>
-                                        </p>
-                                        <p class="text-xs text-gray-500 truncate">
-                                            Docente
-                                        </p>
-                                    </div>
-                                    <div class="py-1">
-                                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150">
-                                            <span class="material-icons-round text-base mr-3">account_circle</span>
-                                            Mi Cuenta
-                                        </a>
-                                    </div>
-                                    <div class="py-1 border-t border-gray-200">
-                                        <a href="#" onclick="confirmLogout()" class="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150">
-                                            <span class="material-icons-round text-base mr-3">logout</span>
-                                            Cerrar Sesión
-                                        </a>
-                                    </div>
+                        </div>
+                        <div class="relative group">
+                            <button id="user-menu-button" class="flex items-center space-x-1 focus:outline-none">
+                                <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
+                                    <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
                                 </div>
-                                
+                            </button>
+                            <!-- Dropdown menu -->
+                            <div id="user-menu-dropdown" 
+                                    class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden z-20 transition-all duration-200 ease-out transform origin-top-right scale-95 opacity-0"
+                                    data-transition-enter="transition ease-out duration-100"
+                                    data-transition-enter-start="transform opacity-0 scale-95"
+                                    data-transition-enter-end="transform opacity-100 scale-100"
+                                    data-transition-leave="transition ease-in duration-75"
+                                    data-transition-leave-start="transform opacity-100 scale-100"
+                                    data-transition-leave-end="transform opacity-0 scale-95">
+                                <div class="px-4 py-3 border-b border-gray-200">
+                                    <p class="text-sm font-semibold text-gray-800 truncate">
+                                        <?php echo htmlspecialchars($_SESSION['nombre_completo']); ?>
+                                    </p>
+                                    <p class="text-xs text-gray-500 truncate">
+                                        Docente
+                                    </p>
+                                </div>
+                                <div class="py-1">
+                                    <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150">
+                                        <span class="material-icons-round text-base mr-3">account_circle</span>
+                                        Mi Cuenta
+                                    </a>
+                                </div>
+                                <div class="py-1 border-t border-gray-200">
+                                    <a href="#" onclick="confirmLogout()" class="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-150">
+                                        <span class="material-icons-round text-base mr-3">logout</span>
+                                        Cerrar Sesión
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -144,41 +148,62 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
         </header>
         <div class="flex flex-1 overflow-hidden">
             <!-- Barra lateral -->
-            <aside class="w-64 bg-white shadow-lg flex flex-col h-full z-30 transition-all duration-300 ease-in-out transform -translate-x-full lg:translate-x-0" id="sidebar">
+            <!-- Barra lateral -->
+            <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg flex flex-col transition-transform duration-300 ease-in-out transform -translate-x-full lg:relative lg:translate-x-0 lg:w-20 lg:hover:w-64 group">
+
                 <!-- contenido del menú con scroll interno -->
                 <div class="flex-1 flex flex-col overflow-hidden">
+                    <!-- cabecera del sidebar para móviles -->
+                    <div class="p-4 lg:hidden">
+                        <h2 class="text-2xl text-gray-800 logo-sora">
+                            <span class="text-red-700">Core</span><span class="text-gray-700">Class</span>
+                        </h2>
+                    </div>
+                    <div class="px-2 lg:hidden">
+                        <hr class="border-gray-200"/>
+                    </div>
             
                     <!-- menú de navegación -->
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Inicio -->
-                            <a href="#" data-page="inicio" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">home</span>
-                                <span>Inicio</span>
+                            <a href="#" data-page="inicio" class="flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                                <div class="w-12 flex justify-center items-center">
+                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">home</span>
+                                </div>
+                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Inicio</span>
                             </a>
 
                             <!-- Mis Cursos -->
-                            <a href="#" data-page="mis_cursos" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">school</span>
-                                <span>Mis Cursos</span>
+                            <a href="#" data-page="mis_cursos" class="flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                                <div class="w-12 flex justify-center items-center">
+                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">school</span>
+                                </div>
+                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Mis Cursos</span>
                             </a>
 
                             <!-- Notas -->
-                            <a href="#" data-page="notas" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">grade</span>
-                                <span>Notas</span>
+                            <a href="#" data-page="notas" class="flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                                <div class="w-12 flex justify-center items-center">
+                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">grade</span>
+                                </div>
+                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Notas</span>
                             </a>
 
                             <!-- Asistencia -->
-                            <a href="#" data-page="asistencia" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">event_available</span>
-                                <span>Asistencia</span>
+                            <a href="#" data-page="asistencia" class="flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                                <div class="w-12 flex justify-center items-center">
+                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">event_available</span>
+                                </div>
+                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Asistencia</span>
                             </a>
 
                             <!-- Tareas -->
-                            <a href="#" data-page="tareas" class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 group mb-1 nav-link">
-                                <span class="material-icons-round mr-3 text-lg text-gray-500 group-hover:text-gray-700">assignment</span>
-                                <span>Tareas</span>
+                            <a href="#" data-page="tareas" class="flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                                <div class="w-12 flex justify-center items-center">
+                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">assignment</span>
+                                </div>
+                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Tareas</span>
                             </a>
 
                         </div>
@@ -188,7 +213,8 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             </aside>
 
             <!-- Contenido principal -->
-            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8">
+            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8 lg:ml-20">
+
                 <!-- contenido dinámicamente -->
             </main>
         </div>
@@ -198,6 +224,8 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('contenido-principal');
+            const menuToggle = document.getElementById('menu-toggle');
+            let backdrop = null;
             const navLinks = document.querySelectorAll('.nav-link');
 
             // función para cargar contenido
@@ -280,33 +308,78 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
 
                     loadContent(page);
 
-                    // cerrar sidebar en móvil
+                            // cerrar sidebar en móvil
                     if (window.innerWidth < 1024) {
                         sidebar.classList.add('-translate-x-full');
+                        if(backdrop) backdrop.remove();
+                        backdrop = null;
                     }
                 });
             });
 
-            // lógica para el menú lateral
-            const menuToggle = document.getElementById('menu-toggle');
-            if (menuToggle) {
-                menuToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('-translate-x-full');
-                });
-            }
-            
-            function handleResize() {
-                if (window.innerWidth >= 1024) {
+            // lógica para el menú lateral responsivo
+            function toggleSidebar() {
+                if (sidebar.classList.contains('-translate-x-full')) {
                     sidebar.classList.remove('-translate-x-full');
+                    // crear y mostrar el backdrop
+                    if (!backdrop) {
+                        backdrop = document.createElement('div');
+                        backdrop.className = 'fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden';
+                        document.body.appendChild(backdrop);
+                        backdrop.addEventListener('click', toggleSidebar);
+                    }
                 } else {
-                    if (!sidebar.classList.contains('manual-toggle')) {
-                       sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.add('-translate-x-full');
+                    // eliminar el backdrop
+                    if (backdrop) {
+                        backdrop.remove();
+                        backdrop = null;
                     }
                 }
             }
-            
-            handleResize();
-            window.addEventListener('resize', handleResize);
+
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleSidebar();
+            });
+
+            // ajustar el estado del sidebar en resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) {
+                    sidebar.classList.remove('-translate-x-full');
+                    if (backdrop) {
+                        backdrop.remove();
+                        backdrop = null;
+                    }
+                    mainContent.style.marginLeft = sidebar.classList.contains('lg:w-20') ? '5rem' : '16rem';
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    mainContent.style.marginLeft = '0';
+                }
+            });
+
+            // ajustar el margen del contenido principal según el estado de la barra lateral en escritorio
+            const observer = new MutationObserver(() => {
+                if (window.innerWidth >= 1024) {
+                    if (sidebar.classList.contains('lg:hover:w-64') && sidebar.matches(':hover')) {
+                        mainContent.style.marginLeft = '16rem';
+                    } else {
+                        mainContent.style.marginLeft = '5rem';
+                    }
+                }
+            });
+
+            sidebar.addEventListener('mouseenter', () => {
+                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '16rem';
+            });
+            sidebar.addEventListener('mouseleave', () => {
+                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '5rem';
+            });
+
+            // inicializar margen
+            if (window.innerWidth >= 1024) {
+                mainContent.style.marginLeft = '5rem';
+            }
 
             // gestión global de dropdowns para que solo uno esté abierto a la vez
             const dropdowns = [];
