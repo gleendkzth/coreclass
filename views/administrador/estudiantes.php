@@ -131,6 +131,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = 'Faltan datos para actualizar.';
             }
             break;
+
+        case 'eliminar':
+            if (!empty($id_usuario)) {
+                $sql = "DELETE FROM usuario WHERE id_usuario = ? AND rol = 'estudiante'";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('i', $id_usuario);
+                if ($stmt->execute()) {
+                    $success = 'Estudiante eliminado exitosamente.';
+                } else {
+                    $error = 'Error al eliminar el estudiante.';
+                }
+            }
+            break;
     }
 }
 
@@ -174,8 +187,19 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     <?php if ($error) echo "<div class='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4'>$error</div>"; ?>
     <?php if ($success) echo "<div class='bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4'>$success</div>"; ?>
 
+    <!-- Botón para mostrar/ocultar formulario -->
+    <div class="flex justify-end mb-4">
+        <button id="toggleFormBtnEstudiantes" 
+                class="px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-semibold rounded-lg hover:from-red-800 hover:to-red-900 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            <span id="btnTextEstudiantes">Registrar Nuevo Estudiante</span>
+        </button>
+    </div>
+
     <!-- Formulario para Crear o Editar Estudiante -->
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+    <div id="formContainerEstudiantes" class="bg-white p-6 rounded-lg shadow-lg mb-8 <?php echo $estudiante_a_editar ? '' : 'hidden'; ?>">
         <h2 class="text-xl font-semibold text-gray-700 mb-4"><?php echo $estudiante_a_editar ? 'Editar' : 'Añadir Nuevo'; ?> Estudiante</h2>
         <form action="estudiantes.php" method="POST">
             <input type="hidden" name="accion" value="<?php echo $estudiante_a_editar ? 'editar' : 'crear'; ?>">
@@ -222,36 +246,62 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     </div>
 
     <!-- Tabla de Estudiantes -->
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Estudiantes Registrados</h2>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Estudiantes Registrados</h2>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-4 py-2 text-left">DNI</th>
-                        <th class="px-4 py-2 text-left">Nombre Completo</th>
-                        <th class="px-4 py-2 text-left">Código</th>
-                        <th class="px-4 py-2 text-left">Correo</th>
-                        <th class="px-4 py-2 text-left">Programa</th>
-                        <th class="px-4 py-2 text-left">Semestre</th>
-                        <th class="px-4 py-2 text-left">Estado</th>
-                        <th class="px-4 py-2 text-right">Acciones</th>
+            <table class="min-w-full">
+                <thead>
+                    <tr class="bg-gradient-to-r from-red-800 to-red-900 text-white">
+                        <th class="px-4 py-3 text-left text-sm font-semibold">DNI</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Nombre Completo</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Código</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Correo</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Programa</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Semestre</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Estado</th>
+                        <th class="px-4 py-3 text-right text-sm font-semibold">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y">
+                <tbody class="divide-y divide-gray-200">
                     <?php if (empty($estudiantes)): ?>
-                        <tr><td colspan="8" class="p-4 text-center text-gray-500">No hay estudiantes registrados.</td></tr>
-                    <?php else: foreach ($estudiantes as $est): ?>
                         <tr>
-                            <td class="p-2"><?php echo htmlspecialchars($est['dni']); ?></td>
-                            <td class="p-2"><?php echo htmlspecialchars(trim($est['apellido_paterno'] . ' ' . $est['apellido_materno'] . ', ' . $est['primer_nombre'] . ' ' . $est['segundo_nombre'])); ?></td>
-                            <td class="p-2"><?php echo htmlspecialchars($est['codigo_estudiante']); ?></td>
-                            <td class="p-2"><?php echo htmlspecialchars($est['correo']); ?></td>
-                            <td class="p-2"><?php echo htmlspecialchars($est['nombre_programa']); ?></td>
-                            <td class="p-2"><?php echo htmlspecialchars($est['semestre']); ?></td>
-                            <td class="p-2"><span class="px-2 py-1 font-semibold leading-tight <?php echo $est['estado_usuario'] ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'; ?> rounded-full"><?php echo $est['estado_usuario'] ? 'Activo' : 'Inactivo'; ?></span></td>
-                            <td class="p-2 text-right">
-                                <a href="estudiantes.php?accion=mostrar_editar&id_usuario=<?php echo $est['id_usuario']; ?>" class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                            <td colspan="8" class="px-6 py-8 text-center">
+                                <div class="bg-blue-50 border border-blue-200 text-blue-800 p-6 rounded-lg">
+                                    <h3 class="font-semibold text-lg">No hay estudiantes registrados</h3>
+                                    <p class="mt-1">Cuando agregues un estudiante, aparecerá aquí.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php else: foreach ($estudiantes as $est): ?>
+                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                            <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-800"><?php echo htmlspecialchars($est['dni']); ?></td>
+                            <td class="px-4 py-3 text-xs font-semibold text-gray-900"><?php echo htmlspecialchars(trim($est['apellido_paterno'] . ' ' . $est['apellido_materno'] . ', ' . $est['primer_nombre'] . ' ' . $est['segundo_nombre'])); ?></td>
+                            <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-700"><?php echo htmlspecialchars($est['codigo_estudiante']); ?></td>
+                            <td class="px-4 py-3 text-xs text-gray-600"><?php echo htmlspecialchars($est['correo']); ?></td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <?php echo htmlspecialchars($est['nombre_programa']); ?>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
+                                    <?php echo htmlspecialchars($est['semestre']); ?>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-flex items-center px-2 py-1 text-xs font-semibold leading-tight <?php echo $est['estado_usuario'] ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'; ?> rounded-full">
+                                    <?php echo $est['estado_usuario'] ? 'Activo' : 'Inactivo'; ?>
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <div class="flex justify-end items-center space-x-2">
+                                    <a href="estudiantes.php?accion=mostrar_editar&id_usuario=<?php echo $est['id_usuario']; ?>" class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors">Editar</a>
+                                    <form action="estudiantes.php" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este estudiante?');">
+                                        <input type="hidden" name="accion" value="eliminar">
+                                        <input type="hidden" name="id_usuario" value="<?php echo $est['id_usuario']; ?>">
+                                        <button type="submit" class="text-xs font-medium text-red-600 hover:text-red-800 transition-colors">Eliminar</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; endif; ?>
@@ -260,3 +310,34 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
         </div>
     </div>
 </div>
+
+<script>
+// Script para mostrar/ocultar el formulario de registro de estudiantes
+const toggleBtnEstudiantes = document.getElementById('toggleFormBtnEstudiantes');
+const formContainerEstudiantes = document.getElementById('formContainerEstudiantes');
+const btnTextEstudiantes = document.getElementById('btnTextEstudiantes');
+
+// Inicializar el estado del botón al cargar la página
+if (formContainerEstudiantes && !formContainerEstudiantes.classList.contains('hidden')) {
+    btnTextEstudiantes.textContent = 'Ocultar Registro';
+    toggleBtnEstudiantes.querySelector('svg path').setAttribute('d', 'M20 12H4');
+}
+
+if (toggleBtnEstudiantes) {
+    toggleBtnEstudiantes.addEventListener('click', function() {
+        if (formContainerEstudiantes.classList.contains('hidden')) {
+            // Mostrar formulario
+            formContainerEstudiantes.classList.remove('hidden');
+            btnTextEstudiantes.textContent = 'Ocultar Registro';
+            // Cambiar icono a minus
+            this.querySelector('svg path').setAttribute('d', 'M20 12H4');
+        } else {
+            // Ocultar formulario
+            formContainerEstudiantes.classList.add('hidden');
+            btnTextEstudiantes.textContent = 'Registrar Nuevo Estudiante';
+            // Cambiar icono a plus
+            this.querySelector('svg path').setAttribute('d', 'M12 4v16m8-8H4');
+        }
+    });
+}
+</script>

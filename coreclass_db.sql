@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-10-2025 a las 22:04:08
--- Versión del servidor: 11.8.3-MariaDB-0+deb13u1 from Debian
+-- Tiempo de generación: 28-10-2025 a las 22:37:43
+-- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 
 --
 -- Base de datos: `coreclass_db`
---
+USE `coreclass_db`;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,30 @@ INSERT INTO `asistencia` (`id_asistencia`, `id_matricula_curso`, `fecha`, `id_do
 (6, 1, '2025-10-08', 4, NULL),
 (7, 1, '2025-10-20', 4, NULL),
 (8, 1, '2025-10-07', 4, NULL),
-(9, 1, '2025-10-09', 4, NULL);
+(9, 1, '2025-10-09', 4, NULL),
+(10, 1, '2025-10-13', 4, NULL),
+(11, 1, '2025-10-14', 4, NULL),
+(12, 1, '2025-10-15', 4, NULL),
+(13, 1, '2025-10-16', 4, NULL),
+(14, 1, '2025-10-02', 4, NULL),
+(15, 1, '2025-10-06', 4, NULL),
+(16, 1, '2025-10-10', 4, NULL),
+(17, 1, '2025-10-17', 4, NULL),
+(18, 1, '2025-10-21', 4, NULL),
+(19, 1, '2025-10-31', 4, NULL),
+(20, 1, '2025-10-30', 4, NULL),
+(21, 1, '2025-10-22', 4, NULL),
+(22, 1, '2025-10-23', 4, NULL),
+(23, 1, '2025-10-24', 4, NULL),
+(24, 1, '2025-10-27', 4, NULL),
+(25, 1, '2025-10-28', 4, NULL),
+(26, 1, '2025-10-29', 4, NULL),
+(27, 3, '2025-10-01', 4, NULL),
+(28, 2, '2025-10-14', 4, NULL),
+(29, 5, '2025-10-01', 4, NULL),
+(30, 4, '2025-10-01', 4, NULL),
+(31, 2, '2025-10-01', 4, NULL),
+(32, 2, '2025-10-02', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -106,10 +129,10 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`id_curso`, `id_programa`, `id_docente`, `nombre`, `descripcion`, `creditos`, `semestre`, `fecha_inicio`, `fecha_fin`) VALUES
-(1, 2, 4, 'Administracion web', '0', 4, 'I', '2025-10-01', '2025-10-31'),
+(1, 2, 4, 'Administracion web', '', 4, 'I', '2025-10-01', '2025-10-31'),
 (2, 2, 4, 'Base de datos', '', 2, 'I', '2025-10-01', '2025-10-31'),
 (4, 3, 4, 'arroz', '', 2, 'V', '2025-10-01', '2025-10-09'),
-(5, 13, 6, 'Introducción al Software', '', 4, 'I', '2026-04-13', '2027-06-23');
+(5, 13, 4, 'Introducción al Software', '', 4, 'II', '2026-04-13', '2027-06-23');
 
 -- --------------------------------------------------------
 
@@ -131,25 +154,38 @@ CREATE TABLE `detalle_asistencia` (
 --
 
 INSERT INTO `detalle_asistencia` (`id_detalle`, `id_asistencia`, `id_estudiante`, `estado`, `hora_marcada`, `observacion`) VALUES
-(1, 1, 1, 'P', '21:08:19', NULL),
-(2, 2, 1, 'P', '21:08:19', NULL),
-(3, 3, 1, 'T', '21:08:19', NULL),
+(1, 1, 1, 'P', '10:05:25', NULL),
+(2, 2, 1, 'P', '10:05:25', NULL),
+(3, 3, 1, 'T', '10:05:25', NULL),
 (4, 4, 1, 'P', '21:13:23', NULL),
 (5, 5, 1, 'T', '21:13:23', NULL),
-(6, 6, 1, 'P', '21:13:23', NULL),
+(6, 6, 1, 'P', '10:05:25', NULL),
 (7, 7, 1, 'P', '21:13:23', NULL),
-(8, 2, 1, 'P', '21:37:09', NULL),
-(9, 3, 1, 'T', '21:37:09', NULL),
-(10, 8, 1, 'P', '21:37:09', NULL),
-(11, 6, 1, 'P', '21:37:09', NULL),
-(12, 9, 1, 'P', '21:37:09', NULL),
-(13, 1, 1, 'P', '21:37:09', NULL),
-(14, 2, 1, 'P', '21:42:17', NULL),
-(15, 3, 1, 'T', '21:42:17', NULL),
-(16, 8, 1, 'P', '21:42:17', NULL),
-(17, 6, 1, 'P', '21:42:17', NULL),
-(18, 9, 1, 'P', '21:42:17', NULL),
-(19, 1, 1, 'P', '21:42:17', NULL);
+(10, 8, 1, 'P', '10:05:25', NULL),
+(12, 9, 1, 'P', '10:05:25', NULL),
+(20, 10, 1, 'P', '10:05:25', NULL),
+(21, 11, 1, 'P', '10:05:25', NULL),
+(22, 12, 1, 'P', '10:05:25', NULL),
+(23, 13, 1, 'T', '10:05:25', NULL),
+(24, 14, 1, 'P', '10:05:25', NULL),
+(25, 15, 1, 'P', '10:05:25', NULL),
+(26, 16, 1, 'P', '10:05:25', NULL),
+(27, 17, 1, 'P', '10:05:25', NULL),
+(28, 18, 1, 'J', '10:05:25', NULL),
+(29, 19, 1, 'P', '10:05:25', NULL),
+(30, 20, 1, 'F', '10:05:25', NULL),
+(31, 21, 1, 'P', '10:05:25', NULL),
+(32, 22, 1, 'T', '10:05:25', NULL),
+(33, 23, 1, 'P', '10:05:25', NULL),
+(34, 24, 1, 'T', '10:05:25', NULL),
+(35, 25, 1, 'J', '10:05:25', NULL),
+(36, 26, 1, 'P', '10:05:25', NULL),
+(37, 27, 2, 'J', '10:33:58', NULL),
+(38, 28, 1, 'J', '14:18:44', NULL),
+(39, 29, 4, 'T', '11:18:37', NULL),
+(40, 30, 3, 'P', '11:18:37', NULL),
+(41, 31, 1, 'P', '14:18:44', NULL),
+(42, 32, 1, 'P', '14:18:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -207,7 +243,8 @@ CREATE TABLE `estudiante` (
 INSERT INTO `estudiante` (`id_estudiante`, `id_usuario`, `codigo_estudiante`, `fecha_ingreso`) VALUES
 (1, 3, 'J26-24-002', '2025-03-01'),
 (2, 6, '2342k3nlk2n', '2025-10-03'),
-(3, 8, 'J24-26-085', '2025-10-01');
+(3, 8, 'J24-26-085', '2025-10-01'),
+(4, 9, 'Tony12', '2025-10-28');
 
 -- --------------------------------------------------------
 
@@ -261,8 +298,9 @@ CREATE TABLE `matricula` (
 
 INSERT INTO `matricula` (`id_matricula`, `id_estudiante`, `id_programa`, `semestre`, `fecha_matricula`, `estado`) VALUES
 (1, 1, 2, 'I', '2025-10-23', 'Activo'),
-(11, 2, 2, 'I', '2025-10-24', 'Activo'),
-(12, 3, 13, 'I', '2025-10-26', 'Activo');
+(11, 2, 3, 'V', '2025-10-24', 'Activo'),
+(12, 3, 13, 'II', '2025-10-26', 'Activo'),
+(13, 4, 13, 'II', '2025-10-28', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -281,7 +319,11 @@ CREATE TABLE `matricula_curso` (
 --
 
 INSERT INTO `matricula_curso` (`id_matricula_curso`, `id_matricula`, `id_curso`) VALUES
-(1, 1, 1);
+(1, 1, 1),
+(2, 1, 2),
+(3, 11, 4),
+(4, 12, 5),
+(5, 13, 5);
 
 -- --------------------------------------------------------
 
@@ -308,7 +350,13 @@ INSERT INTO `notas` (`id_calificacion`, `id_estudiante`, `id_curso`, `nombre_not
 (3, 1, 1, 'il1_n3', 12.00, '2025-10-27 02:18:58'),
 (4, 1, 2, 'il1_n1', 15.00, '2025-10-27 02:19:21'),
 (5, 1, 2, 'il1_n2', 18.00, '2025-10-27 02:19:21'),
-(6, 1, 2, 'il1_n3', 20.00, '2025-10-27 02:19:21');
+(6, 1, 2, 'il1_n3', 20.00, '2025-10-27 02:19:21'),
+(10, 1, 1, 'il2_n1', 14.00, '2025-10-28 14:42:44'),
+(11, 1, 1, 'il2_n2', 19.00, '2025-10-28 14:42:44'),
+(12, 1, 1, 'il2_n3', 15.00, '2025-10-28 14:42:44'),
+(13, 1, 1, 'il3_n1', 12.00, '2025-10-28 14:42:44'),
+(14, 1, 1, 'il3_n2', 15.00, '2025-10-28 14:42:44'),
+(15, 1, 1, 'il3_n3', 19.00, '2025-10-28 14:42:44');
 
 -- --------------------------------------------------------
 
@@ -373,7 +421,7 @@ CREATE TABLE `tarea` (
 --
 
 INSERT INTO `tarea` (`id_tarea`, `id_curso`, `id_docente`, `id_programa`, `semestre`, `titulo`, `instrucciones`, `archivo_apoyo`, `fecha_publicacion`, `fecha_limite`, `puntaje_maximo`) VALUES
-(1, 1, 4, 2, 'I', 'ee', 'ee', NULL, '2025-10-26 21:55:37', '2025-10-29 00:00:00', 20),
+(1, 1, 4, 2, 'I', 'eeooo', 'ee', NULL, '2025-10-26 21:55:37', '2025-10-29 00:00:00', 20),
 (2, 2, 4, 2, 'I', 'Proyecto final', 'eeeoo', NULL, '2025-10-26 22:00:01', '2025-10-26 00:00:00', 20),
 (3, 4, 4, 3, 'V', 'aaee', 'aas', NULL, '2025-10-26 22:05:26', '2025-10-25 00:00:00', 20),
 (4, 1, 4, 2, 'I', 'main', 'asasas', NULL, '2025-10-26 22:20:09', '2025-10-18 00:00:00', 12);
@@ -424,13 +472,14 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `dni`, `primer_nombre`, `segundo_nombre`, `apellido_paterno`, `apellido_materno`, `usuario`, `correo`, `contrasena`, `telefono`, `rol`, `estado`, `fecha_registro`) VALUES
-(1, '12345678', 'Elver', 'Fedver', 'Calcina', 'Condori', 'admin', 'administrador@coreclass.edu', '123456', NULL, 'administrador', 1, '2025-10-23 08:36:59'),
-(3, '11223344', 'Monica', '', 'Quill', 'Lype', 'monica', 'estudiante@coreclass.edu', '123456', '', 'estudiante', 1, '2025-10-23 08:36:59'),
+(1, '12345678', 'Main', 'Administrador', 'Core', 'Class', 'admin', 'administrador@coreclass.edu', '123456', NULL, 'administrador', 1, '2025-10-23 08:36:59'),
+(3, '11223344', 'Monica', '', 'Quill', 'Lye', 'monica', 'estudiante@coreclass.edu', '123456', '', 'estudiante', 1, '2025-10-23 08:36:59'),
 (4, '87654321', 'Antony', 'Howard', 'Tre', 'Spy', 'Anthony', 'docente@coreclass.edu', '123456', '', 'docente', 1, '2025-10-23 14:29:10'),
 (5, '12341234', 'Paul', '', 'Smith', 'Lau', 'paul', 'paul@coreclass.edu', 'paul1234', '', 'docente', 1, '2025-10-23 15:26:09'),
 (6, '123123123123', 'Mike', '', 'Smith', 'Ells', 'sdsvd', 'eee@coreclass.edu', '12345', '123123123123', 'estudiante', 1, '2025-10-24 08:42:45'),
 (7, '74964742', 'mirian', '', 'Paucar', 'Hualpa', 'MIRIAN ESMERALDA PAUCAR HUALPA', 'mia@gmail.com', '54321', '123456', 'docente', 1, '2025-10-26 16:18:30'),
-(8, '02296987', 'Enrique', 'Robert', 'Delgado', 'Coasaca', 'Enrrique', 'erdelco007@gmail.com', '123456', '977170735', 'estudiante', 1, '2025-10-26 16:22:52');
+(8, '02296987', 'Enrique', 'Robert', 'Delgado', 'Coasaca', 'Enrrique', 'erdelco007@gmail.com', '123456', '977170735', 'estudiante', 1, '2025-10-26 16:22:52'),
+(9, '12345', 'Thony', '', 'Sm', 'How', 'Tony', 'tony@gmail.com', '12345', '12345', 'estudiante', 1, '2025-10-28 10:39:53');
 
 --
 -- Índices para tablas volcadas
@@ -471,7 +520,7 @@ ALTER TABLE `curso`
 --
 ALTER TABLE `detalle_asistencia`
   ADD PRIMARY KEY (`id_detalle`),
-  ADD KEY `id_asistencia` (`id_asistencia`),
+  ADD UNIQUE KEY `idx_unica_asistencia` (`id_asistencia`,`id_estudiante`),
   ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
@@ -589,7 +638,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
@@ -607,7 +656,7 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `detalle_asistencia`
 --
 ALTER TABLE `detalle_asistencia`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
@@ -625,7 +674,7 @@ ALTER TABLE `docente_asignacion`
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `horario`
@@ -643,19 +692,19 @@ ALTER TABLE `material`
 -- AUTO_INCREMENT de la tabla `matricula`
 --
 ALTER TABLE `matricula`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `matricula_curso`
 --
 ALTER TABLE `matricula_curso`
-  MODIFY `id_matricula_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_matricula_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_calificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `programa_estudio`
@@ -685,7 +734,7 @@ ALTER TABLE `tarea_entrega`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas

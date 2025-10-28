@@ -149,8 +149,19 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
         </div>
     <?php endif; ?>
 
+    <!-- Botón para mostrar/ocultar formulario -->
+    <div class="flex justify-end mb-4">
+        <button id="toggleFormBtnDocentes" 
+                class="px-6 py-3 bg-gradient-to-r from-red-700 to-red-800 text-white font-semibold rounded-lg hover:from-red-800 hover:to-red-900 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            <span id="btnTextDocentes">Registrar Nuevo Docente</span>
+        </button>
+    </div>
+
     <!-- Formulario para Crear o Editar Docente -->
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+    <div id="formContainerDocentes" class="bg-white p-6 rounded-lg shadow-lg mb-8 <?php echo $docente_a_editar ? '' : 'hidden'; ?>">
         <h2 class="text-xl font-semibold text-gray-700 mb-4"><?php echo $docente_a_editar ? 'Editar' : 'Añadir Nuevo'; ?> Docente</h2>
         <form action="docentes.php" method="POST">
             <input type="hidden" name="accion" value="<?php echo $docente_a_editar ? 'editar' : 'crear'; ?>">
@@ -219,44 +230,51 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
     </div>
 
     <!-- Tabla de Docentes -->
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Docentes Registrados</h2>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Docentes Registrados</h2>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">DNI</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre Completo</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Usuario</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Correo</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Teléfono</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Especialidad</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Grado Académico</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Acciones</th>
+            <table class="min-w-full">
+                <thead>
+                    <tr class="bg-gradient-to-r from-red-800 to-red-900 text-white">
+                        <th class="px-4 py-3 text-left text-sm font-semibold">DNI</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Nombre Completo</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Usuario</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Correo</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Teléfono</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Especialidad</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold">Grado Académico</th>
+                        <th class="px-4 py-3 text-right text-sm font-semibold">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200">
                     <?php if (empty($docentes)) { ?>
                         <tr>
-                            <td colspan="8" class="px-6 py-4 text-center text-gray-500">No hay docentes registrados.</td>
+                            <td colspan="8" class="px-6 py-8 text-center">
+                                <div class="bg-blue-50 border border-blue-200 text-blue-800 p-6 rounded-lg">
+                                    <h3 class="font-semibold text-lg">No hay docentes registrados</h3>
+                                    <p class="mt-1">Cuando agregues un docente, aparecerá aquí.</p>
+                                </div>
+                            </td>
                         </tr>
                     <?php } else {
                         foreach ($docentes as $docente) { ?>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars($docente['dni']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo htmlspecialchars(trim($docente['apellido_paterno'] . ' ' . $docente['apellido_materno'] . ', ' . $docente['primer_nombre'] . ' ' . $docente['segundo_nombre'])); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['usuario']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['correo']); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600"><?php echo htmlspecialchars($docente['telefono'] ?? 'N/A'); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['especialidad'] ?? 'N/A'); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?php echo htmlspecialchars($docente['grado_academico'] ?? 'N/A'); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <a href="docentes.php?accion=mostrar_editar&id_usuario=<?php echo $docente['id_usuario']; ?>" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                                    <form action="docentes.php" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este docente?');">
-                                        <input type="hidden" name="accion" value="eliminar">
-                                        <input type="hidden" name="id_usuario" value="<?php echo $docente['id_usuario']; ?>">
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Eliminar</button>
-                                    </form>
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-800"><?php echo htmlspecialchars($docente['dni']); ?></td>
+                                <td class="px-4 py-3 text-xs font-semibold text-gray-900"><?php echo htmlspecialchars(trim($docente['apellido_paterno'] . ' ' . $docente['apellido_materno'] . ', ' . $docente['primer_nombre'] . ' ' . $docente['segundo_nombre'])); ?></td>
+                                <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-600"><?php echo htmlspecialchars($docente['usuario']); ?></td>
+                                <td class="px-4 py-3 text-xs text-gray-600"><?php echo htmlspecialchars($docente['correo']); ?></td>
+                                <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-600"><?php echo htmlspecialchars($docente['telefono'] ?? 'N/A'); ?></td>
+                                <td class="px-4 py-3 text-xs text-gray-700"><?php echo htmlspecialchars($docente['especialidad'] ?? 'N/A'); ?></td>
+                                <td class="px-4 py-3 text-xs text-gray-700"><?php echo htmlspecialchars($docente['grado_academico'] ?? 'N/A'); ?></td>
+                                <td class="px-4 py-3 text-right">
+                                    <div class="flex justify-end items-center space-x-2">
+                                        <a href="docentes.php?accion=mostrar_editar&id_usuario=<?php echo $docente['id_usuario']; ?>" class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors">Editar</a>
+                                        <form action="docentes.php" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar a este docente?');">
+                                            <input type="hidden" name="accion" value="eliminar">
+                                            <input type="hidden" name="id_usuario" value="<?php echo $docente['id_usuario']; ?>">
+                                            <button type="submit" class="text-xs font-medium text-red-600 hover:text-red-800 transition-colors">Eliminar</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         <?php }
@@ -266,3 +284,34 @@ if ($accion === 'mostrar_editar' && !empty($id_usuario)) {
         </div>
     </div>
 </div>
+
+<script>
+// Script para mostrar/ocultar el formulario de registro de docentes
+const toggleBtnDocentes = document.getElementById('toggleFormBtnDocentes');
+const formContainerDocentes = document.getElementById('formContainerDocentes');
+const btnTextDocentes = document.getElementById('btnTextDocentes');
+
+// Inicializar el estado del botón al cargar la página
+if (formContainerDocentes && !formContainerDocentes.classList.contains('hidden')) {
+    btnTextDocentes.textContent = 'Ocultar Registro';
+    toggleBtnDocentes.querySelector('svg path').setAttribute('d', 'M20 12H4');
+}
+
+if (toggleBtnDocentes) {
+    toggleBtnDocentes.addEventListener('click', function() {
+        if (formContainerDocentes.classList.contains('hidden')) {
+            // Mostrar formulario
+            formContainerDocentes.classList.remove('hidden');
+            btnTextDocentes.textContent = 'Ocultar Registro';
+            // Cambiar icono a minus
+            this.querySelector('svg path').setAttribute('d', 'M20 12H4');
+        } else {
+            // Ocultar formulario
+            formContainerDocentes.classList.add('hidden');
+            btnTextDocentes.textContent = 'Registrar Nuevo Docente';
+            // Cambiar icono a plus
+            this.querySelector('svg path').setAttribute('d', 'M12 4v16m8-8H4');
+        }
+    });
+}
+</script>

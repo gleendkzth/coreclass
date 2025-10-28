@@ -112,7 +112,7 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
                                 <button class="editar-tarea-btn p-1 text-gray-500 hover:text-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Editar Tarea" data-id="${tarea.id_tarea}">
                                     <span class="material-icons-round">edit</span>
                                 </button>
-                                <button class="ver-entregas-btn p-1 text-gray-500 hover:text-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Ver Entregas">
+                                <button class="ver-entregas-btn p-1 text-gray-500 hover:text-gray-700 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" title="Ver Entregas" data-id="${tarea.id_tarea}">
                                     <span class="material-icons-round">assignment</span>
                                 </button>
                             </div>
@@ -126,6 +126,14 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
                 button.addEventListener('click', function() {
                     const idTarea = this.dataset.id;
                     cargarVistaEdicion(idTarea);
+                });
+            });
+
+            // Añadir event listeners a los nuevos botones de ver entregas
+            document.querySelectorAll('.ver-entregas-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const idTarea = this.dataset.id;
+                    cargarVistaEntregas(idTarea);
                 });
             });
 
@@ -190,6 +198,24 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
                     newScript.textContent = scriptContent.innerHTML;
                     document.body.appendChild(newScript).parentNode.removeChild(newScript);
                 }
+            });
+    };
+
+    const cargarVistaEntregas = (idTarea) => {
+        mainContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-500"></div></div>';
+        fetch(`ver_entregas.php?id_tarea=${idTarea}`)
+            .then(response => response.text())
+            .then(html => {
+                mainContent.innerHTML = html;
+                const newScript = document.createElement('script');
+                const scriptContent = mainContent.querySelector('script');
+                if (scriptContent) {
+                    newScript.textContent = scriptContent.innerHTML;
+                    document.body.appendChild(newScript).parentNode.removeChild(newScript);
+                }
+            })
+            .catch(error => {
+                mainContent.innerHTML = `<div class="text-center text-red-500 p-8"><strong>Error:</strong> ${error.message}</div>`;
             });
     };
 

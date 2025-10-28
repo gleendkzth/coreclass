@@ -26,7 +26,7 @@ $stmt_docente->close();
 
 // Filtrado (opcional, pero bueno tenerlo)
 $id_programa = filter_input(INPUT_GET, 'id_programa', FILTER_VALIDATE_INT);
-$semestre = filter_input(INPUT_GET, 'semestre', FILTER_SANITIZE_STRING);
+$semestre = filter_input(INPUT_GET, 'semestre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $id_curso = filter_input(INPUT_GET, 'id_curso', FILTER_VALIDATE_INT);
 
 $sql = "SELECT 

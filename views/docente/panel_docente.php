@@ -114,40 +114,13 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     </div>
                     
                     <!-- acciones de usuario -->
-                    <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <button id="notification-button" class="p-2 text-gray-300 hover:text-white hover:bg-red-700 rounded-full transition-colors" title="Notificaciones">
-                                <span class="material-icons-round relative">
-                                    notifications_none
-                                </span>
-                            </button>
-                            <!-- Dropdown menu -->
-                            <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden z-20">
-                                <div class="py-2 px-4 text-sm text-gray-700 font-semibold border-b">
-                                    Notificaciones
-                                </div>
-                                <div class="divide-y divide-gray-100">
-                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
-                                        <p class="font-semibold">Entrega de tarea</p>
-                                        <p class="text-xs text-gray-500">Un estudiante ha entregado la tarea de Álgebra.</p>
-                                    </a>
-                                    <a href="#" class="block py-3 px-4 text-sm text-gray-600 hover:bg-gray-100">
-                                        <p class="font-semibold">Consulta de estudiante</p>
-                                        <p class="text-xs text-gray-500">Tienes un nuevo mensaje de un estudiante.</p>
-                                    </a>
-                                </div>
-                                <a href="#" class="block bg-gray-50 text-center text-sm text-red-600 font-semibold py-2 hover:bg-gray-100">
-                                    Ver todas las notificaciones
-                                </a>
-                            </div>
-                        </div>
-                        <div class="hidden md:flex items-center space-x-3 border-l border-red-700 pl-4">
-                            <div class="text-right">
+                    <div class="flex items-center space-x-2 md:space-x-4">
+                        <div class="flex items-center space-x-3 border-l border-red-700 pl-2 md:pl-4">
+                            <div class="text-right hidden md:block">
                                 <p class="text-sm font-medium text-white"><?php echo $_SESSION['primer_nombre']; ?> <?php echo $_SESSION['apellido_paterno']; ?></p>
                                 <p class="text-xs text-gray-300">Docente</p>
                             </div>
-                        </div>
-                        <div class="relative group">
+                            <div class="relative group">
                             <button id="user-menu-button" class="flex items-center space-x-1 focus:outline-none">
                                 <div class="h-9 w-9 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 flex items-center justify-center text-white font-medium">
                                     <?php echo strtoupper(substr($_SESSION['primer_nombre'], 0, 1)); ?>
@@ -171,7 +144,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                     </p>
                                 </div>
                                 <div class="py-1">
-                                    <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150">
+                                    <a href="#" data-page="perfil" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150 nav-link">
                                         <span class="material-icons-round text-base mr-3">account_circle</span>
                                         Mi Cuenta
                                     </a>
@@ -182,6 +155,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                         Cerrar Sesión
                                     </a>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -482,7 +456,6 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             });
 
             // inicializar los dropdowns
-            setupDropdown('notification-button', 'notification-dropdown');
             setupDropdown('user-menu-button', 'user-menu-dropdown');
 
             // lógica para fijar el sidebar con el botón orejita
