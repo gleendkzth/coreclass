@@ -5,7 +5,7 @@ session_start();
 // verificar si el usuario está autenticado y tiene el rol de administrador
 if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administrador') {
     // si no hay sesión activa o el rol no es correcto, redirigir al login
-    header('Location: ../auth/login.php');
+    header('Location: ../../views/auth/login.php');
     exit;
 }
 ?>
@@ -175,7 +175,6 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
             <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg flex flex-col transition-transform duration-300 ease-in-out transform -translate-x-full lg:relative lg:translate-x-0 lg:w-20 lg:hover:w-64 group">
                 <!-- contenido del menú con scroll interno -->
                 <div class="flex-1 flex flex-col overflow-hidden">
-            
                     <!-- cabecera del sidebar para móviles -->
                     <div class="p-4 lg:hidden">
                         <h2 class="text-2xl text-gray-800 logo-sora">
@@ -190,72 +189,71 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Dashboard -->
-                            <a href="#" data-page="inicio" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="inicio" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">dashboard</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Dashboard</span>
                             </a>
 
                             <!-- Título de Sección: Gestión Académica -->
-                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="group-hover:opacity-100 opacity-0 transition-opacity duration-300">Gestión Académica</span></div>
-                            <a href="#" data-page="programas" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="lg:hidden lg:group-hover:inline">Gestión Académica</span></div>
+                            <a href="#" data-page="programas" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">school</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Programas</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Programas</span>
                             </a>
-                            <a href="#" data-page="gestion_cursos" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="gestion_cursos" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">book</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Cursos</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Cursos</span>
                             </a>
-                            <a href="#" data-page="semestre" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="semestre" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">layers</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Semestres</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Semestres</span>
                             </a>
 
                             <!-- Título de Sección: Comunidad -->
-                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="group-hover:opacity-100 opacity-0 transition-opacity duration-300">Comunidad</span></div>
-                            <a href="#" data-page="docentes" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="lg:hidden lg:group-hover:inline">Comunidad</span></div>
+                            <a href="#" data-page="docentes" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">account_box</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Docentes</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Docentes</span>
                             </a>
-                            <a href="#" data-page="estudiantes" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="estudiantes" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">groups</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Estudiantes</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Estudiantes</span>
                             </a>
 
                             <!-- Título de Sección: Sistema -->
-                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="group-hover:opacity-100 opacity-0 transition-opacity duration-300">Sistema</span></div>
-                             <a href="#" data-page="comunicaciones" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <div class="px-4 pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"><span class="lg:hidden lg:group-hover:inline">Sistema</span></div>
+                             <a href="#" data-page="comunicaciones" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">forum</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Comunicaciones</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Comunicaciones</span>
                             </a>
-                            <a href="#" data-page="configuracion" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="configuracion" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">settings</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Configuración</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Configuración</span>
                             </a>
 
                         </div>
                     </nav>
                 </div>
- 
             </aside>
 
             <!-- Contenido principal -->
-            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8 lg:ml-20">
+            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8">
                 <!-- contenido dinámicamente -->
             </main>
         </div>
@@ -392,7 +390,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
                         backdrop.remove();
                         backdrop = null;
                     }
-                    mainContent.style.marginLeft = sidebar.classList.contains('lg:w-20') ? '5rem' : '16rem';
+                    // mainContent.style.marginLeft = sidebar.classList.contains('lg:w-20') ? '5rem' : '16rem';
                 } else {
                     sidebar.classList.add('-translate-x-full');
                     mainContent.style.marginLeft = '0';
@@ -400,27 +398,27 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['rol'] !== 'administra
             });
 
             // ajustar el margen del contenido principal según el estado de la barra lateral en escritorio
-            const observer = new MutationObserver(() => {
-                if (window.innerWidth >= 1024) {
-                    if (sidebar.classList.contains('lg:hover:w-64') && sidebar.matches(':hover')) {
-                        mainContent.style.marginLeft = '16rem';
-                    } else {
-                        mainContent.style.marginLeft = '5rem';
-                    }
-                }
-            });
+            // const observer = new MutationObserver(() => {
+            //     if (window.innerWidth >= 1024) {
+            //         if (sidebar.classList.contains('lg:hover:w-64') && sidebar.matches(':hover')) {
+            //             mainContent.style.marginLeft = '16rem';
+            //         } else {
+            //             mainContent.style.marginLeft = '5rem';
+            //         }
+            //     }
+            // });
 
-            sidebar.addEventListener('mouseenter', () => {
-                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '16rem';
-            });
-            sidebar.addEventListener('mouseleave', () => {
-                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '5rem';
-            });
+            // sidebar.addEventListener('mouseenter', () => {
+            //     if (window.innerWidth >= 1024) mainContent.style.marginLeft = '16rem';
+            // });
+            // sidebar.addEventListener('mouseleave', () => {
+            //     if (window.innerWidth >= 1024) mainContent.style.marginLeft = '5rem';
+            // });
 
-            // inicializar margen
-            if (window.innerWidth >= 1024) {
-                mainContent.style.marginLeft = '5rem';
-            }
+            // // inicializar margen
+            // if (window.innerWidth >= 1024) {
+            //     mainContent.style.marginLeft = '5rem';
+            // }
 
             // gestión global de dropdowns para que solo uno esté abierto a la vez
             const dropdowns = [];

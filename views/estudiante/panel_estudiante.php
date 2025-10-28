@@ -5,7 +5,7 @@ session_start();
 // verificar si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado'] !== true) {
     // si no hay sesión activa, redirigir al login
-    header('Location: ../views/auth/login.php');
+    header('Location: ../../views/auth/login.php');
     exit();
 }
 ?>
@@ -147,7 +147,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
@@ -171,67 +171,43 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                     <nav class="flex-1 overflow-y-auto" aria-label="Menú principal">
                         <div class="px-2 py-1">
                             <!-- Inicio -->
-                            <a href="#" data-page="inicio" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="inicio" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">home</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Inicio</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Inicio</span>
                             </a>
 
                             <!-- Cursos -->
-                            <a href="#" data-page="cursos" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="cursos" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">school</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Cursos</span>
-                            </a>
-
-                            <!-- Horario -->
-                            <a href="#" data-page="horario" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
-                                <div class="w-12 flex justify-center items-center">
-                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">calendar_today</span>
-                                </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Horario</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Cursos</span>
                             </a>
 
                             <!-- Calificaciones -->
-                            <a href="#" data-page="calificaciones" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="calificaciones" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">grade</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Calificaciones</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Calificaciones</span>
                             </a>
 
                             <!-- Tareas & Entregas -->
-                            <a href="#" data-page="tareas" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="tareas" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">assignment</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Tareas & Entregas</span>
-                            </a>
-
-                            <!-- Exámenes -->
-                            <a href="#" data-page="examenes" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
-                                <div class="w-12 flex justify-center items-center">
-                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">quiz</span>
-                                </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Exámenes</span>
-                            </a>
-
-                            <!-- Materiales -->
-                            <a href="#" data-page="materiales" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
-                                <div class="w-12 flex justify-center items-center">
-                                    <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">folder</span>
-                                </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Materiales</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Tareas & Entregas</span>
                             </a>
 
                             <!-- Asistencia -->
-                            <a href="#" data-page="asistencia" class="relative flex items-center px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
+                            <a href="#" data-page="asistencia" class="relative flex items-center lg:justify-center lg:group-hover:justify-start px-2 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200 nav-link">
                                 <div class="w-12 flex justify-center items-center">
                                     <span class="material-icons-round text-lg text-gray-500 group-hover:text-gray-700 transition-colors duration-200">event_available</span>
                                 </div>
-                                <span class="ml-4 whitespace-nowrap lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Asistencia</span>
+                                <span class="ml-4 whitespace-nowrap lg:hidden lg:group-hover:inline lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300">Asistencia</span>
                             </a>
 
                         </div>
@@ -240,7 +216,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             </aside>
 
             <!-- Contenido principal -->
-            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8 lg:ml-20">
+            <main id="contenido-principal" class="flex-1 overflow-y-auto bg-gradient-to-br from-gray-25 to-gray-100 p-4 sm:p-6 lg:p-8">
                 <!-- contenido dinámicamente -->
             </main>
         </div>
@@ -377,7 +353,7 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
                         backdrop.remove();
                         backdrop = null;
                     }
-                    mainContent.style.marginLeft = sidebar.classList.contains('lg:w-20') ? '5rem' : '16rem';
+                    // mainContent.style.marginLeft = sidebar.classList.contains('lg:w-20') ? '5rem' : '16rem';
                 } else {
                     sidebar.classList.add('-translate-x-full');
                     mainContent.style.marginLeft = '0';
@@ -385,27 +361,27 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             });
 
             // ajustar el margen del contenido principal según el estado de la barra lateral en escritorio
-            const observer = new MutationObserver(() => {
-                if (window.innerWidth >= 1024) {
-                    if (sidebar.classList.contains('lg:hover:w-64') && sidebar.matches(':hover')) {
-                        mainContent.style.marginLeft = '16rem';
-                    } else {
-                        mainContent.style.marginLeft = '5rem';
-                    }
-                }
-            });
+            // const observer = new MutationObserver(() => {
+            //     if (window.innerWidth >= 1024) {
+            //         if (sidebar.classList.contains('lg:hover:w-64') && sidebar.matches(':hover')) {
+            //             mainContent.style.marginLeft = '16rem';
+            //         } else {
+            //             mainContent.style.marginLeft = '5rem';
+            //         }
+            //     }
+            // });
 
-            sidebar.addEventListener('mouseenter', () => {
-                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '16rem';
-            });
-            sidebar.addEventListener('mouseleave', () => {
-                if (window.innerWidth >= 1024) mainContent.style.marginLeft = '5rem';
-            });
+            // sidebar.addEventListener('mouseenter', () => {
+            //     if (window.innerWidth >= 1024) mainContent.style.marginLeft = '16rem';
+            // });
+            // sidebar.addEventListener('mouseleave', () => {
+            //     if (window.innerWidth >= 1024) mainContent.style.marginLeft = '5rem';
+            // });
 
-            // inicializar margen
-            if (window.innerWidth >= 1024) {
-                mainContent.style.marginLeft = '5rem';
-            }
+            // // inicializar margen
+            // if (window.innerWidth >= 1024) {
+            //     mainContent.style.marginLeft = '5rem';
+            // }
 
             // gestión global de dropdowns para que solo uno esté abierto a la vez
             const dropdowns = [];
