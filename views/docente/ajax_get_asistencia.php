@@ -25,6 +25,9 @@ if (!$id_curso || $mes === false || !$anio) {
 // el mes en js es 0-11, en mysql es 1-12
 $mes_mysql = $mes + 1;
 
+// log temporal para depuración
+error_log("[ASISTENCIA GET] id_curso: $id_curso, mes: $mes (JS), mes_mysql: $mes_mysql, anio: $anio");
+
 try {
     $sql = "SELECT 
                 da.id_estudiante,
@@ -47,11 +50,17 @@ try {
     $resultado = $stmt->get_result();
 
     $asistencias = [];
+    $total_registros = 0;
     while ($row = $resultado->fetch_assoc()) {
         // crear una clave unica para facil acceso en javascript
         $key = $row['id_estudiante'] . '-' . $row['fecha'];
         $asistencias[$key] = $row['estado'];
+        $total_registros++;
     }
+
+    // log temporal para depuración
+    error_log("[ASISTENCIA GET] Total registros encontrados: $total_registros");
+    error_log("[ASISTENCIA GET] Datos: " . json_encode($asistencias));
 
     echo json_encode(['success' => true, 'data' => $asistencias]);
 

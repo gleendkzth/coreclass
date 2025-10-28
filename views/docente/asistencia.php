@@ -370,6 +370,15 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
                 guardarBtn.disabled = true;
                 guardarBtn.textContent = 'Guardando...';
 
+                // log de depuración
+                console.log('Guardando asistencia:', {
+                    id_curso: idCurso,
+                    mes: mesSeleccionado,
+                    anio: anioSeleccionado,
+                    cantidad_registros: datosAsistencia.length,
+                    datos: datosAsistencia
+                });
+
                 try {
                     const response = await fetch('ajax_guardar_asistencia.php', {
                         method: 'POST',
@@ -383,9 +392,12 @@ $programas = $docenteController->obtenerProgramasDelDocente($id_usuario);
                     });
 
                     const resultado = await response.json();
+                    console.log('Resultado del guardado:', resultado);
 
                     if (resultado.success) {
                         alert('Asistencia guardada correctamente.');
+                        // recargar la tabla para mostrar los datos guardados
+                        mostrarTablaAsistencia(idCurso, mesSeleccionado, anioActual);
                     } else {
                         throw new Error(resultado.message || 'Error desconocido al guardar.');
                     }

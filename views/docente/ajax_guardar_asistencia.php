@@ -44,6 +44,9 @@ if (!$id_curso) {
     exit;
 }
 
+// log temporal para depuración
+error_log("[ASISTENCIA GUARDAR] Iniciando guardado - id_curso: $id_curso, id_docente: $id_docente_session, total_asistencias: " . count($asistencias));
+
 $conn->begin_transaction();
 
 try {
@@ -75,8 +78,12 @@ try {
         $result_matricula = $stmt_get_matricula->get_result();
         $matricula_data = $result_matricula->fetch_assoc();
 
-        if (!$matricula_data) continue; // el estudiante no esta matriculado en ese curso
+        if (!$matricula_data) {
+            error_log("[ASISTENCIA GUARDAR] Estudiante $id_estudiante NO matriculado en curso $id_curso");
+            continue; // el estudiante no esta matriculado en ese curso
+        }
         $id_matricula_curso = $matricula_data['id_matricula_curso'];
+        error_log("[ASISTENCIA GUARDAR] Estudiante: $id_estudiante, Fecha: $fecha, Estado: $estado, id_matricula_curso: $id_matricula_curso");
 
         // 2. buscar o crear el registro de asistencia
         $stmt_get_asistencia->bind_param("is", $id_matricula_curso, $fecha);
@@ -107,9 +114,12 @@ try {
             $id_detalle = $detalle_data['id_detalle'];
             $stmt_update_detalle->bind_param("si", $estado, $id_detalle);
             $stmt_update_detalle->execute();
+            error_log("[ASISTENCIA GUARDAR] ACTUALIZADO - id_detalle: $id_detalle, id_asistencia: $id_asistencia, estudiante: $id_estudiante, estado: $estado");
         } else { // si no existe, insertar
             $stmt_insert_detalle->bind_param("iis", $id_asistencia, $id_estudiante, $estado);
             $stmt_insert_detalle->execute();
+            $id_detalle_nuevo = $stmt_insert_detalle->insert_id;
+            error_log("[ASISTENCIA GUARDAR] INSERTADO - id_detalle: $id_detalle_nuevo, id_asistencia: $id_asistencia, estudiante: $id_estudiante, estado: $estado");
         }
     }
 

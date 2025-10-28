@@ -46,6 +46,48 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             max-height: 500px;
             transition: max-height 0.5s ease-in;
         }
+
+        /* Estilos para forzar el estado expandido (hover simulado) */
+        .sidebar-pinned {
+            width: 16rem !important; /* lg:w-64 */
+        }
+        .sidebar-pinned .nav-link span,
+        .sidebar-pinned #pin-sidebar-btn span {
+            display: inline !important;
+            opacity: 1 !important;
+        }
+        .sidebar-pinned .nav-link,
+        .sidebar-pinned #pin-sidebar-btn {
+            justify-content: flex-start !important;
+        }
+
+        /* estilos para el botón orejita */
+        .sidebar-toggle-ear {
+            position: absolute;
+            right: -30px;
+            top: 1px;
+            width: 30px;
+            height: 60px;
+            background: white;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            border: 1px solid #e5e7eb;
+            border-left: none;
+        }
+
+
+        /* ocultar orejita en móviles */
+        @media (max-width: 1023px) {
+            .sidebar-toggle-ear {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 h-screen overflow-hidden">
@@ -149,6 +191,13 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
         <div class="flex flex-1 overflow-hidden">
             <!-- Barra lateral -->
             <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg flex flex-col transition-transform duration-300 ease-in-out transform -translate-x-full lg:relative lg:translate-x-0 lg:w-20 lg:hover:w-64 group">
+                <!-- botón orejita con funcionalidad de fijar -->
+                <div id="sidebar-ear-toggle" class="sidebar-toggle-ear cursor-pointer hover:bg-gray-50 transition-colors" title="Fijar sidebar">
+                    <span id="ear-pin-icon" class="material-icons-round text-gray-600 text-base transform -rotate-45">
+                        push_pin
+                    </span>
+                </div>
+                
                 <!-- contenido del menú con scroll interno -->
                 <div class="flex-1 flex flex-col overflow-hidden">
                     <!-- cabecera del sidebar para móviles -->
@@ -435,6 +484,27 @@ if (!isset($_SESSION['usuario_autenticado']) || $_SESSION['usuario_autenticado']
             // inicializar los dropdowns
             setupDropdown('notification-button', 'notification-dropdown');
             setupDropdown('user-menu-button', 'user-menu-dropdown');
+
+            // lógica para fijar el sidebar con el botón orejita
+            const sidebarEarToggle = document.getElementById('sidebar-ear-toggle');
+            const earPinIcon = document.getElementById('ear-pin-icon');
+
+            sidebarEarToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('sidebar-pinned');
+
+                if (sidebar.classList.contains('sidebar-pinned')) {
+                    // estado: fijado (hover simulado)
+                    sidebar.classList.remove('lg:hover:w-64'); // desactivar hover original
+                    earPinIcon.classList.remove('-rotate-45');
+                    earPinIcon.classList.add('text-red-500');
+                } else {
+                    // estado: normal (con hover)
+                    sidebar.classList.add('lg:hover:w-64'); // reactivar hover original
+                    earPinIcon.classList.add('-rotate-45');
+                    earPinIcon.classList.remove('text-red-500');
+                }
+            });
         });
     </script>
 <script>

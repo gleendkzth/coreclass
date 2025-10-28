@@ -239,7 +239,8 @@ CREATE TABLE detalle_asistencia (
   hora_marcada TIME DEFAULT CURRENT_TIME,
   observacion TEXT,
   FOREIGN KEY (id_asistencia) REFERENCES asistencia(id_asistencia) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante) ON DELETE CASCADE ON UPDATE CASCADE,
+  UNIQUE KEY idx_unica_asistencia (id_asistencia, id_estudiante)
 );
 
 -- =====================================================
